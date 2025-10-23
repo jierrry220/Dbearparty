@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-10-23T08:56:20.605Z",
+  "network": "berachain",
+  "proxyAddress": "0xf7c464c7832e59855aa245ecc7677f54b3460e7d",
+  "oldImplementation": "0x2d75875af2fa80692ad54ddc7c9b830450bd38a3",
+  "newImplementation": "0x2816Fcf9021967CcC3c86E2aF0a6C598Df06EB78",
+  "version": "1.1.0-final",
+  "deployer": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "note": "实际使用的 DPToken 合约"
+}

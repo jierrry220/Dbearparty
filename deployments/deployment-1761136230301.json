@@ -1,0 +1,24 @@
+{
+  "network": "Berachain Mainnet",
+  "chainId": 80094,
+  "deployer": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "treasury": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "defaultInviter": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "timestamp": "2025-10-22T12:30:30.301Z",
+  "contracts": {
+    "DPToken": "0xf7C464c7832e59855aa245Ecc7677f54B3460e7d",
+    "DebearPass": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+    "InvitationSystem": {
+      "proxy": "0xAa733E91132dF624f391f1B426F56BD231486774",
+      "implementation": "0x1Ac0eEB8679116c3566Ebe264bF8239e297e57e7"
+    },
+    "PassSale": {
+      "proxy": "0x40477c0B232cF7AaF939EC79d2Cad51669E101C6",
+      "implementation": "0xBd556c13dd6080d7DC1Eb4E588273469bec77190"
+    },
+    "TEngine": {
+      "proxy": "0xd9661D56659B80A875E42A51955434A0818581D8",
+      "implementation": "0x05EFa1A731cD65C8112A66359059B4a918684d18"
+    }
+  }
+}

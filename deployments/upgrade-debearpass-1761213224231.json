@@ -1,0 +1,15 @@
+{
+  "timestamp": "2025-10-23T09:53:44.231Z",
+  "network": "berachain",
+  "proxyAddress": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+  "oldImplementation": "0x7621d2131c95df5a815d48e906588e51825fcad4",
+  "newImplementation": "0x71D88192Bc116E11E1Efb6f893196b004Be9637f",
+  "version": "1.1.0",
+  "deployer": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "changes": [
+    "添加 PausableUpgradeable 继承",
+    "添加 pause() 和 unpause() 方法",
+    "添加 _beforeTokenTransfer 钩子暂停检查",
+    "允许自由交易（非暂停时）"
+  ]
+}

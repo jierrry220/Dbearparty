@@ -1,0 +1,15 @@
+{
+  "timestamp": "2025-10-23T08:50:34.750Z",
+  "network": "berachain",
+  "proxyAddress": "0x3a4A8bfa98074e203814729df11d4274C889Bcab",
+  "oldImplementation": "0x7783ada9878b6eb2c7ecb528280b2861819f1c4c",
+  "newImplementation": "0x2b104E4449E8B169c6cfC19a8e53585E02b046F0",
+  "version": "1.1.0-final",
+  "deployer": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "changes": [
+    "添加完整的 _beforeTokenTransfer 钩子",
+    "添加暂停检查逻辑",
+    "修复 pause(string) 方法",
+    "添加错误信息字符串"
+  ]
+}

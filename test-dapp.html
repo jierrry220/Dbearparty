@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debear Party - 完整测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .wallet-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn:hover { background: #5568d3; transform: translateY(-2px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .btn.secondary { background: #48bb78; }
+        .btn.secondary:hover { background: #38a169; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .stat:last-child { border-bottom: none; }
+        .stat-label {
+            color: #718096;
+            font-size: 14px;
+        }
+        .stat-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .alert.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #38a169;
+        }
+        .alert.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border-left: 4px solid #e53e3e;
+        }
+        .alert.info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 4px solid #3182ce;
+        }
+        .pass-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .pass-item {
+            text-align: center;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .pass-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .pass-item.selected {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        .pass-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        .pass-price {
+            color: #667eea;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .pass-multiplier {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden { display: none; }
+        .reward-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 16px 0;
+        }
+        .reward-amount {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+        .reward-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🎯 Debear Party - 完整系统测试</h1>
+            <p style="color: #718096; margin-top: 8px;">Berachain 主网 (Chain ID: 80094)</p>
+            <div class="wallet-info">
+                <div>
+                    <div id="walletAddress" style="color: #2d3748; font-weight: 600;">未连接钱包</div>
+                    <div id="beraBalance" style="color: #718096; font-size: 14px; margin-top: 4px;">BERA: --</div>
+                    <div id="dpBalance" style="color: #718096; font-size: 14px;">DP: --</div>
+                </div>
+                <button id="connectBtn" class="btn">连接钱包</button>
+            </div>
+        </div>
+
+        <div id="message"></div>
+
+        <!-- 主要功能区域 -->
+        <div class="grid">
+            <!-- 1. Pass购买 -->
+            <div class="card">
+                <h2>🎫 购买 Pass</h2>
+                <div class="pass-grid">
+                    <div class="pass-item" onclick="selectPass(1)">
+                        <div class="pass-name">Standard</div>
+                        <div class="pass-price" id="passPriceStd">-- BERA</div>
+                        <div class="pass-multiplier">1x 算力</div>
+                    </div>
+                    <div class="pass-item" onclick="selectPass(2)">
+                        <div class="pass-name">Premium</div>
+                        <div class="pass-price" id="passPricePre">-- BERA</div>
+                        <div class="pass-multiplier">3.5x 算力</div>
+                    </div>
+                    <div class="pass-item" onclick="selectPass(3)">
+                        <div class="pass-name">Exclusive</div>
+                        <div class="pass-price" id="passPriceEx">-- BERA</div>
+                        <div class="pass-multiplier">7x 算力</div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                    <label>邀请人地址（可选）</label>
+                    <input type="text" id="inviterInput" placeholder="0x...">
+                </div>
+                <button class="btn" onclick="buyPass()" style="width: 100%;">购买 Pass</button>
+                <div id="passInfo" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                    <div class="stat">
+                        <span class="stat-label">Standard Pass:</span>
+                        <span class="stat-value" id="standardCount">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Premium Pass:</span>
+                        <span class="stat-value" id="premiumCount">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Exclusive Pass:</span>
+                        <span class="stat-value" id="exclusiveCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 邀请关系 -->
+            <div class="card">
+                <h2>🤝 邀请关系</h2>
+                <div class="stat">
+                    <span class="stat-label">我的邀请人:</span>
+                    <span class="stat-value" id="myInviter">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">我的邀请码:</span>
+                    <span class="stat-value" id="myInviteCode" style="font-size: 12px;">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">已邀请人数:</span>
+                    <span class="stat-value" id="inviteeCount">0</span>
+                </div>
+                <button class="btn secondary" onclick="refreshInviteInfo()" style="width: 100%; margin-top: 16px;">刷新邀请信息</button>
+            </div>
+
+            <!-- 3. TEngine 挖矿 -->
+            <div class="card">
+                <h2>⛏️ TEngine 质押挖矿</h2>
+                <div class="form-group">
+                    <label>质押数量 (DP)</label>
+                    <input type="number" id="stakeAmount" placeholder="输入质押数量">
+                </div>
+                <button class="btn" onclick="enterPool()" style="width: 100%; margin-bottom: 12px;">进入矿池</button>
+                
+                <div class="reward-box">
+                    <div class="reward-label">可领取奖励</div>
+                    <div class="reward-amount" id="tengineReward">0.0000</div>
+                    <div class="reward-label">DP</div>
+                </div>
+                
+                <button class="btn secondary" onclick="claimTengineReward()" style="width: 100%;">领取奖励</button>
+                
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                    <div class="stat">
+                        <span class="stat-label">已质押:</span>
+                        <span class="stat-value" id="stakedAmount">0 DP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">已领取份额:</span>
+                        <span class="stat-value" id="tengineClaimedTotal">0 DP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">剩余份额:</span>
+                        <span class="stat-value" id="tengineRemainingShares">0 DP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">释放进度:</span>
+                        <span class="stat-value" id="tengineProgress">0%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">下次释放倒计时:</span>
+                        <span class="stat-value" id="tengineNextRelease">--:--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. NFT挖矿 -->
+            <div class="card">
+                <h2>🎨 NFT Pass 挖矿</h2>
+                <div class="alert info">
+                    持有Pass自动挖矿，无需质押！
+                </div>
+                
+                <button class="btn" onclick="initNFTMining()" style="width: 100%; margin-bottom: 12px;">初始化挖矿</button>
+                
+                <div class="reward-box">
+                    <div class="reward-label">可领取奖励</div>
+                    <div class="reward-amount" id="nftReward">0.0000</div>
+                    <div class="reward-label">DP</div>
+                </div>
+                
+                <button class="btn secondary" onclick="claimNFTReward()" style="width: 100%;">领取奖励</button>
+                
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                    <div class="stat">
+                        <span class="stat-label">每日产出:</span>
+                        <span class="stat-value" id="nftDailyReward">0 DP/天</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">累计已领:</span>
+                        <span class="stat-value" id="nftClaimedTotal">0 DP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">上次领取:</span>
+                        <span class="stat-value" id="nftLastClaim">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 开发者入口（仅owner可见） -->
+        <div id="devEntrance" style="display: none; justify-content: center; align-items: center; margin-top: 30px; padding-bottom: 30px;">
+            <a href="admin.html" style="text-decoration: none;">
+                <button class="btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); font-size: 16px; padding: 15px 40px; box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);">
+                    🔧 开发者管理面板
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 合约地址
+        const CONTRACTS = {
+            dpToken: '0xf7C464c7832e59855aa245Ecc7677f54B3460e7d',
+            debearPass: '0x29f2a6756E5B79C36Eb6699220CB56f7749C7514',
+            invitationSystem: '0xAa733E91132dF624f391f1B426F56BD231486774',
+            passSale: '0x40477c0B232cF7AaF939EC79d2Cad51669E101C6',
+            tEngine: '0xd9661D56659B80A875E42A51955434A0818581D8',
+            nftMiningPool: '0x0D9bfaC27128EA2754179400eB932F13B7c52097',
+            nftMining: '0x8883Ef27fFa001fAcc323E566Bce387A63Af5B4A'
+        };
+
+        // ABIs (简化版)
+        const ERC20_ABI = [
+            'function balanceOf(address) view returns (uint256)',
+            'function approve(address spender, uint256 amount) returns (bool)',
+            'function allowance(address owner, address spender) view returns (uint256)'
+        ];
+
+        const PASS_ABI = [
+            'function balanceOf(address,uint256) view returns (uint256)'
+        ];
+
+        const PASS_SALE_ABI = [
+            'function buyPass(uint256 passLevel, address inviter) payable',
+            'function getAllPrices() view returns (uint256[3])',
+            'function saleActive() view returns (bool)'
+        ];
+
+        const INVITATION_ABI = [
+            'function getInviter(address) view returns (address)',
+            'function inviteeCount(address) view returns (uint256)'
+        ];
+
+        const TENGINE_ABI = [
+            'function enterPool(uint256 amount, address inviter)',
+            'function claim()',
+            'function userInfo(address) view returns (uint256 totalShares, uint256 claimedShares, uint256 lastClaimEpoch, uint256 pendingRewards)',
+            'function totalDeposited() view returns (uint256)',
+            'function totalClaimed() view returns (uint256)',
+            'function deployTime() view returns (uint256)',
+            'function getCurrentEpoch() view returns (uint256)'
+        ];
+
+        const NFT_MINING_ABI = [
+            'function initializeMining()',
+            'function claimNFTReward()',
+            'function getUserMiningInfo(address) view returns (uint256,uint256,uint256,uint256,uint256,uint256,uint256)',
+            'function getPassCounts(address) view returns (uint256,uint256,uint256)',
+            'function getTotalDailyReward(address) view returns (uint256)'
+        ];
+
+        let provider, signer, userAddress;
+        let selectedPassLevel = 1;
+        let updateInterval, tengineCountdownInterval;
+        let passPricesWei = [null, null, null];
+        let passSaleActive = false;
+        // 连接钱包
+        async function connectWallet() {
+            try {
+                if (!window.ethereum) {
+                    showMessage('请安装 MetaMask 或 OKX Wallet！', 'error');
+                    return;
+                }
+
+                const walletProvider = window.okxwallet || window.ethereum;
+                
+                await walletProvider.request({ method: 'eth_requestAccounts' });
+                
+                const chainId = await walletProvider.request({ method: 'eth_chainId' });
+                if (chainId !== '0x138de') {
+                    try {
+                        await walletProvider.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x138de' }]
+                        });
+                    } catch (error) {
+                        showMessage('请切换到 Berachain 主网 (Chain ID: 80094)', 'error');
+                        return;
+                    }
+                }
+
+                provider = new ethers.providers.Web3Provider(walletProvider);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                document.getElementById('connectBtn').textContent = '已连接';
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('walletAddress').textContent = `${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
+
+                await refreshAllData();
+                await refreshPassSaleInfo();
+                startRealtimeUpdate();
+                checkAndShowDevEntrance();
+
+                showMessage('钱包连接成功！', 'success');
+            } catch (error) {
+                console.error(error);
+                showMessage('连接失败: ' + error.message, 'error');
+            }
+        }
+
+        // 选择Pass
+        function selectPass(level) {
+            selectedPassLevel = level;
+            document.querySelectorAll('.pass-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelectorAll('.pass-item')[level - 1].classList.add('selected');
+        }
+
+        // 购买Pass
+        async function buyPass() {
+            if (!signer) {
+                showMessage('请先连接钱包', 'error');
+                return;
+            }
+
+            try {
+                const inviterInput = document.getElementById('inviterInput').value.trim();
+                const inviter = inviterInput || '0xd8B4286c2f299220830f7228bab15225b4EA8379';
+
+                if (!passSaleActive) {
+                    showMessage('当前销售未开启', 'error');
+                    return;
+                }
+                const priceWei = passPricesWei[selectedPassLevel - 1];
+                if (!priceWei) {
+                    await refreshPassSaleInfo();
+                }
+
+                const passSale = new ethers.Contract(CONTRACTS.passSale, PASS_SALE_ABI, signer);
+                showMessage('正在购买 Pass...', 'info');
+                const tx = await passSale.buyPass(selectedPassLevel, inviter, {
+                    value: priceWei || passPricesWei[selectedPassLevel - 1]
+                });
+                await tx.wait();
+                showMessage('Pass 购买成功！', 'success');
+                await refreshAllData();
+                await refreshPassSaleInfo();
+            } catch (error) {
+                console.error(error);
+                showMessage('购买失败: ' + error.message, 'error');
+            }
+        }
+
+        // 进入矿池
+        async function enterPool() {
+            if (!signer) return;
+
+            try {
+                const amount = document.getElementById('stakeAmount').value;
+                if (!amount || amount <= 0) {
+                    showMessage('请输入有效的质押数量', 'error');
+                    return;
+                }
+
+                const amountWei = ethers.utils.parseEther(amount);
+                const dpToken = new ethers.Contract(CONTRACTS.dpToken, ERC20_ABI, signer);
+                const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, signer);
+
+                // 检查授权
+                const allowance = await dpToken.allowance(userAddress, CONTRACTS.tEngine);
+                if (allowance.lt(amountWei)) {
+                    showMessage('正在授权...', 'info');
+                    const approveTx = await dpToken.approve(CONTRACTS.tEngine, ethers.constants.MaxUint256);
+                    await approveTx.wait();
+                }
+
+                // 默认邀请人使用 deployer 地址
+                const inviter = '0xd8B4286c2f299220830f7228bab15225b4EA8379';
+                
+                showMessage('正在质押...', 'info');
+                const tx = await tEngine.enterPool(amountWei, inviter);
+                await tx.wait();
+                
+                showMessage('质押成功！', 'success');
+                await refreshAllData();
+            } catch (error) {
+                console.error(error);
+                showMessage('质押失败: ' + error.message, 'error');
+            }
+        }
+
+        // 领取TEngine奖励
+        async function claimTengineReward() {
+            if (!signer) return;
+
+            try {
+                const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, signer);
+                
+                showMessage('正在领取...', 'info');
+                const tx = await tEngine.claim();
+                await tx.wait();
+                
+                showMessage('领取成功！', 'success');
+                await refreshAllData();
+            } catch (error) {
+                console.error(error);
+                showMessage('领取失败: ' + error.message, 'error');
+            }
+        }
+
+        // 初始化NFT挖矿
+        async function initNFTMining() {
+            if (!signer) return;
+
+            try {
+                const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, signer);
+                
+                showMessage('正在初始化...', 'info');
+                const tx = await nftMining.initializeMining();
+                await tx.wait();
+                
+                showMessage('初始化成功！', 'success');
+                await refreshAllData();
+            } catch (error) {
+                console.error(error);
+                showMessage('初始化失败: ' + error.message, 'error');
+            }
+        }
+
+        // 领取NFT奖励
+        async function claimNFTReward() {
+            if (!signer) return;
+
+            try {
+                const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, signer);
+                
+                showMessage('正在领取...', 'info');
+                const tx = await nftMining.claimNFTReward();
+                await tx.wait();
+                
+                showMessage('领取成功！', 'success');
+                await refreshAllData();
+            } catch (error) {
+                console.error(error);
+                showMessage('领取失败: ' + error.message, 'error');
+            }
+        }
+
+        // 刷新所有数据
+        async function refreshAllData() {
+            if (!signer) return;
+
+            try {
+                // 余额
+                const beraBalance = await provider.getBalance(userAddress);
+                document.getElementById('beraBalance').textContent = `BERA: ${parseFloat(ethers.utils.formatEther(beraBalance)).toFixed(4)}`;
+
+                const dpToken = new ethers.Contract(CONTRACTS.dpToken, ERC20_ABI, provider);
+                const dpBalance = await dpToken.balanceOf(userAddress);
+                document.getElementById('dpBalance').textContent = `DP: ${parseFloat(ethers.utils.formatEther(dpBalance)).toFixed(2)}`;
+
+                // Pass持有
+                const passNFT = new ethers.Contract(CONTRACTS.debearPass, PASS_ABI, provider);
+                const [standard, premium, exclusive] = await Promise.all([
+                    passNFT.balanceOf(userAddress, 1),
+                    passNFT.balanceOf(userAddress, 2),
+                    passNFT.balanceOf(userAddress, 3)
+                ]);
+                document.getElementById('standardCount').textContent = standard.toString();
+                document.getElementById('premiumCount').textContent = premium.toString();
+                document.getElementById('exclusiveCount').textContent = exclusive.toString();
+
+                // Pass 价格 & 销售开关
+                await refreshPassSaleInfo();
+
+                // 邀请信息
+                await refreshInviteInfo();
+
+                // TEngine信息
+                const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
+                try {
+                    const userInfo = await tEngine.userInfo(userAddress);
+                    const totalClaim = await tEngine.totalClaimed();
+                    
+                    // totalShares / 4 = 原始质押量 (使用Number转换避免BigInt运算错误)
+                    const stakedAmount = ethers.BigNumber.from(userInfo.totalShares).div(4);
+                    const remainingShares = ethers.BigNumber.from(userInfo.totalShares).sub(userInfo.claimedShares);
+                    
+                    document.getElementById('stakedAmount').textContent = parseFloat(ethers.utils.formatEther(stakedAmount)).toFixed(2) + ' DP';
+                    document.getElementById('tengineClaimedTotal').textContent = parseFloat(ethers.utils.formatEther(userInfo.claimedShares)).toFixed(2) + ' DP';
+                    document.getElementById('tengineRemainingShares').textContent = parseFloat(ethers.utils.formatEther(remainingShares)).toFixed(2) + ' DP';
+                    document.getElementById('tengineReward').textContent = parseFloat(ethers.utils.formatEther(userInfo.pendingRewards)).toFixed(4);
+                    
+                    // 计算释放进度
+                    if (userInfo.totalShares > 0n) {
+                        const progress = (Number(userInfo.claimedShares) * 100 / Number(userInfo.totalShares)).toFixed(2);
+                        document.getElementById('tengineProgress').textContent = progress + '%';
+                    }
+
+                    // 计算下次释放倒计时（与合约 Epoch 对齐）
+                    try {
+                        const [deployTimeBN, latestBlock] = await Promise.all([
+                            tEngine.deployTime(),
+                            provider.getBlock('latest')
+                        ]);
+                        const deployTime = Number(deployTimeBN.toString());
+                        const now = Number(latestBlock.timestamp);
+                        const SECONDS_PER_DAY = 86400;
+                        const elapsedDays = Math.floor((now - deployTime) / SECONDS_PER_DAY);
+                        const nextEpochStart = deployTime + (elapsedDays + 1) * SECONDS_PER_DAY;
+                        startTengineCountdown(nextEpochStart);
+                    } catch (err) {
+                        console.warn('倒计时计算失败:', err);
+                        document.getElementById('tengineNextRelease').textContent = '--:--:--';
+                    }
+                } catch (e) {
+                    console.error('TEngine查询错误:', e);
+                }
+
+                // NFT挖矿信息
+                const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, provider);
+                try {
+                    const miningInfo = await nftMining.getUserMiningInfo(userAddress);
+                    const dailyReward = await nftMining.getTotalDailyReward(userAddress);
+                    
+                    document.getElementById('nftDailyReward').textContent = parseFloat(ethers.utils.formatEther(dailyReward)).toFixed(0) + ' DP/天';
+                    document.getElementById('nftClaimedTotal').textContent = parseFloat(ethers.utils.formatEther(miningInfo[5])).toFixed(2) + ' DP';
+                    document.getElementById('nftReward').textContent = parseFloat(ethers.utils.formatEther(miningInfo[4])).toFixed(4);
+                    
+                    if (Number(miningInfo[6]) > 0) {
+                        const lastClaim = new Date(Number(miningInfo[6]) * 1000);
+                        document.getElementById('nftLastClaim').textContent = lastClaim.toLocaleString('zh-CN');
+                    }
+                } catch (e) {
+                    console.error('NFT挖矿查询错误:', e);
+                }
+
+            } catch (error) {
+                console.error('刷新数据失败:', error);
+            }
+        }
+
+        // 刷新 Pass 销售价格与状态（实时从链上）
+        async function refreshPassSaleInfo() {
+            try {
+                const passSale = new ethers.Contract(CONTRACTS.passSale, PASS_SALE_ABI, provider);
+                const [prices, active] = await Promise.all([
+                    passSale.getAllPrices(),
+                    passSale.saleActive()
+                ]);
+                passSaleActive = !!active;
+                passPricesWei = prices;
+                const fmt = (bn)=> parseFloat(ethers.utils.formatEther(bn)).toFixed(3);
+                document.getElementById('passPriceStd').textContent = `${fmt(prices[0])} BERA`;
+                document.getElementById('passPricePre').textContent = `${fmt(prices[1])} BERA`;
+                document.getElementById('passPriceEx').textContent = `${fmt(prices[2])} BERA`;
+            } catch (e) {
+                console.warn('获取 Pass 价格失败:', e);
+            }
+        }
+
+        // 刷新邀请信息
+        async function refreshInviteInfo() {
+            if (!signer) return;
+
+            try {
+                const invitation = new ethers.Contract(CONTRACTS.invitationSystem, INVITATION_ABI, provider);
+                
+                try {
+                    const inviter = await invitation.getInviter(userAddress);
+                    if (inviter === ethers.constants.AddressZero) {
+                        document.getElementById('myInviter').textContent = '无';
+                    } else {
+                        document.getElementById('myInviter').textContent = `${inviter.substring(0, 6)}...${inviter.substring(38)}`;
+                    }
+                } catch {
+                    document.getElementById('myInviter').textContent = '无';
+                }
+                
+                try {
+                    const inviteeCount = await invitation.inviteeCount(userAddress);
+                    document.getElementById('inviteeCount').textContent = inviteeCount.toString();
+                } catch {
+                    document.getElementById('inviteeCount').textContent = '0';
+                }
+                
+                document.getElementById('myInviteCode').textContent = `${userAddress.substring(0, 10)}...${userAddress.substring(38)}`;
+                
+            } catch (error) {
+                console.error('刷新邀请信息失败:', error);
+            }
+        }
+
+        // 实时更新
+        function startRealtimeUpdate() {
+            if (updateInterval) clearInterval(updateInterval);
+            updateInterval = setInterval(refreshAllData, 10000); // 每10秒更新
+        }
+
+        // 启动 TEngine 下次释放倒计时（基于链上时间计算的下一 Epoch 起点）
+        function startTengineCountdown(targetSec) {
+            const el = document.getElementById('tengineNextRelease');
+            if (!el) return;
+            if (tengineCountdownInterval) clearInterval(tengineCountdownInterval);
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+            function tick() {
+                const nowMs = Date.now();
+                const diffMs = targetSec * 1000 - nowMs;
+                if (diffMs <= 0) {
+                    el.textContent = '00:00:00';
+                    clearInterval(tengineCountdownInterval);
+                    // 轻量触发一次刷新以同步新一轮释放状态
+                    setTimeout(refreshAllData, 1500);
+                    return;
+                }
+                const totalSec = Math.floor(diffMs / 1000);
+                const h = Math.floor(totalSec / 3600);
+                const m = Math.floor((totalSec % 3600) / 60);
+                const s = totalSec % 60;
+                el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+            }
+
+            tick();
+            tengineCountdownInterval = setInterval(tick, 1000);
+        }
+        // 显示消息
+        function showMessage(text, type = 'info') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="alert ${type}">${text}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // 检查并显示开发者入口（仅owner可见）
+        function checkAndShowDevEntrance() {
+            const OWNER_ADDRESS = '0xd8b4286c2f299220830f7228bab15225b4ea8379';
+            if (userAddress && userAddress.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
+                document.getElementById('devEntrance').style.display = 'flex';
+            } else {
+                document.getElementById('devEntrance').style.display = 'none';
+            }
+        }
+
+        // 事件监听
+        document.getElementById('connectBtn').addEventListener('click', connectWallet);
+
+        // 初始选中Standard Pass
+        selectPass(1);
+    </script>
+</body>
+</html>
