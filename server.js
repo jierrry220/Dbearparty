@@ -7,8 +7,8 @@ const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const server = http.createServer((req, res) => {
-    // 默认访问 test-dapp.html
-    let filePath = req.url === '/' ? '/test-dapp.html' : req.url;
+    // 默认访问 index.html
+    let filePath = req.url === '/' ? '/index.html' : req.url;
     filePath = path.join(__dirname, filePath);
 
     // 获取文件扩展名
