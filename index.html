@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debear Party - Web3 潮流元宇宙游戏平台</title>
+    <meta name="description" content="基于 Berachain 的 Web3 去中心化游戏平台，提供 NFT Pass、挖矿系统和邀请奖励">
+    <style>
+        /* ========== 全局样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #ff00ff 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #e91e63 100%);
+            --neon-cyan: #00d4ff;
+            --neon-pink: #ff00ff;
+            --neon-magenta: #e91e63;
+            --dark-bg: #0a0e1a;
+            --dark-surface: #1a0a2e;
+            --dark-purple: #2d1b4e;
+            --text-primary: #ffffff;
+            --text-secondary: #8b9dc3;
+            --grid-color: rgba(0, 212, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ========== 粒子背景 ========== */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                radial-gradient(ellipse at top, #2d1b4e 0%, #1a0a2e 50%, #0a0e1a 100%);
+            background-size: 50px 50px, 50px 50px, 100% 100%;
+            background-position: 0 0, 0 0, center center;
+        }
+
+        /* 添加扫描线效果 */
+        #particles-js::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 212, 255, 0.03) 0px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* ========== 导航栏 ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(10, 14, 26, 0.4);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
+            transition: all 0.3s ease;
+            gap: 40px;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 5%;
+            background: rgba(10, 14, 26, 0.7);
+            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.1);
+            border-bottom: 2px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: absolute;
+            left: 5%;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .connect-btn {
+            padding: 12px 30px;
+            background: var(--primary-gradient);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
+            position: absolute;
+            right: 5%;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== 汉堡菜单按钮 ========== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+            position: absolute;
+            right: 5%;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ========== 移动端侧边栏菜单 ========== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(10, 14, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: -4px 0 30px rgba(0, 212, 255, 0.2);
+            padding: 80px 30px 30px;
+            transition: right 0.4s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .mobile-nav-links li {
+            margin: 20px 0;
+        }
+
+        .mobile-nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+            padding-left: 10px;
+        }
+
+        .mobile-connect-btn {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        /* ========== Hero 区域 ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 5% 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 212, 255, 0.15);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), inset 0 0 10px rgba(0, 212, 255, 0.2);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #00d4ff 0%, #ffffff 30%, #ff00ff 70%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.4));
+        }
+
+        @keyframes glow {
+            0% { 
+                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 40px rgba(255, 0, 255, 0.3));
+            }
+            50% { 
+                filter: drop-shadow(0 0 40px rgba(255, 0, 255, 0.8)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.4));
+            }
+            100% { 
+                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.7)) drop-shadow(0 0 50px rgba(255, 0, 255, 0.5));
+            }
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4), 0 0 40px rgba(255, 0, 255, 0.2);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.6), 0 0 60px rgba(255, 0, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-pink);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6), 0 4px 20px rgba(255, 0, 255, 0.4);
+        }
+
+
+        /* ========== 功能展示区 ========== */
+        .features-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 0, 255, 0.08) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.25);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            border-color: var(--neon-pink);
+            box-shadow: 0 20px 60px rgba(255, 0, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+
+        /* ========== Roadmap 路线图 ========== */
+        .roadmap-section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-gradient);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(255, 0, 255, 0.08) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 50px rgba(255, 0, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .timeline-content h3 {
+            font-size: 24px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            padding: 60px 5% 30px;
+            background: rgba(10, 14, 26, 0.9);
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 -4px 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(255, 0, 255, 0.2) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-gradient);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4), 0 0 30px rgba(255, 0, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            color: var(--text-secondary);
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
+            .navbar .connect-btn { display: none; }
+            .mobile-connect-btn { display: block; }
+            .timeline::before { left: 20px; }
+            .timeline-content { width: calc(100% - 60px); margin-left: 60px !important; }
+            .timeline-dot { left: 20px; }
+        }
+
+        /* ========== 滚动动画 ========== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">🐻 Debear Party</div>
+        <ul class="nav-menu">
+            <li><a href="swap.html">Swap</a></li>
+            <li><a href="pass-nft.html">Pass NFT</a></li>
+            <li><a href="t-engine.html">T-Engine</a></li>
+            <li><a href="gamefi.html">GameFi</a></li>
+        </ul>
+        <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单遮罩 -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- 移动端侧边栏菜单 -->
+    <div class="mobile-menu">
+        <ul class="mobile-nav-links">
+            <li><a href="swap.html">Swap</a></li>
+            <li><a href="pass-nft.html">Pass NFT</a></li>
+            <li><a href="t-engine.html">T-Engine</a></li>
+            <li><a href="gamefi.html">GameFi</a></li>
+        </ul>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+    </div>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 基于 Berachain 主网</div>
+            <h1>Debear Party</h1>
+            <p>下一代 Web3 潮流元宇宙游戏平台<br>持有 Pass NFT，参与挖矿，赚取奖励</p>
+            <div class="cta-buttons">
+                <a href="#features" class="btn-secondary">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 功能展示区 -->
+    <section id="features" class="features-section">
+        <div class="section-title">
+            <h2>核心功能</h2>
+            <p>一站式 Web3 游戏生态系统</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🎫</div>
+                <h3>NFT Pass 系统</h3>
+                <p>购买 Standard、Premium 或 Exclusive Pass，享受不同等级的挖矿算力加成和专属权益。</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">⛏️</div>
+                <h3>双重挖矿机制</h3>
+                <p>T-Engine 质押挖矿 + NFT Pass 自动挖矿，多种方式赚取 DP Token 奖励。</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🤝</div>
+                <h3>邀请奖励系统</h3>
+                <p>持有 Pass 邀请好友加入，获得奖励，共同建设 Debear Party 社区生态。</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">💎</div>
+                <h3>去中心化治理</h3>
+                <p>持有 DP Token 参与社区治理，对平台发展方向进行投票决策。</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🔒</div>
+                <h3>安全可靠</h3>
+                <p>基于 Berachain 主网部署，智能合约经过审计，资产安全有保障。</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🌐</div>
+                <h3>跨链生态</h3>
+                <p>未来支持多链部署，与更多 DeFi 协议和 NFT 市场互通互联。</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Roadmap 路线图 -->
+    <section id="roadmap" class="roadmap-section">
+        <div class="section-title">
+            <h2>发展路线图</h2>
+            <p>我们的愿景与规划</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Q1 2025 - 启动阶段 ✅</h3>
+                    <p>• 智能合约部署<br>• Pass NFT 销售上线<br>• T-Engine 挖矿系统启动</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Q2 2025 - 生态建设</h3>
+                    <p>• NFT 市场集成<br>• 移动端 App 发布<br>• 合作伙伴拓展</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Q3 2025 - 功能扩展</h3>
+                    <p>• 游戏玩法上线<br>• DAO 治理系统<br>• 跨链桥接功能</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Q4 2025 - 全球扩展</h3>
+                    <p>• 多链部署<br>• 国际化运营<br>• 元宇宙集成</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>关于我们</h4>
+                <p style="color: var(--text-secondary);">Debear Party 是基于 Berachain 的 Web3 游戏平台，致力于打造去中心化的游戏生态系统。</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter">𝕏</a>
+                    <a href="#" title="Discord">💬</a>
+                    <a href="#" title="Telegram">✈️</a>
+                    <a href="#" title="GitHub">🐙</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>开发者</h4>
+                <ul>
+                    <li><a href="#">白皮书</a></li>
+                    <li><a href="#">智能合约</a></li>
+                    <li><a href="#">审计报告</a></li>
+                    <li><a href="#">GitHub</a></li>
+                    <li id="owner-link" style="display: none;"><a href="test-dapp.html">Debear Party 完整测试页面</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>社区</h4>
+                <ul>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Medium</a></li>
+                    <li><a href="#">帮助中心</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Debear Party. All rights reserved. Built on Berachain.</p>
+        </div>
+    </footer>
+
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script>
+        // ========== 粒子背景配置 ==========
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: ['#00d4ff', '#ff00ff', '#4dd0e1', '#e91e63'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.2 } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 3, size_min: 0.5 } },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#00d4ff',
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'grab' },
+                    onclick: { enable: true, mode: 'push' }
+                },
+                modes: {
+                    grab: { distance: 200, line_linked: { opacity: 0.8 } },
+                    push: { particles_nb: 4 }
+                }
+            }
+        });
+
+        // ========== 导航栏滚动效果 ==========
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== 滚动显示动画 ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+
+        // ========== 连接钱包 ==========
+        async function connectWallet() {
+            try {
+                const walletProvider = window.okxwallet || window.ethereum;
+                if (!walletProvider) {
+                    alert('请安装 MetaMask 或 OKX Wallet！');
+                    return;
+                }
+
+                await walletProvider.request({ method: 'eth_requestAccounts' });
+                
+                const chainId = await walletProvider.request({ method: 'eth_chainId' });
+                if (chainId !== '0x138de') {
+                    try {
+                        await walletProvider.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x138de' }]
+                        });
+                    } catch (error) {
+                        alert('请切换到 Berachain 主网 (Chain ID: 80094)');
+                        return;
+                    }
+                }
+
+                const accounts = await walletProvider.request({ method: 'eth_accounts' });
+                const userAddress = accounts[0];
+                
+                // 更新按钮显示
+                const shortAddr = userAddress.substring(0, 6) + '...' + userAddress.substring(38);
+                const connectBtns = document.querySelectorAll('.connect-btn');
+                connectBtns.forEach(btn => {
+                    btn.textContent = shortAddr;
+                    btn.disabled = true;
+                });
+                
+                // 保存连接状态
+                localStorage.setItem('walletConnected', 'true');
+                localStorage.setItem('walletAddress', userAddress);
+                
+                // 检查 Owner 权限
+                checkOwnerAccess();
+                
+                alert('钱包连接成功！');
+            } catch (error) {
+                console.error('Connect wallet error:', error);
+                alert('连接钱包失败: ' + error.message);
+            }
+        }
+
+        // ========== 检查并恢复钱包连接 ==========
+        async function checkWalletConnection() {
+            const wasConnected = localStorage.getItem('walletConnected');
+            if (!wasConnected) return;
+
+            try {
+                const walletProvider = window.okxwallet || window.ethereum;
+                if (!walletProvider) return;
+
+                // 检查钱包是否仍然连接
+                const accounts = await walletProvider.request({ method: 'eth_accounts' });
+                if (accounts && accounts.length > 0) {
+                    const userAddress = accounts[0];
+                    const shortAddr = userAddress.substring(0, 6) + '...' + userAddress.substring(38);
+                    const connectBtns = document.querySelectorAll('.connect-btn');
+                    connectBtns.forEach(btn => {
+                        btn.textContent = shortAddr;
+                        btn.disabled = true;
+                    });
+                    localStorage.setItem('walletAddress', userAddress);
+                } else {
+                    // 钱包已断开，清除状态
+                    localStorage.removeItem('walletConnected');
+                    localStorage.removeItem('walletAddress');
+                }
+            } catch (error) {
+                console.error('Error checking wallet connection:', error);
+            }
+        }
+
+        // ========== 页面加载时检查钱包连接 ==========
+        window.addEventListener('load', () => {
+            checkWalletConnection();
+            checkOwnerAccess();
+        });
+
+        // ========== 检查 Owner 权限 ==========
+        async function checkOwnerAccess() {
+            try {
+                const walletProvider = window.okxwallet || window.ethereum;
+                if (!walletProvider) return;
+
+                const accounts = await walletProvider.request({ method: 'eth_accounts' });
+                if (accounts && accounts.length > 0) {
+                    const userAddress = accounts[0].toLowerCase();
+                    // Owner 地址
+                    const ownerAddress = '0xd8b4286c2f299220830f7228bab15225b4ea8379'.toLowerCase();
+                    
+                    if (userAddress === ownerAddress) {
+                        document.getElementById('owner-link').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking owner access:', error);
+            }
+        }
+
+        // ========== 移动端菜单切换 ==========
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // 防止背景滚动
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ========== 平滑滚动 ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

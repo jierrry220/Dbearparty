@@ -397,7 +397,8 @@
             'function totalDeposited() view returns (uint256)',
             'function totalClaimed() view returns (uint256)',
             'function deployTime() view returns (uint256)',
-            'function getCurrentEpoch() view returns (uint256)'
+            'function getCurrentEpoch() view returns (uint256)',
+            'function calculateClaimable(address user) view returns (uint256)'
         ];
 
         const NFT_MINING_ABI = [
@@ -631,20 +632,98 @@
                 const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
                 try {
                     const userInfo = await tEngine.userInfo(userAddress);
-                    const totalClaim = await tEngine.totalClaimed();
+                    console.log('🔍 TEngine userInfo 原始数据:', userInfo);
+                    console.log('🔍 userInfo 类型:', typeof userInfo, Array.isArray(userInfo));
+                    console.log('🔍 userInfo 长度:', userInfo?.length);
                     
-                    // totalShares / 4 = 原始质押量 (使用Number转换避免BigInt运算错误)
-                    const stakedAmount = ethers.BigNumber.from(userInfo.totalShares).div(4);
-                    const remainingShares = ethers.BigNumber.from(userInfo.totalShares).sub(userInfo.claimedShares);
+                    // 尝试多种访问方式
+                    let totalShares, claimedShares, lastClaimEpoch, pendingRewards;
+                    
+                    if (Array.isArray(userInfo)) {
+                        // 如果是数组
+                        totalShares = userInfo[0];
+                        claimedShares = userInfo[1];
+                        lastClaimEpoch = userInfo[2];
+                        pendingRewards = userInfo[3];
+                        console.log('✅ 使用数组索引访问');
+                    } else {
+                        // 如果是对象（某些版本的ethers.js返回命名元组）
+                        totalShares = userInfo.totalShares || userInfo[0];
+                        claimedShares = userInfo.claimedShares || userInfo[1];
+                        lastClaimEpoch = userInfo.lastClaimEpoch || userInfo[2];
+                        pendingRewards = userInfo.pendingRewards || userInfo[3];
+                        console.log('✅ 使用对象属性访问');
+                    }
+                    
+                    console.log('📊 totalShares:', totalShares?.toString());
+                    console.log('📊 claimedShares:', claimedShares?.toString());
+                    console.log('📊 lastClaimEpoch:', lastClaimEpoch?.toString());
+                    console.log('💰 pendingRewards:', pendingRewards?.toString());
+                    console.log('💰 pendingRewards (格式化):', ethers.utils.formatEther(pendingRewards || 0));
+                    
+                    // 尝试调用 calculateClaimable 获取实时可领取数量
+                    let actualClaimable = pendingRewards;
+                    try {
+                        const claimable = await tEngine.calculateClaimable(userAddress);
+                        console.log('✅ calculateClaimable 返回:', claimable.toString());
+                        console.log('✅ calculateClaimable (格式化):', ethers.utils.formatEther(claimable));
+                        actualClaimable = claimable;
+                    } catch (calcError) {
+                        console.log('🔍 合约未提供 calculateClaimable，使用手动计算模式');
+                        // 如果 calculateClaimable不存在，手动计算
+                        // 根据合约逻辑：每天可领取 totalShares / (365 * 4)
+                        try {
+                            const currentEpoch = await tEngine.getCurrentEpoch();
+                            console.log('🗓️ currentEpoch:', currentEpoch.toString());
+                            console.log('🗓️ lastClaimEpoch:', lastClaimEpoch.toString());
+                            
+                            const epochDiff = currentEpoch.sub(lastClaimEpoch);
+                            if (epochDiff.gt(0)) {
+                                // T-Engine 递减释放机制:
+                                // 每天释放剩余份额的0.3%
+                                // 例: 4000份额 第1天 4000*0.3%=12, 第2天 3988*0.3%=11.964
+                                
+                                // 剩余份额 = totalShares - claimedShares
+                                const remainingShares = totalShares.sub(claimedShares);
+                                console.log('📊 totalShares:', ethers.utils.formatEther(totalShares));
+                                console.log('📊 claimedShares:', ethers.utils.formatEther(claimedShares));
+                                console.log('📊 剩余份额:', ethers.utils.formatEther(remainingShares));
+                                
+                                // 递减计算: 模拟每天释放0.3%
+                                let currentRemaining = remainingShares;
+                                let totalClaimable = ethers.BigNumber.from(0);
+                                
+                                for (let i = 0; i < Number(epochDiff); i++) {
+                                    // 每天释放 = 当前剩余 * 0.3% = 当前剩余 * 3 / 1000
+                                    const dayRelease = currentRemaining.mul(3).div(1000);
+                                    totalClaimable = totalClaimable.add(dayRelease);
+                                    currentRemaining = currentRemaining.sub(dayRelease);
+                                    console.log(`🗓️ 第${i+1}天: 释放 ${ethers.utils.formatEther(dayRelease)} DP, 剩余 ${ethers.utils.formatEther(currentRemaining)} 份额`);
+                                }
+                                
+                                actualClaimable = totalClaimable;
+                                console.log('💰 总可领取数量:', actualClaimable.toString());
+                                console.log('💰 总可领取 (格式化):', ethers.utils.formatEther(actualClaimable));
+                            }
+                        } catch (epochError) {
+                            console.error('⚠️ 获取 epoch 失败:', epochError);
+                        }
+                    }
+                    
+                    // totalShares / 4 = 原始质押量
+                    const stakedAmount = totalShares.div(4);
+                    
+                    // 剩余份额 = 总份额 - 已领取 - 当前可领取（已释放但未领取）
+                    const remainingShares = totalShares.sub(claimedShares).sub(actualClaimable);
                     
                     document.getElementById('stakedAmount').textContent = parseFloat(ethers.utils.formatEther(stakedAmount)).toFixed(2) + ' DP';
-                    document.getElementById('tengineClaimedTotal').textContent = parseFloat(ethers.utils.formatEther(userInfo.claimedShares)).toFixed(2) + ' DP';
+                    document.getElementById('tengineClaimedTotal').textContent = parseFloat(ethers.utils.formatEther(claimedShares)).toFixed(2) + ' DP';
                     document.getElementById('tengineRemainingShares').textContent = parseFloat(ethers.utils.formatEther(remainingShares)).toFixed(2) + ' DP';
-                    document.getElementById('tengineReward').textContent = parseFloat(ethers.utils.formatEther(userInfo.pendingRewards)).toFixed(4);
+                    document.getElementById('tengineReward').textContent = parseFloat(ethers.utils.formatEther(actualClaimable)).toFixed(4);
                     
                     // 计算释放进度
-                    if (userInfo.totalShares > 0n) {
-                        const progress = (Number(userInfo.claimedShares) * 100 / Number(userInfo.totalShares)).toFixed(2);
+                    if (totalShares.gt(0)) {
+                        const progress = (Number(claimedShares) * 100 / Number(totalShares)).toFixed(2);
                         document.getElementById('tengineProgress').textContent = progress + '%';
                     }
 
