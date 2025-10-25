@@ -13,17 +13,34 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #ff00ff 100%);
-            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #e91e63 100%);
-            --neon-cyan: #00d4ff;
-            --neon-pink: #ff00ff;
-            --neon-magenta: #e91e63;
+            /* 优化颜色系统 */
+            --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
+            --neon-cyan: #00c4ef;
+            --neon-pink: #e900e9;
+            --neon-magenta: #d91e5a;
             --dark-bg: #0a0e1a;
             --dark-surface: #1a0a2e;
             --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
-            --text-secondary: #8b9dc3;
-            --grid-color: rgba(0, 212, 255, 0.15);
+            --text-secondary: #a0b1d4;
+            --grid-color: rgba(0, 196, 239, 0.12);
+            
+            /* z-index 层级 */
+            --z-background: -1;
+            --z-navbar: 100;
+            --z-mobile-menu-overlay: 110;
+            --z-mobile-menu: 120;
+            --z-hamburger: 130;
+            
+            /* 间距系统 */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 40px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
         }
 
         body {
@@ -34,19 +51,19 @@
             line-height: 1.6;
         }
 
-        /* ========== 粒子背景 ========== */
+        /* ========== 粒子背景 (优化) ========== */
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: var(--z-background);
             background: 
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 radial-gradient(ellipse at top, #2d1b4e 0%, #1a0a2e 50%, #0a0e1a 100%);
-            background-size: 50px 50px, 50px 50px, 100% 100%;
+            background-size: 60px 60px, 60px 60px, 100% 100%;
             background-position: 0 0, 0 0, center center;
         }
 
@@ -59,17 +76,17 @@
             bottom: 0;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 212, 255, 0.03) 0px,
+                rgba(0, 196, 239, 0.015) 0px,
                 transparent 2px,
                 transparent 4px
             );
             pointer-events: none;
-            animation: scan 8s linear infinite;
+            animation: scan 12s linear infinite;
         }
 
         @keyframes scan {
             0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
+            100% { transform: translateY(60px); }
         }
 
         /* ========== 导航栏 ========== */
@@ -77,23 +94,23 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 14, 26, 0.4);
+            background: rgba(10, 14, 26, 0.5);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
+            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
             transition: all 0.3s ease;
         }
 
         .navbar.scrolled {
-            padding: 15px 5%;
-            background: rgba(10, 14, 26, 0.7);
-            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.1);
-            border-bottom: 2px solid rgba(255, 0, 255, 0.3);
+            padding: var(--spacing-sm) 5%;
+            background: rgba(10, 14, 26, 0.75);
+            box-shadow: 0 4px 24px rgba(233, 0, 233, 0.12);
+            border-bottom: 2px solid rgba(233, 0, 233, 0.25);
         }
 
         .logo {
@@ -146,7 +163,7 @@
         }
 
         .connect-btn {
-            padding: 12px 30px;
+            padding: 12px var(--spacing-lg);
             background: var(--primary-gradient);
             border: 2px solid transparent;
             border-radius: 25px;
@@ -154,13 +171,23 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 196, 239, 0.4), 0 0 32px rgba(233, 0, 233, 0.25);
         }
 
-        .connect-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.5);
+        .connect-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.6), 0 0 40px rgba(233, 0, 233, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .connect-btn:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         /* ========== 汉堡菜单按钮 ========== */
@@ -169,8 +196,8 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
+            padding: var(--spacing-xs);
+            z-index: var(--z-hamburger);
         }
 
         .hamburger span {
@@ -304,10 +331,10 @@
 
         .development-icon {
             font-size: 120px;
-            margin-bottom: 30px;
+            margin-bottom: var(--spacing-lg);
             display: inline-block;
-            animation: pulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+            animation: pulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 24px rgba(0, 196, 239, 0.5));
             position: relative;
             z-index: 1;
         }
@@ -318,8 +345,8 @@
                 opacity: 1;
             }
             50% { 
-                transform: scale(1.1);
-                opacity: 0.8;
+                transform: scale(1.05);
+                opacity: 0.85;
             }
         }
 
@@ -410,8 +437,8 @@
         }
 
         .back-btn {
-            margin-top: 40px;
-            padding: 16px 40px;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-sm) var(--spacing-xl);
             background: transparent;
             color: var(--neon-cyan);
             border: 2px solid var(--neon-cyan);
@@ -422,19 +449,29 @@
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 16px rgba(0, 196, 239, 0.25);
             position: relative;
             z-index: 1;
         }
 
-        .back-btn:hover {
+        .back-btn:hover:not(:disabled) {
             background: var(--neon-cyan);
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 4px 20px rgba(0, 212, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(0, 196, 239, 0.5), 0 4px 16px rgba(0, 196, 239, 0.35);
+        }
+
+        .back-btn:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
         }
 
         /* ========== 响应式设计 ========== */
+        @media (max-width: 1024px) {
+            .development-title { font-size: 40px; }
+            .development-icon { font-size: 96px; }
+        }
+
         @media (max-width: 768px) {
             .nav-menu { display: none; }
             .hamburger { display: flex; }
@@ -442,19 +479,32 @@
             .mobile-connect-btn { display: block; }
             
             .development-title {
-                font-size: 36px;
+                font-size: 32px;
             }
             
             .development-subtitle {
-                font-size: 18px;
+                font-size: 16px;
             }
             
             .development-icon {
-                font-size: 80px;
+                font-size: 72px;
             }
             
             .development-container {
-                padding: 40px 25px;
+                padding: var(--spacing-xl) var(--spacing-md);
+            }
+            
+            .feature-preview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .development-title { font-size: 28px; }
+            .development-icon { font-size: 64px; }
+            .feature-preview {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -467,16 +517,19 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
+            <li><a href="index.html">首页</a></li>
             <li><a href="swap.html">Swap</a></li>
             <li><a href="pass-nft.html">Pass NFT</a></li>
             <li><a href="t-engine.html">T-Engine</a></li>
             <li><a href="gamefi.html" class="active">GameFi</a></li>
         </ul>
-        <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-buttons">
+            <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -486,6 +539,7 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
+            <li><a href="index.html">首页</a></li>
             <li><a href="swap.html">Swap</a></li>
             <li><a href="pass-nft.html">Pass NFT</a></li>
             <li><a href="t-engine.html">T-Engine</a></li>

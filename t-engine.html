@@ -14,17 +14,35 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #ff00ff 100%);
-            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #e91e63 100%);
-            --neon-cyan: #00d4ff;
-            --neon-pink: #ff00ff;
-            --neon-magenta: #e91e63;
+            /* 优化颜色系统 */
+            --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
+            --neon-cyan: #00c4ef;
+            --neon-pink: #e900e9;
+            --neon-magenta: #d91e5a;
             --dark-bg: #0a0e1a;
             --dark-surface: #1a0a2e;
             --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
-            --text-secondary: #8b9dc3;
-            --grid-color: rgba(0, 212, 255, 0.15);
+            --text-secondary: #a0b1d4;
+            --grid-color: rgba(0, 196, 239, 0.12);
+            
+            /* z-index 层级 */
+            --z-background: -1;
+            --z-navbar: 100;
+            --z-mobile-menu-overlay: 110;
+            --z-mobile-menu: 120;
+            --z-hamburger: 130;
+            --z-toast: 200;
+            --z-modal: 300;
+            
+            /* 间距系统 */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 40px;
+            --spacing-2xl: 48px;
         }
 
         body {
@@ -97,6 +115,51 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 导航菜单 */
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 196, 239, 0.6);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
         }
 
         .nav-buttons {
@@ -222,9 +285,16 @@
             cursor: pointer;
         }
 
-        .mobile-nav-links a:hover, .mobile-nav-links button:hover {
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active,
+        .mobile-nav-links button:hover {
             color: var(--neon-cyan);
             padding-left: 10px;
+        }
+
+        .mobile-connect-btn {
+            width: 100%;
+            margin-top: 30px;
         }
 
         /* ========== 主容器 ========== */
@@ -535,10 +605,12 @@
         /* ========== 响应式 ========== */
         @media (max-width: 768px) {
             .page-title h1 { font-size: 36px; }
+            .nav-menu { display: none; }
             .nav-back { display: none; }
             .navbar .connect-btn { display: none; }
             .hamburger { display: flex; }
             .mobile-back { display: flex; }
+            .mobile-connect-btn { display: block; }
             .mining-card { padding: 25px; }
         }
     </style>
@@ -548,16 +620,21 @@
 
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="logo" onclick="location.href='index.html'">🐻 Debear Party</div>
+        <a href="index.html" class="logo">🐻 Debear Party</a>
+        <ul class="nav-menu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="swap.html">Swap</a></li>
+            <li><a href="pass-nft.html">Pass NFT</a></li>
+            <li><a href="t-engine.html" class="active">T-Engine</a></li>
+            <li><a href="gamefi.html">GameFi</a></li>
+        </ul>
         <div class="nav-buttons">
-            <button class="mobile-back" onclick="location.href='index.html'">←</button>
-            <button class="nav-back" onclick="location.href='index.html'">← 返回主页</button>
             <button class="connect-btn" id="connectBtn" onclick="connectWallet()">连接钱包</button>
-            <div class="hamburger" onclick="toggleMobileMenu()">
+            <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -570,9 +647,13 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html">返回主页</a></li>
-            <li><button onclick="connectWallet(); toggleMobileMenu();">连接钱包</button></li>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="swap.html">Swap</a></li>
+            <li><a href="pass-nft.html">Pass NFT</a></li>
+            <li><a href="t-engine.html" class="active">T-Engine</a></li>
+            <li><a href="gamefi.html">GameFi</a></li>
         </ul>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
     </div>
 
     <!-- 主内容 -->
@@ -649,7 +730,7 @@
                     T-Engine 是 Debear Party 生态系统的核心挖矿引擎。通过质押 DP Token，用户可以启动 T-Engine 进行持续挖矿，获得丰厚的 DP Token 奖励。
                 </p>
                 <p>
-                    T-Engine 采用递减释放机制，每天释放剩余份额的0.3%，确保公平分配和可持续发展。无论您是小额质押还是大额投资，都能获得相应的收益回报。
+                    T-Engine 的释放机制为，每天释放剩余份额的0.3%，确保公平分配和可持续发展。无论您是小额质押还是大额投资，都能获得相应的收益回报。
                 </p>
             </div>
         </div>
@@ -675,8 +756,6 @@
                 <ul style="color: var(--text-secondary); margin-left: 20px; line-height: 2;">
                     <li>质押操作需要支付少量 Gas 费用（BERA）</li>
                     <li>T-Engine 不支持取回质押，仅能领取每日释放的奖励</li>
-                    <li>领取奖励时会扣除10%的税费，实际到账为90%</li>
-                    <li>每天释放率为剩余份额的0.3%，呈递减趋势</li>
                     <li>持有 Pass NFT 可获得算力加成（即将开放）</li>
                     <li>智能合约已经过安全审计，但仍需谨慎投资</li>
                 </ul>

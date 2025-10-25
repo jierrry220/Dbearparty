@@ -14,17 +14,37 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #ff00ff 100%);
-            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #e91e63 100%);
-            --neon-cyan: #00d4ff;
-            --neon-pink: #ff00ff;
-            --neon-magenta: #e91e63;
+            /* 优化后的颜色系统 - 降低饱和度，提高可读性 */
+            --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
+            --neon-cyan: #00c4ef;
+            --neon-pink: #e900e9;
+            --neon-magenta: #d91e5a;
             --dark-bg: #0a0e1a;
             --dark-surface: #1a0a2e;
             --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
-            --text-secondary: #8b9dc3;
-            --grid-color: rgba(0, 212, 255, 0.15);
+            --text-secondary: #a0b1d4;  /* 提高对比度 */
+            --grid-color: rgba(0, 196, 239, 0.12);
+            
+            /* z-index 层级系统 */
+            --z-background: -1;
+            --z-content: 1;
+            --z-navbar: 100;
+            --z-mobile-menu-overlay: 110;
+            --z-mobile-menu: 120;
+            --z-hamburger: 130;
+            --z-toast: 200;
+            --z-modal: 300;
+            
+            /* 间距系统 (8px 基数) */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 40px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
         }
 
         body {
@@ -35,23 +55,23 @@
             line-height: 1.6;
         }
 
-        /* ========== 粒子背景 ========== */
+        /* ========== 粒子背景 (优化性能) ========== */
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: var(--z-background);
             background: 
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 radial-gradient(ellipse at top, #2d1b4e 0%, #1a0a2e 50%, #0a0e1a 100%);
-            background-size: 50px 50px, 50px 50px, 100% 100%;
+            background-size: 60px 60px, 60px 60px, 100% 100%;
             background-position: 0 0, 0 0, center center;
         }
 
-        /* 添加扫描线效果 */
+        /* 减弱扫描线效果 */
         #particles-js::before {
             content: '';
             position: absolute;
@@ -61,42 +81,41 @@
             bottom: 0;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 212, 255, 0.03) 0px,
+                rgba(0, 196, 239, 0.015) 0px,
                 transparent 2px,
                 transparent 4px
             );
             pointer-events: none;
-            animation: scan 8s linear infinite;
+            animation: scan 12s linear infinite;
         }
 
         @keyframes scan {
             0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
+            100% { transform: translateY(60px); }
         }
 
-        /* ========== 导航栏 ========== */
+        /* ========== 导航栏 (优化布局) ========== */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            background: rgba(10, 14, 26, 0.4);
+            background: rgba(10, 14, 26, 0.5);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
+            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
             transition: all 0.3s ease;
-            gap: 40px;
         }
 
         .navbar.scrolled {
-            padding: 15px 5%;
-            background: rgba(10, 14, 26, 0.7);
-            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.1);
-            border-bottom: 2px solid rgba(255, 0, 255, 0.3);
+            padding: var(--spacing-sm) 5%;
+            background: rgba(10, 14, 26, 0.75);
+            box-shadow: 0 4px 24px rgba(233, 0, 233, 0.12);
+            border-bottom: 2px solid rgba(233, 0, 233, 0.25);
         }
 
         .logo {
@@ -108,14 +127,13 @@
             background-clip: text;
             display: flex;
             align-items: center;
-            gap: 10px;
-            position: absolute;
-            left: 5%;
+            gap: var(--spacing-xs);
+            cursor: pointer;
         }
 
         .nav-menu {
             display: flex;
-            gap: 40px;
+            gap: var(--spacing-xl);
             list-style: none;
             align-items: center;
         }
@@ -124,13 +142,19 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             position: relative;
         }
 
         .nav-menu a:hover {
             color: var(--neon-cyan);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+            text-shadow: 0 0 8px rgba(0, 196, 239, 0.6);
+        }
+
+        .nav-menu a:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
         .nav-menu a::after {
@@ -141,7 +165,7 @@
             width: 0;
             height: 2px;
             background: var(--primary-gradient);
-            box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 6px rgba(0, 196, 239, 0.5);
             transition: width 0.3s;
         }
 
@@ -150,7 +174,7 @@
         }
 
         .connect-btn {
-            padding: 12px 30px;
+            padding: 12px var(--spacing-lg);
             background: var(--primary-gradient);
             border: 2px solid transparent;
             border-radius: 25px;
@@ -158,15 +182,24 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
-            position: absolute;
-            right: 5%;
+            box-shadow: 0 4px 16px rgba(0, 196, 239, 0.4), 0 0 32px rgba(233, 0, 233, 0.25);
         }
 
-        .connect-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.5);
+        .connect-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.6), 0 0 40px rgba(233, 0, 233, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .connect-btn:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* ========== 汉堡菜单按钮 ========== */
@@ -175,10 +208,8 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
-            position: absolute;
-            right: 5%;
+            padding: var(--spacing-xs);
+            z-index: var(--z-hamburger);
         }
 
         .hamburger span {
@@ -211,11 +242,11 @@
             height: 100vh;
             background: rgba(10, 14, 26, 0.98);
             backdrop-filter: blur(20px);
-            border-left: 2px solid rgba(0, 212, 255, 0.3);
-            box-shadow: -4px 0 30px rgba(0, 212, 255, 0.2);
-            padding: 80px 30px 30px;
+            border-left: 2px solid rgba(0, 196, 239, 0.3);
+            box-shadow: -4px 0 24px rgba(0, 196, 239, 0.2);
+            padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-lg);
             transition: right 0.4s ease;
-            z-index: 999;
+            z-index: var(--z-mobile-menu);
             overflow-y: auto;
         }
 
@@ -234,7 +265,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
-            z-index: 998;
+            z-index: var(--z-mobile-menu-overlay);
         }
 
         .mobile-menu-overlay.active {
@@ -292,46 +323,46 @@
 
         .hero-badge {
             display: inline-block;
-            padding: 8px 20px;
-            background: rgba(0, 212, 255, 0.15);
+            padding: var(--spacing-xs) var(--spacing-md);
+            background: rgba(0, 196, 239, 0.12);
             border: 2px solid var(--neon-cyan);
             border-radius: 20px;
             color: var(--neon-cyan);
             font-size: 14px;
             font-weight: 700;
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), inset 0 0 10px rgba(0, 212, 255, 0.2);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+            margin-bottom: var(--spacing-lg);
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 0 16px rgba(0, 196, 239, 0.3), inset 0 0 8px rgba(0, 196, 239, 0.15);
+            text-shadow: 0 0 8px rgba(0, 196, 239, 0.6);
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
         .hero h1 {
-            font-size: 72px;
+            font-size: 64px;
             font-weight: 900;
             line-height: 1.2;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #00d4ff 0%, #ffffff 30%, #ff00ff 70%, #ffffff 100%);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, #00c4ef 0%, #ffffff 30%, #e900e9 70%, #ffffff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glow 3s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.4));
+            animation: glow 5s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 24px rgba(0, 196, 239, 0.5)) drop-shadow(0 0 48px rgba(233, 0, 233, 0.3));
         }
 
         @keyframes glow {
             0% { 
-                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 40px rgba(255, 0, 255, 0.3));
+                filter: drop-shadow(0 0 20px rgba(0, 196, 239, 0.5)) drop-shadow(0 0 36px rgba(233, 0, 233, 0.3));
             }
             50% { 
-                filter: drop-shadow(0 0 40px rgba(255, 0, 255, 0.8)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.4));
+                filter: drop-shadow(0 0 32px rgba(233, 0, 233, 0.6)) drop-shadow(0 0 48px rgba(0, 196, 239, 0.35));
             }
             100% { 
-                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.7)) drop-shadow(0 0 50px rgba(255, 0, 255, 0.5));
+                filter: drop-shadow(0 0 24px rgba(0, 196, 239, 0.55)) drop-shadow(0 0 40px rgba(233, 0, 233, 0.4));
             }
         }
 
@@ -350,7 +381,7 @@
         }
 
         .btn-primary, .btn-secondary {
-            padding: 16px 40px;
+            padding: var(--spacing-sm) var(--spacing-xl);
             font-size: 16px;
             font-weight: 700;
             border-radius: 30px;
@@ -364,28 +395,38 @@
         .btn-primary {
             background: var(--primary-gradient);
             color: white;
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4), 0 0 40px rgba(255, 0, 255, 0.2);
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.35), 0 0 32px rgba(233, 0, 233, 0.2);
+            border: 2px solid rgba(0, 196, 239, 0.25);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.6), 0 0 60px rgba(255, 0, 255, 0.4);
-            border-color: rgba(255, 255, 255, 0.5);
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 196, 239, 0.5), 0 0 48px rgba(233, 0, 233, 0.35);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--neon-pink);
             border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 16px rgba(233, 0, 233, 0.25);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover:not(:disabled) {
             background: var(--neon-pink);
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6), 0 4px 20px rgba(255, 0, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(233, 0, 233, 0.5), 0 4px 16px rgba(233, 0, 233, 0.35);
+        }
+
+        .btn-secondary:focus {
+            outline: 2px solid var(--neon-pink);
+            outline-offset: 2px;
         }
 
 
@@ -423,11 +464,11 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 0, 255, 0.08) 100%);
-            border: 2px solid rgba(0, 212, 255, 0.25);
+            background: linear-gradient(135deg, rgba(0, 196, 239, 0.05) 0%, rgba(233, 0, 233, 0.08) 100%);
+            border: 2px solid rgba(0, 196, 239, 0.22);
             border-radius: 20px;
-            padding: 40px;
-            transition: all 0.4s;
+            padding: var(--spacing-xl);
+            transition: all 0.35s;
             position: relative;
             overflow: hidden;
         }
@@ -439,9 +480,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 255, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(233, 0, 233, 0.12) 0%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.35s;
         }
 
         .feature-card:hover::before {
@@ -449,21 +490,21 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-15px) rotateX(5deg);
+            transform: translateY(-8px);
             border-color: var(--neon-pink);
-            box-shadow: 0 20px 60px rgba(255, 0, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 16px 48px rgba(233, 0, 233, 0.35), 0 0 64px rgba(0, 196, 239, 0.18);
         }
 
         .feature-icon {
             font-size: 56px;
-            margin-bottom: 25px;
+            margin-bottom: var(--spacing-md);
             display: inline-block;
-            animation: bounce 2s infinite;
+            animation: bounce 3s ease-in-out infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-6px); }
         }
 
         .feature-card h3 {
@@ -634,15 +675,51 @@
         }
 
         /* ========== 响应式设计 ========== */
+        /* 平板端 */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 52px; }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 移动端 */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 42px; }
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 18px; }
+            .section-title h2 { font-size: 36px; }
             .nav-menu { display: none; }
             .hamburger { display: flex; }
             .navbar .connect-btn { display: none; }
             .mobile-connect-btn { display: block; }
-            .timeline::before { left: 20px; }
-            .timeline-content { width: calc(100% - 60px); margin-left: 60px !important; }
-            .timeline-dot { left: 20px; }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 时间轴移动端优化 - 避免使用!important */
+            .timeline::before { 
+                left: var(--spacing-md);
+            }
+            .timeline-content { 
+                width: calc(100% - 72px);
+            }
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 72px;
+            }
+            .timeline-dot { 
+                left: var(--spacing-md);
+            }
+        }
+
+        /* 小屏手机 */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .section-title h2 { font-size: 28px; }
+            .pass-grid, .features-grid {
+                gap: var(--spacing-sm);
+            }
         }
 
         /* ========== 滚动动画 ========== */
@@ -664,18 +741,21 @@
 
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="logo">🐻 Debear Party</div>
+        <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
+            <li><a href="index.html" class="active">首页</a></li>
             <li><a href="swap.html">Swap</a></li>
             <li><a href="pass-nft.html">Pass NFT</a></li>
             <li><a href="t-engine.html">T-Engine</a></li>
             <li><a href="gamefi.html">GameFi</a></li>
         </ul>
-        <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-buttons">
+            <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -685,6 +765,7 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
+            <li><a href="index.html" class="active">首页</a></li>
             <li><a href="swap.html">Swap</a></li>
             <li><a href="pass-nft.html">Pass NFT</a></li>
             <li><a href="t-engine.html">T-Engine</a></li>
@@ -726,7 +807,7 @@
             <div class="feature-card fade-in">
                 <div class="feature-icon">🤝</div>
                 <h3>邀请奖励系统</h3>
-                <p>持有Pass享有5%/8%/12%邀请奖励，好友购买NFT获得BERA奖励，投入T-Engine获得DP奖励。</p>
+                <p>持有Pass解锁推荐权益，分享好友共建Debear Party社区。</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">💎</div>
