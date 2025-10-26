@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +13,36 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #ff00ff 100%);
-            --neon-cyan: #00d4ff;
-            --neon-pink: #ff00ff;
+            --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
+            --neon-cyan: #00c4ef;
+            --neon-pink: #e900e9;
+            --neon-magenta: #d91e5a;
             --dark-bg: #0a0e1a;
             --dark-surface: #1a0a2e;
+            --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
-            --text-secondary: #8b9dc3;
+            --text-secondary: #a0b1d4;
+            --grid-color: rgba(0, 196, 239, 0.12);
+            
+            /* z-index 层级系统 */
+            --z-background: -1;
+            --z-content: 1;
+            --z-navbar: 100;
+            --z-mobile-menu-overlay: 110;
+            --z-mobile-menu: 120;
+            --z-hamburger: 130;
+            --z-toast: 200;
+            --z-modal: 300;
+            
+            /* 间距系统 */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 40px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
         }
 
         body {
@@ -40,50 +63,108 @@
             background: radial-gradient(ellipse at top, #2d1b4e 0%, #1a0a2e 50%, #0a0e1a 100%);
         }
 
-        /* 导航栏 */
+        /* ========== 导航栏 ========== */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
-            background: rgba(10, 14, 26, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(10, 14, 26, 0.5);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: var(--spacing-sm) 5%;
+            background: rgba(10, 14, 26, 0.75);
+            box-shadow: 0 4px 24px rgba(233, 0, 233, 0.12);
+            border-bottom: 2px solid rgba(233, 0, 233, 0.25);
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+            text-decoration: none;
         }
 
-        .back-btn {
-            padding: 10px 25px;
-            background: var(--primary-gradient);
-            border: none;
-            border-radius: 20px;
-            color: white;
-            font-weight: 600;
+        .nav-menu {
+            display: flex;
+            gap: var(--spacing-xl);
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
             text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 196, 239, 0.6);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            box-shadow: 0 0 6px rgba(0, 196, 239, 0.5);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .connect-btn {
+            padding: 12px var(--spacing-lg);
+            background: var(--primary-gradient);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            color: white;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(0, 196, 239, 0.4), 0 0 32px rgba(233, 0, 233, 0.25);
         }
 
-        .back-btn:hover {
+        .connect-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.6), 0 0 40px rgba(233, 0, 233, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* 白皮书容器 */
@@ -273,6 +354,179 @@
             margin-right: 10px;
         }
 
+        /* ========== 语言切换器 ========== */
+        .lang-switcher {
+            position: relative;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+        
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.15);
+        }
+        
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        /* ========== 汉堡菜单 ========== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: var(--z-hamburger);
+            background: transparent;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 196, 239, 0.5);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ========== 移动端菜单 ========== */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: var(--z-mobile-menu-overlay);
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(10, 14, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 2px solid rgba(0, 196, 239, 0.3);
+            box-shadow: -4px 0 30px rgba(0, 196, 239, 0.2);
+            padding: 80px 30px 30px;
+            transition: right 0.4s ease;
+            z-index: var(--z-mobile-menu);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .mobile-nav-links li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-links a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-radius: 12px;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 196, 239, 0.5);
+        }
+
+        .mobile-connect-btn {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+        }
+
         /* 底部 */
         .footer {
             text-align: center;
@@ -282,7 +536,28 @@
             margin-top: 80px;
         }
 
-        /* 响应式 */
+        /* 返回主页按钮 */
+        .back-home-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .back-home-btn:hover {
+            background: var(--neon-cyan);
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 196, 239, 0.5);
+        }
+
+        /* ========== 响应式 ========== */
         @media (max-width: 768px) {
             .wp-header h1 { font-size: 32px; }
             .wp-header .subtitle { font-size: 18px; }
@@ -298,6 +573,17 @@
             th, td {
                 padding: 10px;
             }
+            
+            .nav-menu { display: none; }
+            .navbar .connect-btn { display: none; }
+            .hamburger { display: none; }
+            .mobile-menu { display: none; }
+            .mobile-menu-overlay { display: none; }
+            .mobile-connect-btn { display: none; }
+            .lang-switcher { display: none; }
+            
+            /* 移动端只显示返回按钮 */
+            .back-home-btn { display: inline-block; }
         }
     </style>
 </head>
@@ -306,27 +592,73 @@
 
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">🐻 Debear Party</div>
-            <a href="index.html" class="back-btn">← 返回首页</a>
+        <a href="index.html" class="logo">🐻 Debear Party</a>
+        <ul class="nav-menu">
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <!-- 返回主页按钮 (移动端显示) -->
+            <a href="index.html" class="back-home-btn">← Home</a>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- 移动端菜单遮罩 -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- 移动端侧边栏菜单 -->
+    <div class="mobile-menu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" data-i18n="nav.home">← Back to Home</a></li>
+        </ul>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <h4 style="color: var(--neon-cyan); padding: 0 15px; margin-bottom: 10px; font-size: 14px;">🌐 Language / 語言</h4>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" onclick="window.i18n?.setLanguage('en'); window.location.href='whitepaper-en.html';">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option active" style="padding: 12px; cursor: pointer;" onclick="window.i18n?.setLanguage('zh-TW'); window.location.href='whitepaper.html';">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+    </div>
 
     <!-- 白皮书内容 -->
     <div class="whitepaper-container">
         <!-- 标题 -->
         <div class="wp-header">
-            <h1>Debear Party 白皮书</h1>
-            <p class="subtitle">潮流元宇宙游戏平台</p>
+            <h1 data-i18n="whitepaper.title">Debear Party Whitepaper</h1>
+            <p class="subtitle" data-i18n="whitepaper.subtitle">Trendy Metaverse Gaming Platform</p>
             <div class="meta">
-                <span><strong>版本:</strong> v1.0</span>
-                <span><strong>发布日期:</strong> 2025年</span>
+                <span><strong data-i18n="whitepaper.version">Version:</strong> v1.0</span>
+                <span><strong data-i18n="whitepaper.releaseDate">Release Date:</strong> 2025</span>
             </div>
         </div>
 
         <!-- 目录 -->
         <div class="toc">
-            <h2>📋 目录</h2>
+            <h2 data-i18n="whitepaper.toc">📋 Table of Contents</h2>
             <ol>
                 <li><a href="#section-1">项目概述</a></li>
                 <li><a href="#section-2">愿景与使命</a></li>
@@ -816,6 +1148,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
+    
+    <!-- 公共脚本 -->
+    <script src="js/common.js"></script>
+    
     <script>
         // 粒子背景
         particlesJS('particles-js', {

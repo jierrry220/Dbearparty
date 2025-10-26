@@ -43,6 +43,20 @@ yarn-error.log*
 .zeabur
 zeabur.json
 
+# 管理员后台（敏感）
+admin.html
+admin*.html
+
+# 合约和部署脚本（可能包含敏感信息）
+scripts/
+test/
+contracts/
+hardhat.config.js
+hardhat.config.ts
+*.key
+*.pem
+*.secret
+
 # 构建输出
 dist
 build

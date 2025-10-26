@@ -13,18 +13,21 @@
         }
 
         :root {
-            /* 优化颜色系统 */
             --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
+            --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
             --neon-cyan: #00c4ef;
             --neon-pink: #e900e9;
+            --neon-magenta: #d91e5a;
             --dark-bg: #0a0e1a;
             --dark-surface: #1a0a2e;
+            --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
             --text-secondary: #a0b1d4;
             --grid-color: rgba(0, 196, 239, 0.12);
             
-            /* z-index 层级 */
+            /* z-index 层级系统 */
             --z-background: -1;
+            --z-content: 1;
             --z-navbar: 100;
             --z-mobile-menu-overlay: 110;
             --z-mobile-menu: 120;
@@ -38,6 +41,8 @@
             --spacing-md: 24px;
             --spacing-lg: 32px;
             --spacing-xl: 40px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
         }
 
         body {
@@ -55,7 +60,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: var(--z-background);
             background: 
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
@@ -68,8 +73,8 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -88,17 +93,11 @@
             background-clip: text;
             cursor: pointer;
             text-decoration: none;
-            transition: transform 0.2s;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        /* 导航菜单 */
         .nav-menu {
             display: flex;
-            gap: 40px;
+            gap: var(--spacing-xl);
             list-style: none;
             align-items: center;
         }
@@ -109,7 +108,6 @@
             font-weight: 500;
             transition: all 0.3s;
             position: relative;
-            padding: 8px 0;
         }
 
         .nav-menu a:hover,
@@ -121,24 +119,18 @@
         .nav-menu a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
             background: var(--primary-gradient);
+            box-shadow: 0 0 6px rgba(0, 196, 239, 0.5);
             transition: width 0.3s;
         }
 
         .nav-menu a:hover::after,
         .nav-menu a.active::after {
             width: 100%;
-        }
-
-        /* 导航按钮组 */
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
         }
 
         .nav-back {
@@ -182,7 +174,7 @@
             gap: 5px;
             cursor: pointer;
             padding: 10px;
-            z-index: 1001;
+            z-index: var(--z-hamburger);
         }
 
         .hamburger span {
@@ -234,11 +226,11 @@
             height: 100vh;
             background: rgba(10, 14, 26, 0.98);
             backdrop-filter: blur(20px);
-            border-left: 2px solid rgba(0, 212, 255, 0.3);
-            box-shadow: -4px 0 30px rgba(0, 212, 255, 0.2);
+            border-left: 2px solid rgba(0, 196, 239, 0.3);
+            box-shadow: -4px 0 30px rgba(0, 196, 239, 0.2);
             padding: 80px 30px 30px;
             transition: right 0.4s ease;
-            z-index: 999;
+            z-index: var(--z-mobile-menu);
             overflow-y: auto;
         }
 
@@ -257,7 +249,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
-            z-index: 998;
+            z-index: var(--z-mobile-menu-overlay);
         }
 
         .mobile-menu-overlay.active {
@@ -285,22 +277,89 @@
             transition: all 0.3s;
         }
 
-        .mobile-nav-links a:hover,
-        .mobile-nav-links a.active {
+        .mobile-nav-links a:hover {
             color: var(--neon-cyan);
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
             padding-left: 10px;
-        }
-
-        .mobile-connect-btn {
-            width: 100%;
-            margin-top: 30px;
         }
 
         .nav-buttons {
             display: flex;
             gap: 15px;
             align-items: center;
+        }
+
+        /* 语言切换器 */
+        .lang-switcher {
+            position: relative;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+        
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.15);
+        }
+        
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .mobile-connect-btn {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
         }
 
         /* 主内容区 */
@@ -819,10 +878,9 @@
         @media (max-width: 768px) {
             .page-title h1 { font-size: 36px; }
             .nav-menu { display: none; }
-            .nav-back { display: none; }
-            .nav-buttons .connect-btn { display: none; }
+            .lang-switcher { display: none; }
+            .navbar .connect-btn { display: none; }
             .hamburger { display: flex; }
-            .mobile-back { display: flex; }
             .mobile-connect-btn { display: block; }
             .amount-input { font-size: 24px; }
         }
@@ -835,14 +893,26 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html" class="active">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" class="active" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">连接钱包</button>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
             <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -857,16 +927,25 @@
     <!-- 移动端菜单遮罩 -->
     <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
 
-    <!-- 移动端菜单 -->
+    <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html" class="active">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" class="active" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
     <!-- Token 选择弹窗 -->
@@ -899,7 +978,6 @@
     <div class="container">
         <div class="page-title">
             <h1>💱 Swap</h1>
-            <p>通过 Kodiak DEX 交换代币</p>
         </div>
 
         <!-- Swap 卡片 -->
@@ -995,6 +1073,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
+    
+    <!-- 公共脚本 -->
+    <script src="js/common.js"></script>
+    
     <script src="kodiak-api.js"></script>
     <script src="swap.js"></script>
     

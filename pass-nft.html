@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,20 +63,28 @@
             background-size: 50px 50px, 50px 50px, 100% 100%;
         }
 
-        /* 导航栏 */
+        /* ========== 导航栏 (优化布局) ========== */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 14, 26, 0.4);
+            background: rgba(10, 14, 26, 0.5);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
-            transition: all 0.3s;
+            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: var(--spacing-sm) 5%;
+            background: rgba(10, 14, 26, 0.75);
+            box-shadow: 0 4px 24px rgba(233, 0, 233, 0.12);
+            border-bottom: 2px solid rgba(233, 0, 233, 0.25);
         }
 
         .logo {
@@ -86,19 +94,15 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
             cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        /* 导航菜单 */
         .nav-menu {
             display: flex;
-            gap: 40px;
+            gap: var(--spacing-xl);
             list-style: none;
             align-items: center;
         }
@@ -109,57 +113,37 @@
             font-weight: 500;
             transition: all 0.3s;
             position: relative;
-            padding: 8px 0;
         }
 
-        .nav-menu a:hover,
-        .nav-menu a.active {
+        .nav-menu a:hover {
             color: var(--neon-cyan);
             text-shadow: 0 0 8px rgba(0, 196, 239, 0.6);
+        }
+
+        .nav-menu a:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
         .nav-menu a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
             background: var(--primary-gradient);
+            box-shadow: 0 0 6px rgba(0, 196, 239, 0.5);
             transition: width 0.3s;
         }
 
-        .nav-menu a:hover::after,
-        .nav-menu a.active::after {
+        .nav-menu a:hover::after {
             width: 100%;
         }
 
-        /* 导航按钮组 */
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .nav-back {
-            padding: 10px 25px;
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 20px;
-            color: var(--neon-cyan);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-back:hover {
-            background: var(--neon-cyan);
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-        }
-
         .connect-btn {
-            padding: 12px 30px;
+            padding: 12px var(--spacing-lg);
             background: var(--primary-gradient);
             border: 2px solid transparent;
             border-radius: 25px;
@@ -167,12 +151,100 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 196, 239, 0.4), 0 0 32px rgba(233, 0, 233, 0.25);
         }
 
-        .connect-btn:hover {
+        .connect-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.7);
+            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.6), 0 0 40px rgba(233, 0, 233, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .connect-btn:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ========== 语言切换器 ========== */
+        .lang-switcher {
+            position: relative;
+            margin-right: var(--spacing-sm);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.15);
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
 
         /* ========== 汉堡菜单按钮 ========== */
@@ -181,8 +253,8 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
+            padding: var(--spacing-xs);
+            z-index: var(--z-hamburger);
         }
 
         .hamburger span {
@@ -914,10 +986,9 @@
             .nft-grid { grid-template-columns: 1fr; }
             .nft-image { height: 280px; }
             .nav-menu { display: none; }
-            .nav-back { display: none; }
-            .nav-buttons .connect-btn { display: none; }
+            .lang-switcher { display: none; }
             .hamburger { display: flex; }
-            .mobile-back { display: flex; }
+            .navbar .connect-btn { display: none; }
             .mobile-connect-btn { display: block; }
         }
     </style>
@@ -929,14 +1000,26 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html" class="active">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" class="active" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">连接钱包</button>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" id="connectBtn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
             <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -954,24 +1037,33 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html" class="active">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" class="active" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
     <!-- 邀请人弹窗 -->
     <div class="modal-overlay" id="inviteModal">
         <div class="modal">
-            <h3>🎁 输入邀请人地址</h3>
-            <p>检测到您是新用户，请输入邀请人地址以获得奖励，或者跳过使用默认邀请人。</p>
+            <h3 data-i18n="pass.inviteTitle">🎁 Enter Referrer Address</h3>
+            <p data-i18n="pass.inviteDesc">You are detected as a new user. Please enter referrer address to get rewards, or skip to use default referrer.</p>
             <input type="text" class="modal-input" id="modalInviterInput" placeholder="0x... (选填)">
             <div class="modal-buttons">
-                <button class="modal-btn-secondary" onclick="closeInviteModal()">跳过</button>
-                <button class="modal-btn-primary" onclick="confirmInviter()">确认</button>
+                <button class="modal-btn-secondary" onclick="closeInviteModal()" data-i18n="pass.skip">Skip</button>
+                <button class="modal-btn-primary" onclick="confirmInviter()" data-i18n="pass.confirm">Confirm</button>
             </div>
         </div>
     </div>
@@ -980,22 +1072,22 @@
     <div class="modal-overlay" id="sendModal">
         <div class="modal">
             <div class="send-modal-content">
-                <h3>📤 发送 Pass NFT</h3>
+                <h3 data-i18n="pass.sendNFT">📤 Send Pass NFT</h3>
                 <div class="send-info">
                     <div class="send-info-item">
-                        <span>Pass 类型:</span>
+                        <span data-i18n="pass.passType">Pass Type:</span>
                         <span id="sendPassType">--</span>
                     </div>
                     <div class="send-info-item">
-                        <span>可用数量:</span>
+                        <span data-i18n="pass.available">Available:</span>
                         <span id="sendPassAvailable">--</span>
                     </div>
                 </div>
-                <input type="text" class="modal-input" id="sendToAddress" placeholder="输入接收方地址 (0x...)">
-                <input type="number" class="modal-input" id="sendAmount" placeholder="输入发送数量" min="1" value="1">
+                <input type="text" class="modal-input" id="sendToAddress" data-i18n-attr="placeholder" data-i18n="pass.recipientAddress" placeholder="Enter recipient address (0x...)">
+                <input type="number" class="modal-input" id="sendAmount" data-i18n-attr="placeholder" data-i18n="pass.sendAmount" placeholder="Enter send amount" min="1" value="1">
                 <div class="modal-buttons">
-                    <button class="modal-btn-secondary" onclick="closeSendModal()">取消</button>
-                    <button class="modal-btn-primary" onclick="confirmSend()">发送</button>
+                    <button class="modal-btn-secondary" onclick="closeSendModal()" data-i18n="pass.cancel">Cancel</button>
+                    <button class="modal-btn-primary" onclick="confirmSend()" data-i18n="pass.send">Send</button>
                 </div>
             </div>
         </div>
@@ -1004,14 +1096,14 @@
     <!-- 主内容 -->
     <div class="container">
         <div class="page-title">
-            <h1>🎫 Pass NFT</h1>
-            <p>购买专属 Pass NFT，开启挖矿收益之旅</p>
+            <h1 data-i18n="pass.title">🎫 Pass NFT</h1>
+            <p data-i18n="pass.subtitle">Purchase Exclusive Pass to Start Your Debear Party Journey</p>
         </div>
 
         <!-- 选项卡 -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('buy')">购买 Pass NFT</button>
-            <button class="tab-btn" onclick="switchTab('mining')">NFT 挖矿</button>
+            <button class="tab-btn active" onclick="switchTab('buy')" data-i18n="pass.buyTab">Buy Pass NFT</button>
+            <button class="tab-btn" onclick="switchTab('mining')" data-i18n="pass.miningTab">NFT Mining</button>
         </div>
 
         <!-- 购买Pass -->
@@ -1021,21 +1113,21 @@
                 <div class="pass-card">
                     <img src="pass-picture/Standard.jpg" alt="Standard Pass" style="width: 100%; height: auto; border-radius: 15px; margin: 20px 0 15px 0; box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);">
                     <div class="pass-price" id="priceStd" style="margin-bottom: 20px;">-- BERA</div>
-                    <button class="btn-primary" onclick="buyPass(1)">立即购买</button>
+                    <button class="btn-primary" onclick="buyPass(1)" data-i18n="pass.buyNow">Buy Now</button>
                 </div>
 
                 <!-- Premium Pass -->
                 <div class="pass-card">
                     <img src="pass-picture/Premium.jpg" alt="Premium Pass" style="width: 100%; height: auto; border-radius: 15px; margin: 20px 0 15px 0; box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);">
                     <div class="pass-price" id="pricePre" style="margin-bottom: 20px;">-- BERA</div>
-                    <button class="btn-primary" onclick="buyPass(2)">立即购买</button>
+                    <button class="btn-primary" onclick="buyPass(2)" data-i18n="pass.buyNow">Buy Now</button>
                 </div>
 
                 <!-- Exclusive Pass -->
                 <div class="pass-card">
                     <img src="pass-picture/Exclusive.jpg" alt="Exclusive Pass" style="width: 100%; height: auto; border-radius: 15px; margin: 20px 0 15px 0; box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);">
                     <div class="pass-price" id="priceEx" style="margin-bottom: 20px;">-- BERA</div>
-                    <button class="btn-primary" onclick="buyPass(3)">立即购买</button>
+                    <button class="btn-primary" onclick="buyPass(3)" data-i18n="pass.buyNow">Buy Now</button>
                 </div>
             </div>
         </div>
@@ -1044,7 +1136,7 @@
         <div id="tab-mining" class="tab-content">
             <!-- NFT橱窗展示 -->
             <div class="nft-showcase" id="nftShowcase">
-                <h2 class="showcase-title">🎨 我的 Pass NFT 收藏</h2>
+                <h2 class="showcase-title" data-i18n="pass.myCollection">🎨 My Pass NFT Collection</h2>
                 <div class="nft-grid" id="nftGrid">
                     <!-- 动态生成NFT卡片 -->
                 </div>
@@ -1054,47 +1146,47 @@
                 <div class="mining-card">
                     <!-- 初始化覆盖层 -->
                     <div class="init-overlay" id="initOverlay">
-                        <h4>✨ 开启 NFT 挖矿</h4>
-                        <p>您需要先初始化挖矿系统才能开始赚取 DP Token 奖励</p>
-                        <button class="btn-primary" onclick="initNFTMining()" style="width: 200px;">初始化挖矿</button>
+                        <h4 data-i18n="pass.initMining">✨ Start NFT Mining</h4>
+                        <p data-i18n="pass.initDescription">You need to initialize the mining system first to start earning DP Token rewards</p>
+                        <button class="btn-primary" onclick="initNFTMining()" style="width: 200px;" data-i18n="pass.initialize">Initialize</button>
                     </div>
                     
-                    <h3>🎨 NFT Pass 挖矿</h3>
-                    <div class="alert info">
-                        持有Pass自动挖矿，无需质押！每日产出根据Pass等级自动计算。
+                    <h3 data-i18n="pass.nftMining">🎨 NFT Pass Mining</h3>
+                    <div class="alert info" data-i18n="pass.autoMining">
+                        Holding Pass automatically mines, no staking needed! Daily output calculated automatically based on Pass level.
                     </div>
                     
                     <div class="reward-box">
-                        <div class="reward-label">可领取奖励</div>
+                        <div class="reward-label" data-i18n="pass.claimableReward">Claimable Reward</div>
                         <div class="reward-amount" id="nftReward">0.0000</div>
                         <div class="reward-label">DP Token</div>
                     </div>
                     
-                    <button class="btn-primary btn-secondary" onclick="claimNFTReward()">领取奖励</button>
+                    <button class="btn-primary btn-secondary" onclick="claimNFTReward()" data-i18n="pass.claimReward">Claim Reward</button>
                     
                     <div style="margin-top: 30px;">
                         <div class="stat">
-                            <span class="stat-label">Standard Pass:</span>
+                            <span class="stat-label" data-i18n="pass.standardPass">Standard Pass:</span>
                             <span class="stat-value" id="stdCount">0</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-label">Premium Pass:</span>
+                            <span class="stat-label" data-i18n="pass.premiumPass">Premium Pass:</span>
                             <span class="stat-value" id="preCount">0</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-label">Exclusive Pass:</span>
+                            <span class="stat-label" data-i18n="pass.exclusivePass">Exclusive Pass:</span>
                             <span class="stat-value" id="exCount">0</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-label">每日产出:</span>
+                            <span class="stat-label" data-i18n="pass.dailyOutput">Daily Output:</span>
                             <span class="stat-value" id="dailyReward">0 DP/天</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-label">累计已领:</span>
+                            <span class="stat-label" data-i18n="tengine.totalClaimed">Total Claimed:</span>
                             <span class="stat-value" id="totalClaimed">0 DP</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-label">上次领取:</span>
+                            <span class="stat-label" data-i18n="pass.lastClaim">Last Claim:</span>
                             <span class="stat-value" id="lastClaim">--</span>
                         </div>
                     </div>
@@ -1104,6 +1196,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
+    
+    <!-- 公共脚本 -->
+    <script src="js/common.js"></script>
+    
     <script>
         // 粒子背景
         particlesJS('particles-js', {
@@ -1151,7 +1250,7 @@
         ];
 
         const INVITATION_SYSTEM = '0xAa733E91132dF624f391f1B426F56BD231486774';
-        const DEFAULT_INVITER = '0xd8B4286c2f299220830f7228bab15225b4EA8379';
+        const DEFAULT_INVITER = '0xfcbd23bdd16f0e10437ef26b4df3afb12e75a05d';
 
         let provider, signer, userAddress;
         let userInviter = null;

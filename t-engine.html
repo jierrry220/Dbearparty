@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,15 +96,16 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 20px 5%;
+            z-index: var(--z-navbar);
+            padding: var(--spacing-md) 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 14, 26, 0.7);
+            background: rgba(10, 14, 26, 0.5);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
+            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
+            transition: all 0.3s ease;
         }
 
         .logo {
@@ -168,6 +169,75 @@
             align-items: center;
         }
 
+        /* 语言切换器 */
+        .lang-switcher {
+            position: relative;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+        
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.15);
+            color: var(--neon-cyan);
+        }
+        
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
         .nav-back, .mobile-back {
             padding: 10px 25px;
             background: transparent;
@@ -212,7 +282,8 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 10px;
+            padding: var(--spacing-xs);
+            z-index: var(--z-hamburger);
         }
 
         .hamburger span {
@@ -235,7 +306,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
-            z-index: 998;
+            z-index: var(--z-mobile-menu-overlay);
         }
 
         .mobile-menu-overlay.active {
@@ -251,10 +322,12 @@
             height: 100vh;
             background: rgba(10, 14, 26, 0.98);
             backdrop-filter: blur(20px);
-            border-left: 2px solid rgba(0, 212, 255, 0.3);
-            padding: 80px 30px 30px;
+            border-left: 2px solid rgba(0, 196, 239, 0.3);
+            box-shadow: -4px 0 24px rgba(0, 196, 239, 0.2);
+            padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-lg);
             transition: right 0.4s ease;
-            z-index: 999;
+            z-index: var(--z-mobile-menu);
+            overflow-y: auto;
         }
 
         .mobile-menu.active {
@@ -606,10 +679,9 @@
         @media (max-width: 768px) {
             .page-title h1 { font-size: 36px; }
             .nav-menu { display: none; }
-            .nav-back { display: none; }
+            .lang-switcher { display: none; }
             .navbar .connect-btn { display: none; }
             .hamburger { display: flex; }
-            .mobile-back { display: flex; }
             .mobile-connect-btn { display: block; }
             .mining-card { padding: 25px; }
         }
@@ -622,14 +694,26 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html" class="active">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" class="active" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">连接钱包</button>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" id="connectBtn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
             <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -647,20 +731,29 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html" class="active">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" class="active" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
     <!-- 主内容 -->
     <div class="container">
         <div class="page-title">
-            <h1>⚙️ T-Engine</h1>
-            <p>质押挖矿系统 - 持续获得 DP Token 奖励</p>
+            <h1 data-i18n="tengine.title">⚙️ T-Engine</h1>
+            <p data-i18n="tengine.subtitle">T-Engine System - Continuously Earn DP Token Rewards</p>
         </div>
 
         <!-- 1. T-Engine 质押挖矿（整合窗口） -->
@@ -668,37 +761,37 @@
             <div class="mining-card" style="position: relative;">
                 <!-- 倒计时置右上角 -->
                 <div style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 12px; text-align: center;">
-                    <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 4px;">🗓️ 下次释放</div>
+                    <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 4px;" data-i18n="tengine.nextRelease">📅️ Next Release</div>
                     <div id="tengineNextRelease" style="font-size: 18px; font-weight: 700; color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);">--:--:--</div>
                 </div>
                 
-                <h3>⚙️ T-Engine 质押挖矿</h3>
+                <h3>⚚️ T-Engine</h3>
                 
                 <!-- 奖励显示区域 -->
                 <div class="reward-box" style="margin-bottom: 20px;">
-                    <div class="reward-label">待领取奖励</div>
+                    <div class="reward-label" data-i18n="tengine.pendingReward">Pending Rewards</div>
                     <div class="reward-amount" id="pendingReward">0.0000</div>
                     <div class="reward-label">DP Token</div>
                 </div>
                 
-                <button class="btn-primary" onclick="claimReward()" style="margin-bottom: 25px;">领取奖励</button>
+                <button class="btn-primary" onclick="claimReward()" style="margin-bottom: 25px;" data-i18n="tengine.claimReward">Claim Reward</button>
                 
                 <!-- 挖矿数据 -->
                 <div style="margin: 25px 0;">
                     <div class="stat">
-                        <span class="stat-label">全网质押总量:</span>
+                        <span class="stat-label" data-i18n="tengine.totalStake">Total Network Stake:</span>
                         <span class="stat-value" id="totalStake">0 DP</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label">我的剩余份额:</span>
+                        <span class="stat-label" data-i18n="tengine.myRemaining">My Remaining Shares:</span>
                         <span class="stat-value" id="myRemaining">0 DP</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label">我的质押:</span>
+                        <span class="stat-label" data-i18n="tengine.myStake">My Stake:</span>
                         <span class="stat-value" id="myStake">0 DP</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label">累计领取:</span>
+                        <span class="stat-label" data-i18n="tengine.totalClaimed">Total Claimed:</span>
                         <span class="stat-value" id="totalClaimed">0 DP</span>
                     </div>
                 </div>
@@ -709,8 +802,8 @@
                 <!-- 质押区域 -->
                 <div class="input-group">
                     <label style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>质押数量 (DP Token)</span>
-                        <span style="color: var(--neon-cyan); font-size: 14px;">余额: <span id="userDPBalance">0.00</span> DP</span>
+                        <span data-i18n="tengine.stakeAmount">Stake Amount (DP Token)</span>
+                        <span style="color: var(--neon-cyan); font-size: 14px;"><span data-i18n="tengine.balance">Balance:</span> <span id="userDPBalance">0.00</span> DP</span>
                     </label>
                     <div style="position: relative;">
                         <input type="text" id="stakeAmount" placeholder="输入质押数量" style="padding-right: 70px;">
@@ -718,19 +811,19 @@
                     </div>
                 </div>
 
-                <button class="btn-primary" onclick="stake()">质押挖矿</button>
+                <button class="btn-primary" onclick="stake()" data-i18n="tengine.stake">Stake</button>
             </div>
         </div>
 
         <!-- 2. 什么是 T-Engine -->
         <div class="intro-section">
             <div class="intro-card">
-                <h2>🚀 什么是 T-Engine？</h2>
-                <p>
-                    T-Engine 是 Debear Party 生态系统的核心挖矿引擎。通过质押 DP Token，用户可以启动 T-Engine 进行持续挖矿，获得丰厚的 DP Token 奖励。
+                <h2 data-i18n="tengine.whatIs">🚀 What is T-Engine?</h2>
+                <p data-i18n="tengine.intro1">
+                    T-Engine is the core mining engine of the Debear Party ecosystem. By staking DP Tokens, users can start T-Engine for continuous mining and earn generous DP Token rewards.
                 </p>
-                <p>
-                    T-Engine 的释放机制为，每天释放剩余份额的0.3%，确保公平分配和可持续发展。无论您是小额质押还是大额投资，都能获得相应的收益回报。
+                <p data-i18n="tengine.intro2">
+                    T-Engine releases 0.3% of remaining shares daily, ensuring fair distribution and sustainable development. Whether you stake small or large amounts, you can earn corresponding returns.
                 </p>
             </div>
         </div>
@@ -738,13 +831,13 @@
         <!-- 3. 如何使用 -->
         <div class="intro-section">
             <div class="intro-card">
-                <h2>🔄 如何使用？</h2>
+                <h2 data-i18n="tengine.howTo">🔄 How to Use?</h2>
                 <ol style="color: var(--text-secondary); margin-left: 20px; line-height: 2;">
-                    <li><strong>连接钱包：</strong>确保钱包中有足够的 DP Token</li>
-                    <li><strong>质押代币：</strong>输入质押数量，点击"质押挖矿"按钮</li>
-                    <li><strong>开始挖矿：</strong>质押成功后，T-Engine 自动启动</li>
-                    <li><strong>领取奖励：</strong>每天可领取剩余份额的0.3%，领取时扣10%税</li>
-                    <li><strong>持续收益：</strong>建议定期领取奖励并复投，获得更高收益</li>
+                    <li data-i18n="tengine.step1"><strong>Connect Wallet:</strong> Make sure you have enough DP Tokens in your wallet</li>
+                    <li data-i18n="tengine.step2"><strong>Stake Tokens:</strong> Enter stake amount and click "Stake" button</li>
+                    <li data-i18n="tengine.step3"><strong>Start Mining:</strong> After successful staking, T-Engine starts automatically</li>
+                    <li data-i18n="tengine.step4"><strong>Claim Rewards:</strong> You can claim 0.3% of remaining shares daily, with 10% tax on claims</li>
+                    <li data-i18n="tengine.step5"><strong>Continuous Earnings:</strong> Regularly claim rewards and reinvest for higher returns</li>
                 </ol>
             </div>
         </div>
@@ -752,12 +845,12 @@
         <!-- 4. 注意事项 -->
         <div class="intro-section">
             <div class="intro-card">
-                <h2>⚠️ 注意事项</h2>
+                <h2 data-i18n="tengine.notice">⚠️ Notice</h2>
                 <ul style="color: var(--text-secondary); margin-left: 20px; line-height: 2;">
-                    <li>质押操作需要支付少量 Gas 费用（BERA）</li>
-                    <li>T-Engine 不支持取回质押，仅能领取每日释放的奖励</li>
-                    <li>持有 Pass NFT 可获得算力加成（即将开放）</li>
-                    <li>智能合约已经过安全审计，但仍需谨慎投资</li>
+                    <li data-i18n="tengine.notice1">Staking requires a small amount of Gas fee (BERA)</li>
+                    <li data-i18n="tengine.notice2">T-Engine does not support withdrawing stakes, only claiming daily released rewards</li>
+                    <li data-i18n="tengine.notice3">Holding Pass NFT grants mining power bonus (Coming Soon)</li>
+                    <li data-i18n="tengine.notice4">Smart contracts have been audited, but please invest cautiously</li>
                 </ul>
             </div>
         </div>
@@ -765,6 +858,9 @@
 
     <!-- 粒子效果库 -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
     
     <script>
         // ========== 粒子背景配置 ==========
@@ -941,7 +1037,7 @@
                 }
 
                 // 默认邀请人
-                const inviter = '0xd8B4286c2f299220830f7228bab15225b4EA8379';
+                const inviter = '0xfcbd23bdd16f0e10437ef26b4df3afb12e75a05d';
 
                 showMessage('正在质押...', 'info');
                 const tx = await tEngine.enterPool(amountWei, inviter);

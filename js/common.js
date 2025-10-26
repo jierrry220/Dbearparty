@@ -9,7 +9,6 @@
 const CONFIG = {
     BERACHAIN_CHAIN_ID: '0x138de', // 80094 in hex
     BERACHAIN_CHAIN_ID_DECIMAL: 80094,
-    OWNER_ADDRESS: '0xd8b4286c2f299220830f7228bab15225b4ea8379',
     PARTICLES_CONFIG: {
         particles: {
             number: { value: 100, density: { enable: true, value_area: 800 } },
@@ -203,11 +202,13 @@ class WalletManager {
             this.provider = this.getProvider();
             
             if (!this.provider) {
-                toast.error('请安装 MetaMask 或 OKX Wallet！');
+                const msg = window.i18n ? window.i18n.t('toast.wallet.noProvider') : 'Please install MetaMask or OKX Wallet!';
+                toast.error(msg);
                 return null;
             }
 
-            loading.show('连接钱包中...');
+            const loadingMsg = window.i18n ? window.i18n.t('loading.connecting') : 'Connecting wallet...';
+            loading.show(loadingMsg);
 
             // 请求账户权限
             const accounts = await this.provider.request({ 
@@ -224,7 +225,8 @@ class WalletManager {
                     });
                 } catch (switchError) {
                     loading.hide();
-                    toast.error('请切换到 Berachain 主网 (Chain ID: 80094)');
+                    const msg = window.i18n ? window.i18n.t('toast.wallet.switchNetwork') : 'Please switch to Berachain Mainnet (Chain ID: 80094)';
+                    toast.error(msg);
                     return null;
                 }
             }
@@ -243,13 +245,15 @@ class WalletManager {
             this.checkOwnerAccess();
 
             loading.hide();
-            toast.success('钱包连接成功！');
+            const successMsg = window.i18n ? window.i18n.t('toast.wallet.connected') : 'Wallet connected successfully!';
+            toast.success(successMsg);
 
             return this.address;
         } catch (error) {
             loading.hide();
             console.error('Connect wallet error:', error);
-            toast.error('连接钱包失败: ' + error.message);
+            const errorMsg = window.i18n ? window.i18n.t('toast.wallet.failed') : 'Failed to connect wallet';
+            toast.error(errorMsg + ': ' + error.message);
             return null;
         }
     }
@@ -305,8 +309,9 @@ class WalletManager {
                 btn.disabled = true;
             });
         } else {
+            const btnText = window.i18n ? window.i18n.t('nav.connect') : 'Connect Wallet';
             connectBtns.forEach(btn => {
-                btn.textContent = '连接钱包';
+                btn.textContent = btnText;
                 btn.disabled = false;
             });
         }
@@ -558,6 +563,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 监听钱包事件
     wallet.onAccountsChanged();
     wallet.onChainChanged();
+    
+    // 监听语言切换事件，更新钱包按钮文本
+    window.addEventListener('languageChanged', () => {
+        wallet.updateUI();
+    });
 });
 
 // ========================================

@@ -13,7 +13,6 @@
         }
 
         :root {
-            /* 优化颜色系统 */
             --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
             --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
             --neon-cyan: #00c4ef;
@@ -26,12 +25,15 @@
             --text-secondary: #a0b1d4;
             --grid-color: rgba(0, 196, 239, 0.12);
             
-            /* z-index 层级 */
+            /* z-index 层级系统 */
             --z-background: -1;
+            --z-content: 1;
             --z-navbar: 100;
             --z-mobile-menu-overlay: 110;
             --z-mobile-menu: 120;
             --z-hamburger: 130;
+            --z-toast: 200;
+            --z-modal: 300;
             
             /* 间距系统 */
             --spacing-xs: 8px;
@@ -51,7 +53,7 @@
             line-height: 1.6;
         }
 
-        /* ========== 粒子背景 (优化) ========== */
+        /* ========== 粒子背景 ========== */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -63,7 +65,7 @@
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 radial-gradient(ellipse at top, #2d1b4e 0%, #1a0a2e 50%, #0a0e1a 100%);
-            background-size: 60px 60px, 60px 60px, 100% 100%;
+            background-size: 50px 50px, 50px 50px, 100% 100%;
             background-position: 0 0, 0 0, center center;
         }
 
@@ -76,17 +78,17 @@
             bottom: 0;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 196, 239, 0.015) 0px,
+                rgba(0, 212, 255, 0.03) 0px,
                 transparent 2px,
                 transparent 4px
             );
             pointer-events: none;
-            animation: scan 12s linear infinite;
+            animation: scan 8s linear infinite;
         }
 
         @keyframes scan {
             0% { transform: translateY(0); }
-            100% { transform: translateY(60px); }
+            100% { transform: translateY(50px); }
         }
 
         /* ========== 导航栏 ========== */
@@ -99,18 +101,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 14, 26, 0.5);
+            background: rgba(10, 14, 26, 0.4);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 196, 239, 0.2);
-            box-shadow: 0 4px 24px rgba(0, 196, 239, 0.06);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
             transition: all 0.3s ease;
         }
 
         .navbar.scrolled {
-            padding: var(--spacing-sm) 5%;
-            background: rgba(10, 14, 26, 0.75);
-            box-shadow: 0 4px 24px rgba(233, 0, 233, 0.12);
-            border-bottom: 2px solid rgba(233, 0, 233, 0.25);
+            padding: 15px 5%;
+            background: rgba(10, 14, 26, 0.7);
+            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.1);
+            border-bottom: 2px solid rgba(255, 0, 255, 0.3);
         }
 
         .logo {
@@ -162,8 +164,83 @@
             width: 100%;
         }
 
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 语言切换器 */
+        .lang-switcher {
+            position: relative;
+            margin-right: 16px;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+        
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.15);
+            color: var(--neon-cyan);
+        }
+        
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
         .connect-btn {
-            padding: 12px var(--spacing-lg);
+            padding: 12px 30px;
             background: var(--primary-gradient);
             border: 2px solid transparent;
             border-radius: 25px;
@@ -171,23 +248,13 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(0, 196, 239, 0.4), 0 0 32px rgba(233, 0, 233, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
         }
 
-        .connect-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0, 196, 239, 0.6), 0 0 40px rgba(233, 0, 233, 0.4);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .connect-btn:focus {
-            outline: 2px solid var(--neon-cyan);
-            outline-offset: 2px;
-        }
-
-        .connect-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .connect-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         /* ========== 汉堡菜单按钮 ========== */
@@ -196,8 +263,8 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: var(--spacing-xs);
-            z-index: var(--z-hamburger);
+            padding: 10px;
+            z-index: 1001;
         }
 
         .hamburger span {
@@ -290,6 +357,12 @@
         .mobile-connect-btn {
             width: 100%;
             margin-top: 30px;
+            display: none;
+        }
+
+        .mobile-connect-btn {
+            width: 100%;
+            margin-top: 30px;
         }
 
         /* ========== 主内容区 ========== */
@@ -331,10 +404,10 @@
 
         .development-icon {
             font-size: 120px;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 30px;
             display: inline-block;
-            animation: pulse 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 24px rgba(0, 196, 239, 0.5));
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
             position: relative;
             z-index: 1;
         }
@@ -345,8 +418,8 @@
                 opacity: 1;
             }
             50% { 
-                transform: scale(1.05);
-                opacity: 0.85;
+                transform: scale(1.1);
+                opacity: 0.8;
             }
         }
 
@@ -437,8 +510,8 @@
         }
 
         .back-btn {
-            margin-top: var(--spacing-xl);
-            padding: var(--spacing-sm) var(--spacing-xl);
+            margin-top: 40px;
+            padding: 16px 40px;
             background: transparent;
             color: var(--neon-cyan);
             border: 2px solid var(--neon-cyan);
@@ -449,62 +522,40 @@
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 0 16px rgba(0, 196, 239, 0.25);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
             position: relative;
             z-index: 1;
         }
 
-        .back-btn:hover:not(:disabled) {
+        .back-btn:hover {
             background: var(--neon-cyan);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 0 24px rgba(0, 196, 239, 0.5), 0 4px 16px rgba(0, 196, 239, 0.35);
-        }
-
-        .back-btn:focus {
-            outline: 2px solid var(--neon-cyan);
-            outline-offset: 2px;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 4px 20px rgba(0, 212, 255, 0.4);
         }
 
         /* ========== 响应式设计 ========== */
-        @media (max-width: 1024px) {
-            .development-title { font-size: 40px; }
-            .development-icon { font-size: 96px; }
-        }
-
         @media (max-width: 768px) {
             .nav-menu { display: none; }
+            .lang-switcher { display: none; }
             .hamburger { display: flex; }
             .navbar .connect-btn { display: none; }
             .mobile-connect-btn { display: block; }
             
             .development-title {
-                font-size: 32px;
+                font-size: 36px;
             }
             
             .development-subtitle {
-                font-size: 16px;
+                font-size: 18px;
             }
             
             .development-icon {
-                font-size: 72px;
+                font-size: 80px;
             }
             
             .development-container {
-                padding: var(--spacing-xl) var(--spacing-md);
-            }
-            
-            .feature-preview {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-sm);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .development-title { font-size: 28px; }
-            .development-icon { font-size: 64px; }
-            .feature-preview {
-                grid-template-columns: 1fr;
+                padding: 40px 25px;
             }
         }
     </style>
@@ -517,14 +568,26 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html" class="active">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" class="active" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
             <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -539,21 +602,30 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html" class="active">GameFi</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" class="active" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
     <!-- 主内容区 -->
     <section class="main-content">
         <div class="development-container">
-            <div class="development-icon">🎮</div>
-            <h1 class="development-title">游戏开发中</h1>
-            <p class="development-subtitle">我们正在打造激动人心的 GameFi 体验<br>敬请期待！</p>
+            <div class="development-icon" data-i18n="gamefi.title">🎮</div>
+            <h1 class="development-title" data-i18n="gamefi.developing">Game In Development</h1>
+            <p class="development-subtitle" data-i18n="gamefi.subtitle">We are building an exciting GameFi experience<br>Stay tuned!</p>
             
             <div class="progress-bar-container">
                 <div class="progress-bar"></div>
@@ -562,28 +634,34 @@
             <div class="feature-preview">
                 <div class="feature-item">
                     <div class="feature-item-icon">🏆</div>
-                    <div class="feature-item-title">竞技对战</div>
+                    <div class="feature-item-title" data-i18n="gamefi.competition">Competitive Battles</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-item-icon">💰</div>
-                    <div class="feature-item-title">边玩边赚</div>
+                    <div class="feature-item-title" data-i18n="gamefi.playToEarn">Play to Earn</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-item-icon">🌟</div>
-                    <div class="feature-item-title">NFT 装备</div>
+                    <div class="feature-item-title" data-i18n="gamefi.nftEquipment">NFT Equipment</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-item-icon">🤝</div>
-                    <div class="feature-item-title">社交互动</div>
+                    <div class="feature-item-title" data-i18n="gamefi.socialInteraction">Social Interaction</div>
                 </div>
             </div>
 
-            <a href="index.html" class="back-btn">返回主页</a>
+            <a href="index.html" class="back-btn" data-i18n="gamefi.backHome">Back to Home</a>
         </div>
     </section>
 
     <!-- 粒子效果库 -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
+    
+    <!-- 公共脚本 -->
+    <script src="js/common.js"></script>
     
     <script>
         // ========== 粒子背景配置 ==========

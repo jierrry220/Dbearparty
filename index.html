@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debear Party - Web3 潮流元宇宙游戏平台</title>
-    <meta name="description" content="基于 Berachain 的 Web3 去中心化游戏平台，提供 NFT Pass、挖矿系统和邀请奖励">
+    <title>Debear Party - Next-Generation Web3 Trendy Metaverse Gaming Platform</title>
+    <meta name="description" content="Web3 decentralized gaming platform based on Berachain, providing NFT Pass, mining system and referral rewards">
     <style>
         /* ========== 全局样式 ========== */
         * {
@@ -200,6 +200,82 @@
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* ========== 语言切换器 ========== */
+        .lang-switcher {
+            position: relative;
+            margin-right: var(--spacing-sm);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0, 196, 239, 0.1);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 50px;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 196, 239, 0.2);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 196, 239, 0.4);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 196, 239, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 196, 239, 0.2);
+        }
+
+        .lang-switcher:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .lang-option:hover {
+            background: rgba(0, 196, 239, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .lang-option.active {
+            background: rgba(0, 196, 239, 0.15);
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
 
         /* ========== 汉堡菜单按钮 ========== */
@@ -743,14 +819,26 @@
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
-            <li><a href="index.html" class="active">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <button class="connect-btn" onclick="connectWallet()">连接钱包</button>
+            <!-- 语言切换器 -->
+            <div class="lang-switcher">
+                <button class="lang-btn">EN</button>
+                <div class="lang-dropdown">
+                    <div class="lang-option active" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                        <span data-i18n="lang.en">English</span>
+                    </div>
+                    <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                        <span data-i18n="lang.zh">繁體中文</span>
+                    </div>
+                </div>
+            </div>
+            <button class="connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
             <button class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -765,23 +853,32 @@
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
-            <li><a href="index.html" class="active">首页</a></li>
-            <li><a href="swap.html">Swap</a></li>
-            <li><a href="pass-nft.html">Pass NFT</a></li>
-            <li><a href="t-engine.html">T-Engine</a></li>
-            <li><a href="gamefi.html">GameFi</a></li>
+            <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
+            <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
+            <li><a href="pass-nft.html" data-i18n="nav.pass">Pass NFT</a></li>
+            <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
+            <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()">连接钱包</button>
+        <!-- 移动端语言选择 -->
+        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+                <span data-i18n="lang.en">English</span>
+            </div>
+            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+                <span data-i18n="lang.zh">繁體中文</span>
+            </div>
+        </div>
+        <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
     <!-- Hero 区域 -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">🚀 基于 Berachain 主网</div>
-            <h1>Debear Party</h1>
-            <p>下一代 Web3 潮流元宇宙游戏平台<br>持有 Pass NFT，参与挖矿，赚取奖励</p>
+            <div class="hero-badge" data-i18n="hero.badge">🚀 Built on Berachain Mainnet</div>
+            <h1 data-i18n="hero.title">Debear Party</h1>
+            <p data-i18n="hero.description">Innovative Web3.0 Comprehensive Platform - DeFi, GameFi, and Trendy Collectibles Await Your Discovery</p>
             <div class="cta-buttons">
-                <a href="#features" class="btn-secondary">了解更多</a>
+                <a href="#features" class="btn-secondary" data-i18n="hero.learnmore">Learn More</a>
             </div>
         </div>
     </section>
@@ -790,39 +887,39 @@
     <!-- 功能展示区 -->
     <section id="features" class="features-section">
         <div class="section-title">
-            <h2>核心功能</h2>
-            <p>一站式 Web3 游戏生态系统</p>
+            <h2 data-i18n="features.title">Core Features</h2>
+            <p data-i18n="features.subtitle">One-Stop Web3 Gaming Ecosystem</p>
         </div>
         <div class="features-grid">
             <div class="feature-card fade-in">
                 <div class="feature-icon">🎫</div>
-                <h3>NFT Pass 系统</h3>
-                <p>购买 Standard、Premium 或 Exclusive Pass，享受不同等级的挖矿算力加成和专属权益。</p>
+                <h3 data-i18n="feature.pass.title">NFT Pass System</h3>
+                <p data-i18n="feature.pass.desc">Purchase Standard, Premium, or Exclusive Pass to enjoy different levels of mining power bonuses and exclusive benefits.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">⚡</div>
-                <h3>T-Engine 嬗变引擎</h3>
-                <p>革命性的T-Engine（嬗变引擎）机制：永久销毁DP代币获得4倍挖矿份额，强力通缩推动价值增长。</p>
+                <h3 data-i18n="feature.tengine.title">T-Engine Transformation</h3>
+                <p data-i18n="feature.tengine.desc">Revolutionary T-Engine mechanism: Permanently burn DP tokens to get 4x mining shares, driving value growth through strong deflation.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">🤝</div>
-                <h3>邀请奖励系统</h3>
-                <p>持有Pass解锁推荐权益，分享好友共建Debear Party社区。</p>
+                <h3 data-i18n="feature.invite.title">Referral Rewards</h3>
+                <p data-i18n="feature.invite.desc">Holding Pass unlocks referral benefits. Share with friends to build the Debear Party community together.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">💎</div>
-                <h3>DAO治理与RWA资产</h3>
-                <p>持有Pass享有DAO治理投票权，未来享有平台手续费分红、RWA资产收益分配和GameFi特权。</p>
+                <h3 data-i18n="feature.dao.title">DAO Governance & RWA Assets</h3>
+                <p data-i18n="feature.dao.desc">Pass holders enjoy DAO governance voting rights, and will receive platform fee dividends, RWA asset income distribution, and GameFi privileges.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">🔒</div>
-                <h3>安全可靠</h3>
-                <p>基于 Berachain 主网部署，智能合约经过审计，资产安全有保障。</p>
+                <h3 data-i18n="feature.security.title">Secure & Reliable</h3>
+                <p data-i18n="feature.security.desc">Deployed on Berachain mainnet with audited smart contracts, ensuring asset security.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">🎮</div>
-                <h3>GameFi与潮流元宇宙</h3>
-                <p>即将推出的社交类GameFi游戏，结合潮流文化的RWA资产，打造边玩边赚的元宇宙体验。</p>
+                <h3 data-i18n="feature.gamefi.title">GameFi & Trendy Metaverse</h3>
+                <p data-i18n="feature.gamefi.desc">Upcoming social GameFi games combined with trendy RWA assets, creating a play-to-earn metaverse experience.</p>
             </div>
         </div>
     </section>
@@ -831,36 +928,36 @@
     <!-- Roadmap 路线图 -->
     <section id="roadmap" class="roadmap-section">
         <div class="section-title">
-            <h2>发展路线图</h2>
-            <p>我们的愿景与规划</p>
+            <h2 data-i18n="roadmap.title">Roadmap</h2>
+            <p data-i18n="roadmap.subtitle">Our Vision & Planning</p>
         </div>
         <div class="timeline">
             <div class="timeline-item fade-in">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h3>阶段1：启动与社区建设 (Q2-Q3 2025) ✅</h3>
-                    <p>• Pass销售（Standard/Premium/Exclusive）<br>• DP代币上线与初始流动性池<br>• NFT挖矿与T-Engine功能启动<br>• 社区建设与激励活动</p>
+                    <h3 data-i18n="roadmap.phase1.title">Phase 1: Launch & Community Building (Q2-Q3 2025) ✅</h3>
+                    <p data-i18n="roadmap.phase1.desc">• Pass Sales (Standard/Premium/Exclusive)<br>• DP Token Launch & Initial Liquidity Pool<br>• NFT Mining & T-Engine Features Launch<br>• Community Building & Incentive Activities</p>
                 </div>
             </div>
             <div class="timeline-item fade-in">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h3>阶段2：生态扩展 (Q4 2025 - Q1 2026)</h3>
-                    <p>• GameFi社交游戏上线<br>• DAO治理系统启动<br>• RWA潮流资产模块开发<br>• 流动性质押与PoL奖励</p>
+                    <h3 data-i18n="roadmap.phase2.title">Phase 2: Ecosystem Expansion (Q4 2025 - Q1 2026)</h3>
+                    <p data-i18n="roadmap.phase2.desc">• GameFi Social Game Launch<br>• DAO Governance System Activation<br>• RWA Trendy Asset Module Development<br>• Liquidity Staking & PoL Rewards</p>
                 </div>
             </div>
             <div class="timeline-item fade-in">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h3>里程碑目标</h3>
-                    <p>• 阶段1：2,000个Pass售罄，1000+社区成员，TVL达到$500万<br>• 阶段2：TVL攀升至$2000万，月活用户5000+，RWA资产上线</p>
+                    <h3 data-i18n="roadmap.milestone.title">Milestone Goals</h3>
+                    <p data-i18n="roadmap.milestone.desc">• Phase 1: 2,000 Passes Sold Out, 1000+ Community Members, TVL Reaches $5M<br>• Phase 2: TVL Climbs to $20M, 5000+ Monthly Active Users, RWA Assets Launch</p>
                 </div>
             </div>
             <div class="timeline-item fade-in">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h3>未来愿景</h3>
-                    <p>• 成为Berachain最具创新性的潮流元宇宙平台<br>• 连接Web3技术与潮流文化<br>• 构建公平透明的价值生态系统</p>
+                    <h3 data-i18n="roadmap.vision.title">Future Vision</h3>
+                    <p data-i18n="roadmap.vision.desc">• Become the Most Innovative Trendy Metaverse Platform on Berachain<br>• Connect Web3 Technology with Trendy Culture<br>• Build a Fair and Transparent Value Ecosystem</p>
                 </div>
             </div>
         </div>
@@ -870,8 +967,8 @@
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-section">
-                <h4>关于我们</h4>
-                <p style="color: var(--text-secondary);">Debear Party 是基于 Berachain 的 Web3 游戏平台，致力于打造去中心化的游戏生态系统。</p>
+                <h4 data-i18n="footer.about.title">About Us</h4>
+                <p style="color: var(--text-secondary);" data-i18n="footer.about.desc">Debear Party is a Web3 gaming platform based on Berachain, committed to building a decentralized gaming ecosystem.</p>
                 <div class="social-links">
                     <a href="#" title="Twitter">𝕏</a>
                     <a href="#" title="Discord">💬</a>
@@ -880,32 +977,35 @@
                 </div>
             </div>
             <div class="footer-section">
-                <h4>开发者</h4>
+                <h4 data-i18n="footer.developer.title">Developer</h4>
                 <ul>
-                    <li><a href="whitepaper.html">白皮书</a></li>
-                    <li><a href="#">智能合约</a></li>
-                    <li><a href="#">审计报告</a></li>
-                    <li><a href="#">GitHub</a></li>
-                    <li id="owner-link" style="display: none;"><a href="test-dapp.html">Debear Party 完整测试页面</a></li>
+                    <li><a href="whitepaper-en.html" data-i18n="footer.developer.whitepaper">Whitepaper</a></li>
+                    <li><a href="#" data-i18n="footer.developer.contract">Smart Contracts</a></li>
+                    <li><a href="#" data-i18n="footer.developer.audit">Audit Report</a></li>
+                    <li><a href="#" data-i18n="footer.developer.github">GitHub</a></li>
+                    <li id="owner-link" style="display: none;"><a href="test-dapp.html" data-i18n="footer.developer.test">Debear Party Complete Test Page</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>社区</h4>
+                <h4 data-i18n="footer.community.title">Community</h4>
                 <ul>
-                    <li><a href="#">Discord</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Medium</a></li>
-                    <li><a href="#">帮助中心</a></li>
+                    <li><a href="#" data-i18n="footer.community.discord">Discord</a></li>
+                    <li><a href="#" data-i18n="footer.community.twitter">Twitter</a></li>
+                    <li><a href="#" data-i18n="footer.community.medium">Medium</a></li>
+                    <li><a href="#" data-i18n="footer.community.help">Help Center</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Debear Party. All rights reserved. Built on Berachain.</p>
+            <p data-i18n="footer.copyright">© 2025 Debear Party. All rights reserved. Built on Berachain.</p>
         </div>
     </footer>
 
     <!-- 粒子效果库 -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 国际化配置 -->
+    <script src="js/i18n.js"></script>
     
     <script>
         // ========== 粒子背景配置 ==========
@@ -1056,7 +1156,23 @@
         window.addEventListener('load', () => {
             checkWalletConnection();
             checkOwnerAccess();
+            updateWhitepaperLink();
         });
+
+        // ========== 监听语言切换事件 ==========
+        window.addEventListener('languageChanged', () => {
+            updateWhitepaperLink();
+        });
+
+        // ========== 根据当前语言更新白皮书链接 ==========
+        function updateWhitepaperLink() {
+            const whitepaperLink = document.querySelector('a[data-i18n="footer.developer.whitepaper"]');
+            if (whitepaperLink && window.i18n) {
+                const currentLang = window.i18n.getCurrentLanguage();
+                // 根据当前语言设置白皮书链接
+                whitepaperLink.href = currentLang === 'zh-TW' ? 'whitepaper.html' : 'whitepaper-en.html';
+            }
+        }
 
         // ========== 检查 Owner 权限 ==========
         async function checkOwnerAccess() {
