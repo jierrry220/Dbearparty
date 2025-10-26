@@ -675,6 +675,111 @@
             max-width: 600px;
         }
 
+        /* ========== 邀请人弹窗样式 ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.5);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal h3 {
+            font-size: 28px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary-gradient);
+            border: 2px solid transparent;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .modal-btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
         /* ========== 响应式 ========== */
         @media (max-width: 768px) {
             .page-title h1 { font-size: 36px; }
@@ -747,6 +852,19 @@
             </div>
         </div>
         <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
+    </div>
+
+    <!-- 邀请人弹窗 -->
+    <div class="modal-overlay" id="inviteModal">
+        <div class="modal">
+            <h3 data-i18n="pass.inviteTitle">🎁 Enter Referrer Address</h3>
+            <p data-i18n="pass.inviteDesc">You are detected as a new user. Please enter referrer address to get rewards, or skip to use default referrer.</p>
+            <input type="text" class="modal-input" id="modalInviterInput" placeholder="0x... (选填)">
+            <div class="modal-buttons">
+                <button class="modal-btn-secondary" onclick="closeInviteModal()" data-i18n="pass.skip">Skip</button>
+                <button class="modal-btn-primary" onclick="confirmInviter()" data-i18n="pass.confirm">Confirm</button>
+            </div>
+        </div>
     </div>
 
     <!-- 主内容 -->
@@ -913,15 +1031,24 @@
             'function calculateClaimable(address user) view returns (uint256)'
         ];
 
+        const INVITATION_ABI = [
+            'function getInviter(address) view returns (address)'
+        ];
+
         const TOKEN_ABI = [
             'function approve(address spender, uint256 amount) external returns (bool)',
             'function balanceOf(address account) external view returns (uint256)',
             'function allowance(address owner, address spender) external view returns (uint256)'
         ];
 
+        const INVITATION_SYSTEM = '0xAa733E91132dF624f391f1B426F56BD231486774';
+        const DEFAULT_INVITER = '0xfcbd23bdd16f0e10437ef26b4df3afb12e75a05d';
+
         let provider, signer, userAddress;
         let updateInterval, tengineCountdownInterval;
         let userDPBalance = '0';
+        let userInviter = null;
+        let pendingStakeAmount = null;
 
         // ========== 连接钱包 ==========
         async function connectWallet() {
@@ -952,6 +1079,9 @@
                 // 保存连接状态
                 localStorage.setItem('walletConnected', 'true');
                 localStorage.setItem('walletAddress', userAddress);
+                
+                // 检查邀请关系
+                await checkInviter();
                 
                 await refreshData();
                 await refreshDPBalance();
@@ -991,6 +1121,7 @@
 
                     localStorage.setItem('walletAddress', userAddress);
 
+                    await checkInviter();
                     await refreshData();
                     await refreshDPBalance();
                     startRealtimeUpdate();
@@ -1010,6 +1141,25 @@
             checkWalletConnection();
         });
 
+        // ========== 检查邀请关系 ==========
+        async function checkInviter() {
+            try {
+                const invitation = new ethers.Contract(INVITATION_SYSTEM, INVITATION_ABI, provider);
+                const inviter = await invitation.getInviter(userAddress);
+                
+                if (inviter === ethers.constants.AddressZero) {
+                    // 新用户，使用默认邀请人
+                    userInviter = DEFAULT_INVITER;
+                } else {
+                    // 已有邀请人
+                    userInviter = inviter;
+                }
+            } catch (error) {
+                console.error('检查邀请关系失败:', error);
+                userInviter = DEFAULT_INVITER;
+            }
+        }
+
         // ========== 进入矿池 ==========
         async function stake() {
             if (!signer) {
@@ -1023,6 +1173,20 @@
                 return;
             }
 
+            // 检查是否是新用户（没有邀请人）
+            if (userInviter === DEFAULT_INVITER) {
+                // 显示弹窗让用户输入邀请人
+                pendingStakeAmount = amount;
+                showInviteModal();
+                return;
+            }
+
+            // 执行质押
+            await executeStake(amount, userInviter);
+        }
+
+        // ========== 执行质押 ==========
+        async function executeStake(amount, inviter) {
             try {
                 const amountWei = ethers.utils.parseEther(amount);
                 const token = new ethers.Contract(CONTRACTS.dpToken, TOKEN_ABI, signer);
@@ -1036,19 +1200,52 @@
                     await approveTx.wait();
                 }
 
-                // 默认邀请人
-                const inviter = '0xfcbd23bdd16f0e10437ef26b4df3afb12e75a05d';
-
                 showMessage('正在质押...', 'info');
                 const tx = await tEngine.enterPool(amountWei, inviter);
                 await tx.wait();
 
                 showMessage('质押成功！T-Engine 已启动', 'success');
+                
+                // 更新邀请关系
+                userInviter = inviter;
+                
                 document.getElementById('stakeAmount').value = '';
                 await refreshData();
                 await refreshDPBalance();
             } catch (error) {
                 showMessage('质押失败: ' + error.message, 'error');
+            }
+        }
+
+        // ========== 显示邀请人弹窗 ==========
+        function showInviteModal() {
+            document.getElementById('inviteModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ========== 关闭邀请人弹窗 ==========
+        function closeInviteModal() {
+            document.getElementById('inviteModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('modalInviterInput').value = '';
+            
+            // 使用默认邀请人
+            if (pendingStakeAmount) {
+                executeStake(pendingStakeAmount, DEFAULT_INVITER);
+                pendingStakeAmount = null;
+            }
+        }
+
+        // ========== 确认邀请人 ==========
+        function confirmInviter() {
+            const inviterInput = document.getElementById('modalInviterInput').value.trim();
+            const inviter = inviterInput || DEFAULT_INVITER;
+            
+            closeInviteModal();
+            
+            if (pendingStakeAmount) {
+                executeStake(pendingStakeAmount, inviter);
+                pendingStakeAmount = null;
             }
         }
 

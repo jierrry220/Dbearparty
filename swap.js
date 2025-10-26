@@ -709,8 +709,18 @@ async function connectWallet() {
         swapManager.userAddress = await swapManager.signer.getAddress();
 
         const shortAddress = swapManager.userAddress.slice(0, 6) + '...' + swapManager.userAddress.slice(-4);
-        document.getElementById('connectBtn').textContent = shortAddress;
-        document.getElementById('connectBtn').disabled = false;
+        const connectBtn = document.getElementById('connectBtn');
+        const mobileConnectBtn = document.getElementById('mobileConnectBtn');
+        
+        if (connectBtn) {
+            connectBtn.textContent = shortAddress;
+            connectBtn.disabled = false;
+        }
+        
+        if (mobileConnectBtn) {
+            mobileConnectBtn.textContent = shortAddress;
+            mobileConnectBtn.disabled = false;
+        }
 
         // 保存连接状态
         localStorage.setItem('walletConnected', 'true');
@@ -755,8 +765,18 @@ async function checkWalletConnection() {
             swapManager.userAddress = await swapManager.signer.getAddress();
 
             const shortAddress = swapManager.userAddress.slice(0, 6) + '...' + swapManager.userAddress.slice(-4);
-            document.getElementById('connectBtn').textContent = shortAddress;
-            document.getElementById('connectBtn').disabled = false;
+            const connectBtn = document.getElementById('connectBtn');
+            const mobileConnectBtn = document.getElementById('mobileConnectBtn');
+            
+            if (connectBtn) {
+                connectBtn.textContent = shortAddress;
+                connectBtn.disabled = false;
+            }
+            
+            if (mobileConnectBtn) {
+                mobileConnectBtn.textContent = shortAddress;
+                mobileConnectBtn.disabled = false;
+            }
 
             localStorage.setItem('walletAddress', swapManager.userAddress);
 
