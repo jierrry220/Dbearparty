@@ -6,7 +6,7 @@
     <title>Debear Party - Next-Generation Web3 Trendy Metaverse Gaming Platform</title>
     <meta name="description" content="Web3 decentralized gaming platform based on Berachain, providing NFT Pass, mining system and referral rewards">
     <style>
-        /* ========== 全局样式 ========== */
+        /* ========== Global Styles ========== */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,7 @@
         }
 
         :root {
-            /* 优化后的颜色系统 - 降低饱和度，提高可读性 */
+            /* Optimized Color System - Reduced Saturation for Better Readability */
             --primary-gradient: linear-gradient(135deg, #00c4ef 0%, #e900e9 100%);
             --secondary-gradient: linear-gradient(135deg, #4dd0e1 0%, #d91e5a 100%);
             --neon-cyan: #00c4ef;
@@ -24,10 +24,10 @@
             --dark-surface: #1a0a2e;
             --dark-purple: #2d1b4e;
             --text-primary: #ffffff;
-            --text-secondary: #a0b1d4;  /* 提高对比度 */
+            --text-secondary: #b5c4e8;  /* Improved Contrast - WCAG AA Compliant */
             --grid-color: rgba(0, 196, 239, 0.12);
             
-            /* z-index 层级系统 */
+            /* z-index Layer System */
             --z-background: -1;
             --z-content: 1;
             --z-navbar: 100;
@@ -37,7 +37,7 @@
             --z-toast: 200;
             --z-modal: 300;
             
-            /* 间距系统 (8px 基数) */
+            /* Spacing System (8px base) */
             --spacing-xs: 8px;
             --spacing-sm: 16px;
             --spacing-md: 24px;
@@ -55,7 +55,7 @@
             line-height: 1.6;
         }
 
-        /* ========== 粒子背景 (优化性能) ========== */
+        /* ========== Particle Background (Performance Optimized) ========== */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -71,7 +71,7 @@
             background-position: 0 0, 0 0, center center;
         }
 
-        /* 减弱扫描线效果 */
+        /* Reduced Scanline Effect */
         #particles-js::before {
             content: '';
             position: absolute;
@@ -94,7 +94,7 @@
             100% { transform: translateY(60px); }
         }
 
-        /* ========== 导航栏 (优化布局) ========== */
+        /* ========== Navbar (Optimized Layout) ========== */
         .navbar {
             position: fixed;
             top: 0;
@@ -202,7 +202,7 @@
             transform: none;
         }
 
-        /* ========== 语言切换器 ========== */
+        /* ========== Language Switcher ========== */
         .lang-switcher {
             position: relative;
             margin-right: var(--spacing-sm);
@@ -278,7 +278,7 @@
             gap: var(--spacing-sm);
         }
 
-        /* ========== 汉堡菜单按钮 ========== */
+        /* ========== Hamburger Menu Button ========== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -309,7 +309,7 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
 
-        /* ========== 移动端侧边栏菜单 ========== */
+        /* ========== Mobile Sidebar Menu ========== */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -380,7 +380,40 @@
             margin-top: 30px;
         }
 
-        /* ========== Hero 区域 ========== */
+        /* Mobile Language Selection */
+        .mobile-lang-selector {
+            margin-top: 20px;
+            padding: 10px 0;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .mobile-lang-selector .lang-option {
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        /* ========== Skip Link (Accessibility) ========== */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 1000;
+            font-weight: 600;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+
+        /* ========== Hero Section ========== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -750,8 +783,8 @@
             color: var(--text-secondary);
         }
 
-        /* ========== 响应式设计 ========== */
-        /* 平板端 */
+        /* ========== Responsive Design ========== */
+        /* Tablet */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 52px; }
             .features-grid {
@@ -759,7 +792,7 @@
             }
         }
 
-        /* 移动端 */
+        /* Mobile */
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
             .hero p { font-size: 18px; }
@@ -772,7 +805,7 @@
                 grid-template-columns: 1fr;
             }
             
-            /* 时间轴移动端优化 - 避免使用!important */
+            /* Timeline Mobile Optimization - Avoid !important */
             .timeline::before { 
                 left: var(--spacing-md);
             }
@@ -788,7 +821,7 @@
             }
         }
 
-        /* 小屏手机 */
+        /* Small Screen Mobile */
         @media (max-width: 480px) {
             .hero h1 { font-size: 32px; }
             .hero p { font-size: 16px; }
@@ -798,7 +831,7 @@
             }
         }
 
-        /* ========== 滚动动画 ========== */
+        /* ========== Scroll Animation ========== */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -812,10 +845,13 @@
     </style>
 </head>
 <body>
-    <!-- 粒子背景 -->
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Particle Background -->
     <div id="particles-js"></div>
 
-    <!-- 导航栏 -->
+    <!-- Navbar -->
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
@@ -826,7 +862,7 @@
             <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <!-- 语言切换器 -->
+            <!-- Language Switcher -->
             <div class="lang-switcher">
                 <button class="lang-btn">EN</button>
                 <div class="lang-dropdown">
@@ -839,19 +875,23 @@
                 </div>
             </div>
             <button class="connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
-            <button class="hamburger" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" 
+                    onclick="toggleMobileMenu()" 
+                    aria-label="Toggle navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </button>
         </div>
     </nav>
 
-    <!-- 移动端菜单遮罩 -->
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
 
-    <!-- 移动端侧边栏菜单 -->
-    <div class="mobile-menu">
+    <!-- Mobile Sidebar Menu -->
+    <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
         <ul class="mobile-nav-links">
             <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
             <li><a href="swap.html" data-i18n="nav.swap">Swap</a></li>
@@ -859,20 +899,20 @@
             <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
             <li><a href="gamefi.html" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <!-- 移动端语言选择 -->
-        <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
-            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
+        <!-- Mobile Language Selection -->
+        <div class="mobile-lang-selector">
+            <div class="lang-option" data-lang="en" onclick="window.i18n?.setLanguage('en')">
                 <span data-i18n="lang.en">English</span>
             </div>
-            <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
+            <div class="lang-option" data-lang="zh-TW" onclick="window.i18n?.setLanguage('zh-TW')">
                 <span data-i18n="lang.zh">繁體中文</span>
             </div>
         </div>
         <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
-    <!-- Hero 区域 -->
-    <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero" id="main-content" role="main">
         <div class="hero-content">
             <div class="hero-badge" data-i18n="hero.badge">🚀 Built on Berachain Mainnet</div>
             <h1 data-i18n="hero.title">Debear Party</h1>
@@ -1042,7 +1082,7 @@
             }
         });
 
-        // ========== 导航栏滚动效果 ==========
+        // ========== Navbar scroll effect ==========
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 100) {
@@ -1052,7 +1092,7 @@
             }
         });
 
-        // ========== 滚动显示动画 ==========
+        // ========== Scroll reveal animation ==========
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -1069,12 +1109,17 @@
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 
-        // ========== 连接钱包 ==========
+        // ========== Connect Wallet ==========
         async function connectWallet() {
             try {
                 const walletProvider = window.okxwallet || window.ethereum;
                 if (!walletProvider) {
-                    alert('请安装 MetaMask 或 OKX Wallet！');
+                    const msg = window.i18n?.t('toast.wallet.noProvider') || 'Please install MetaMask or OKX Wallet!';
+                    if (window.DebearParty?.toast) {
+                        window.DebearParty.toast.error(msg);
+                    } else {
+                        alert(msg);
+                    }
                     return;
                 }
 
@@ -1088,7 +1133,12 @@
                             params: [{ chainId: '0x138de' }]
                         });
                     } catch (error) {
-                        alert('请切换到 Berachain 主网 (Chain ID: 80094)');
+                        const msg = window.i18n?.t('toast.wallet.switchNetwork') || 'Please switch to Berachain Mainnet (Chain ID: 80094)';
+                        if (window.DebearParty?.toast) {
+                            window.DebearParty.toast.error(msg);
+                        } else {
+                            alert(msg);
+                        }
                         return;
                     }
                 }
@@ -1096,7 +1146,7 @@
                 const accounts = await walletProvider.request({ method: 'eth_accounts' });
                 const userAddress = accounts[0];
                 
-                // 更新按钮显示
+                // Update button display
                 const shortAddr = userAddress.substring(0, 6) + '...' + userAddress.substring(38);
                 const connectBtns = document.querySelectorAll('.connect-btn');
                 connectBtns.forEach(btn => {
@@ -1104,21 +1154,31 @@
                     btn.disabled = true;
                 });
                 
-                // 保存连接状态
+                // Save connection state
                 localStorage.setItem('walletConnected', 'true');
                 localStorage.setItem('walletAddress', userAddress);
                 
-                // 检查 Owner 权限
+                // Check Owner permissions
                 checkOwnerAccess();
                 
-                alert('钱包连接成功！');
+                const successMsg = window.i18n?.t('toast.wallet.connected') || 'Wallet connected successfully!';
+                if (window.DebearParty?.toast) {
+                    window.DebearParty.toast.success(successMsg);
+                } else {
+                    alert(successMsg);
+                }
             } catch (error) {
                 console.error('Connect wallet error:', error);
-                alert('连接钱包失败: ' + error.message);
+                const errorMsg = (window.i18n?.t('toast.wallet.failed') || 'Failed to connect wallet') + ': ' + error.message;
+                if (window.DebearParty?.toast) {
+                    window.DebearParty.toast.error(errorMsg);
+                } else {
+                    alert(errorMsg);
+                }
             }
         }
 
-        // ========== 检查并恢复钱包连接 ==========
+        // ========== Check and restore wallet connection ==========
         async function checkWalletConnection() {
             const wasConnected = localStorage.getItem('walletConnected');
             if (!wasConnected) return;
@@ -1127,7 +1187,7 @@
                 const walletProvider = window.okxwallet || window.ethereum;
                 if (!walletProvider) return;
 
-                // 检查钱包是否仍然连接
+                // Check if wallet is still connected
                 const accounts = await walletProvider.request({ method: 'eth_accounts' });
                 if (accounts && accounts.length > 0) {
                     const userAddress = accounts[0];
@@ -1139,7 +1199,7 @@
                     });
                     localStorage.setItem('walletAddress', userAddress);
                 } else {
-                    // 钱包已断开，清除状态
+                    // Wallet disconnected, clear state
                     localStorage.removeItem('walletConnected');
                     localStorage.removeItem('walletAddress');
                 }
@@ -1148,29 +1208,29 @@
             }
         }
 
-        // ========== 页面加载时检查钱包连接 ==========
+        // ========== Check wallet connection on page load ==========
         window.addEventListener('load', () => {
             checkWalletConnection();
             checkOwnerAccess();
             updateWhitepaperLink();
         });
 
-        // ========== 监听语言切换事件 ==========
+        // ========== Listen for language change events ==========
         window.addEventListener('languageChanged', () => {
             updateWhitepaperLink();
         });
 
-        // ========== 根据当前语言更新白皮书链接 ==========
+        // ========== Update whitepaper link based on current language ==========
         function updateWhitepaperLink() {
             const whitepaperLink = document.querySelector('a[data-i18n="footer.developer.whitepaper"]');
             if (whitepaperLink && window.i18n) {
                 const currentLang = window.i18n.getCurrentLanguage();
-                // 根据当前语言设置白皮书链接
+                // Set whitepaper link based on current language
                 whitepaperLink.href = currentLang === 'zh-TW' ? 'whitepaper.html' : 'whitepaper-en.html';
             }
         }
 
-        // ========== 检查 Owner 权限 ==========
+        // ========== Check Owner permissions ==========
         async function checkOwnerAccess() {
             try {
                 const walletProvider = window.okxwallet || window.ethereum;
@@ -1179,7 +1239,7 @@
                 const accounts = await walletProvider.request({ method: 'eth_accounts' });
                 if (accounts && accounts.length > 0) {
                     const userAddress = accounts[0].toLowerCase();
-                    // Owner 地址
+                    // Owner address
                     const ownerAddress = '0xd8b4286c2f299220830f7228bab15225b4ea8379'.toLowerCase();
                     
                     if (userAddress === ownerAddress) {
@@ -1191,17 +1251,20 @@
             }
         }
 
-        // ========== 移动端菜单切换 ==========
+        // ========== Mobile menu toggle ==========
         function toggleMobileMenu() {
             const hamburger = document.querySelector('.hamburger');
             const mobileMenu = document.querySelector('.mobile-menu');
             const overlay = document.querySelector('.mobile-menu-overlay');
             
-            hamburger.classList.toggle('active');
+            const isActive = hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             overlay.classList.toggle('active');
             
-            // 防止背景滚动
+            // Update ARIA attributes for accessibility
+            hamburger.setAttribute('aria-expanded', isActive.toString());
+            
+            // Prevent background scrolling
             if (mobileMenu.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
             } else {
@@ -1209,7 +1272,7 @@
             }
         }
 
-        // ========== 平滑滚动 ==========
+        // ========== Smooth scroll ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();

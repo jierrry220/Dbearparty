@@ -373,7 +373,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            align-items: start;
+            grid-auto-rows: 1fr;
         }
 
         .page-title {
@@ -404,9 +404,9 @@
             padding: 30px;
             position: relative;
             overflow: hidden;
-            height: 100%;
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .swap-header {
@@ -894,6 +894,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
         
         .chart-header {
@@ -947,8 +948,9 @@
         
         .chart-container {
             position: relative;
-            flex: 1;
+            flex: 1 1 auto;
             min-height: 300px;
+            max-height: 500px;
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(0, 212, 255, 0.2);
             border-radius: 12px;
@@ -974,6 +976,7 @@
         @media (max-width: 1200px) {
             .swap-layout {
                 grid-template-columns: 1fr;
+                grid-auto-rows: auto;
             }
             
             .price-chart-card {
@@ -981,7 +984,7 @@
             }
             
             .swap-card {
-                height: auto;
+                min-height: auto;
             }
         }
         
@@ -1000,7 +1003,7 @@
             
             .chart-container {
                 min-height: 250px;
-                flex: 1;
+                max-height: 350px;
             }
         }
     </style>
@@ -1072,9 +1075,9 @@
         <div class="token-modal">
             <h3>Select Token</h3>
             
-            <!-- 自定义代币输入 (仅在 To 模式下显示) -->
+            <!-- Custom token input (only visible in To mode) -->
             <div class="custom-token-section" id="customTokenSection" style="display: none;">
-                <h4>🔍 输入自定义代币地址</h4>
+                <h4>🔍 Enter Custom Token Address</h4>
                 <input 
                     type="text" 
                     class="custom-token-input" 
@@ -1083,7 +1086,7 @@
                     maxlength="42"
                 >
                 <button class="add-custom-token-btn" id="addCustomTokenBtn" onclick="swapManager.addCustomToken()">
-                    添加代币
+                    Add Token
                 </button>
             </div>
             
@@ -1135,7 +1138,7 @@
             </div>
             
             <div class="chart-footer">
-                <span id="dpLastUpdate">Updated: --:--</span> | Powered by <strong>Ave Cloud Data API</strong>
+                <span id="dpLastUpdate">Updated: --:--</span> | Powered by <strong>Ave</strong>
             </div>
         </div>
 

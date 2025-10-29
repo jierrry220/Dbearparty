@@ -60,7 +60,7 @@ const translations = {
         
         // Footer
         'footer.about.title': 'About Us',
-        'footer.about.desc': 'Debear Party is a Web3 gaming platform based on Berachain, committed to building a decentralized gaming ecosystem.',
+        'footer.about.desc': 'Debear Party is an innovative Web3.0 comprehensive platform based on Berachain, featuring DeFi, GameFi, and RWA, committed to building a decentralized community ecosystem.',
         
         'footer.developer.title': 'Developer',
         'footer.developer.whitepaper': 'Whitepaper',
@@ -267,7 +267,7 @@ const translations = {
         
         // Footer
         'footer.about.title': '關於我們',
-        'footer.about.desc': 'Debear Party 是基於 Berachain 的 Web3 遊戲平台，致力於打造去中心化的遊戲生態系統。',
+        'footer.about.desc': 'Debear Party 是基於 Berachain 的創新型Web3.0綜合平台，擁有 DeFi、GameFi、RWA，致力於打造去中心化的社區生態系統。',
         
         'footer.developer.title': '開發者',
         'footer.developer.whitepaper': '白皮書',

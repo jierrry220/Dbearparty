@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameFi - Debear Party</title>
     <style>
-        /* ========== 全局样式 ========== */
+        /* ========== Global Styles ========== */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
             --text-secondary: #a0b1d4;
             --grid-color: rgba(0, 196, 239, 0.12);
             
-            /* z-index 层级系统 */
+            /* z-index layering system */
             --z-background: -1;
             --z-content: 1;
             --z-navbar: 100;
@@ -35,7 +35,7 @@
             --z-toast: 200;
             --z-modal: 300;
             
-            /* 间距系统 */
+            /* Spacing system */
             --spacing-xs: 8px;
             --spacing-sm: 16px;
             --spacing-md: 24px;
@@ -53,7 +53,7 @@
             line-height: 1.6;
         }
 
-        /* ========== 粒子背景 ========== */
+        /* ========== Particle Background ========== */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -91,7 +91,7 @@
             100% { transform: translateY(50px); }
         }
 
-        /* ========== 导航栏 ========== */
+        /* ========== Navbar ========== */
         .navbar {
             position: fixed;
             top: 0;
@@ -170,7 +170,7 @@
             gap: 15px;
         }
 
-        /* 语言切换器 */
+        /* Language switcher */
         .lang-switcher {
             position: relative;
             margin-right: 16px;
@@ -257,7 +257,7 @@
             border-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ========== 汉堡菜单按钮 ========== */
+        /* ========== Hamburger Menu Button ========== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -288,7 +288,7 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
 
-        /* ========== 移动端侧边栏菜单 ========== */
+        /* ========== Mobile Sidebar Menu ========== */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -365,7 +365,7 @@
             margin-top: 30px;
         }
 
-        /* ========== 主内容区 ========== */
+        /* ========== Main Content Area ========== */
         .main-content {
             min-height: 100vh;
             display: flex;
@@ -534,7 +534,7 @@
             box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 4px 20px rgba(0, 212, 255, 0.4);
         }
 
-        /* ========== 响应式设计 ========== */
+        /* ========== Responsive Design ========== */
         @media (max-width: 768px) {
             .nav-menu { display: none; }
             .lang-switcher { display: none; }
@@ -561,10 +561,10 @@
     </style>
 </head>
 <body>
-    <!-- 粒子背景 -->
+    <!-- Particle background -->
     <div id="particles-js"></div>
 
-    <!-- 导航栏 -->
+    <!-- Navbar -->
     <nav class="navbar">
         <a href="index.html" class="logo">🐻 Debear Party</a>
         <ul class="nav-menu">
@@ -575,7 +575,7 @@
             <li><a href="gamefi.html" class="active" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
         <div class="nav-buttons">
-            <!-- 语言切换器 -->
+            <!-- Language switcher -->
             <div class="lang-switcher">
                 <button class="lang-btn">EN</button>
                 <div class="lang-dropdown">
@@ -596,10 +596,10 @@
         </div>
     </nav>
 
-    <!-- 移动端菜单遮罩 -->
+    <!-- Mobile menu overlay -->
     <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
 
-    <!-- 移动端侧边栏菜单 -->
+    <!-- Mobile sidebar menu -->
     <div class="mobile-menu">
         <ul class="mobile-nav-links">
             <li><a href="index.html" data-i18n="nav.home">Home</a></li>
@@ -608,7 +608,7 @@
             <li><a href="t-engine.html" data-i18n="nav.tengine">T-Engine</a></li>
             <li><a href="gamefi.html" class="active" data-i18n="nav.gamefi">GameFi</a></li>
         </ul>
-        <!-- 移动端语言选择 -->
+        <!-- Mobile language selection -->
         <div style="margin-top: 20px; padding: 10px 0; border-top: 1px solid rgba(0, 212, 255, 0.2);">
             <div class="lang-option" style="padding: 12px; cursor: pointer;" data-lang="en" onclick="window.i18n?.setLanguage('en')">
                 <span data-i18n="lang.en">English</span>
@@ -620,7 +620,7 @@
         <button class="connect-btn mobile-connect-btn" onclick="connectWallet()" data-i18n="nav.connect">Connect Wallet</button>
     </div>
 
-    <!-- 主内容区 -->
+    <!-- Main content area -->
     <section class="main-content">
         <div class="development-container">
             <div class="development-icon" data-i18n="gamefi.title">🎮</div>
@@ -654,17 +654,17 @@
         </div>
     </section>
 
-    <!-- 粒子效果库 -->
+    <!-- Particle effects library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     
-    <!-- 国际化配置 -->
+    <!-- Internationalization config -->
     <script src="js/i18n.js"></script>
     
-    <!-- 公共脚本 -->
+    <!-- Common scripts -->
     <script src="js/common.js"></script>
     
     <script>
-        // ========== 粒子背景配置 ==========
+        // ========== Particle background config ==========
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -702,7 +702,7 @@
             }
         });
 
-        // ========== 导航栏滚动效果 ==========
+        // ========== Navbar scroll effect ==========
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 100) {
@@ -712,12 +712,17 @@
             }
         });
 
-        // ========== 连接钱包 ==========
+        // ========== Connect Wallet ==========
         async function connectWallet() {
             try {
                 const walletProvider = window.okxwallet || window.ethereum;
                 if (!walletProvider) {
-                    alert('请安装 MetaMask 或 OKX Wallet！');
+                    const msg = window.i18n?.t('toast.wallet.noProvider') || 'Please install MetaMask or OKX Wallet!';
+                    if (window.DebearParty?.toast) {
+                        window.DebearParty.toast.error(msg);
+                    } else {
+                        alert(msg);
+                    }
                     return;
                 }
 
@@ -731,7 +736,12 @@
                             params: [{ chainId: '0x138de' }]
                         });
                     } catch (error) {
-                        alert('请切换到 Berachain 主网 (Chain ID: 80094)');
+                        const msg = window.i18n?.t('toast.wallet.switchNetwork') || 'Please switch to Berachain Mainnet (Chain ID: 80094)';
+                        if (window.DebearParty?.toast) {
+                            window.DebearParty.toast.error(msg);
+                        } else {
+                            alert(msg);
+                        }
                         return;
                     }
                 }
@@ -749,14 +759,24 @@
                 localStorage.setItem('walletConnected', 'true');
                 localStorage.setItem('walletAddress', userAddress);
                 
-                alert('钱包连接成功！');
+                const successMsg = window.i18n?.t('toast.wallet.connected') || 'Wallet connected successfully!';
+                if (window.DebearParty?.toast) {
+                    window.DebearParty.toast.success(successMsg);
+                } else {
+                    alert(successMsg);
+                }
             } catch (error) {
                 console.error('Connect wallet error:', error);
-                alert('连接钱包失败: ' + error.message);
+                const errorMsg = (window.i18n?.t('toast.wallet.failed') || 'Failed to connect wallet') + ': ' + error.message;
+                if (window.DebearParty?.toast) {
+                    window.DebearParty.toast.error(errorMsg);
+                } else {
+                    alert(errorMsg);
+                }
             }
         }
 
-        // ========== 检查并恢复钱包连接 ==========
+        // ========== Check and restore wallet connection ==========
         async function checkWalletConnection() {
             const wasConnected = localStorage.getItem('walletConnected');
             if (!wasConnected) return;
@@ -784,12 +804,12 @@
             }
         }
 
-        // ========== 页面加载时检查钱包连接 ==========
+        // ========== Check wallet connection on page load ==========
         window.addEventListener('load', () => {
             checkWalletConnection();
         });
 
-        // ========== 移动端菜单切换 ==========
+        // ========== Mobile menu toggle ==========
         function toggleMobileMenu() {
             const hamburger = document.querySelector('.hamburger');
             const mobileMenu = document.querySelector('.mobile-menu');

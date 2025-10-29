@@ -44,7 +44,8 @@ yarn-error.log*
 zeabur.json
 
 # 管理员后台（敏感）
-admin.html
+# admin.html 已移动到 owner/ 文件夹
+owner/
 admin*.html
 
 # 合约和部署脚本（可能包含敏感信息）

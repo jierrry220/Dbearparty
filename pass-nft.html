@@ -1259,7 +1259,7 @@
         let pendingSendPassLevel = null;
         let pendingSendPassName = null;
 
-        // 切换选项卡
+        // Switch tab
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -1268,12 +1268,12 @@
             document.getElementById(`tab-${tab}`).classList.add('active');
         }
 
-        // 连接钱包
+        // Connect wallet
         async function connectWallet() {
             try {
                 const walletProvider = window.okxwallet || window.ethereum;
                 if (!walletProvider) {
-                    showMessage('请安装 MetaMask 或 OKX Wallet', 'error');
+                    showMessage('Please install MetaMask or OKX Wallet', 'error');
                     return;
                 }
 
@@ -1295,22 +1295,22 @@
                 document.getElementById('connectBtn').textContent = shortAddr;
                 document.getElementById('connectBtn').disabled = true;
 
-                // 保存连接状态
+                // Save connection state
                 localStorage.setItem('walletConnected', 'true');
                 localStorage.setItem('walletAddress', userAddress);
 
-                // 检查邀请关系
+                // Check inviter relationship
                 await checkInviter();
 
                 await refreshData();
                 startAutoRefresh();
-                showMessage('钱包连接成功', 'success');
+                showMessage('Wallet connected successfully', 'success');
             } catch (error) {
-                showMessage('连接失败: ' + error.message, 'error');
+                showMessage('Connection failed: ' + error.message, 'error');
             }
         }
 
-        // 检查并恢复钱包连接
+        // Check and restore wallet connection
         async function checkWalletConnection() {
             const wasConnected = localStorage.getItem('walletConnected');
             if (!wasConnected) return false;
@@ -1323,7 +1323,7 @@
                     return false;
                 }
 
-                // 先检查网络
+                // Check network first
                 const chainId = await walletProvider.request({ method: 'eth_chainId' });
                 if (chainId !== '0x138de') {
                     console.log('Wrong network, need to switch to Berachain');
@@ -1361,181 +1361,181 @@
             }
         }
 
-        // 页面加载时初始化
+        // Initialize on page load
         window.addEventListener('load', async () => {
-            // 先检查是否有已连接的钱包
+            // Check if wallet is already connected
             const walletRestored = await checkWalletConnection();
             
-            // 如果没有连接钱包，初始化一个只读 provider 用于获取公开数据
+            // If no wallet connected, initialize a read-only provider for public data
             if (!walletRestored && !provider) {
                 try {
                     provider = new ethers.providers.JsonRpcProvider('https://rpc.berachain.com');
                     await refreshData();
                 } catch (error) {
-                    console.error('初始化失败:', error);
+                    console.error('Initialization failed:', error);
                 }
             }
         });
 
-        // 检查邀请关系
+        // Check inviter relationship
         async function checkInviter() {
             try {
                 const invitation = new ethers.Contract(INVITATION_SYSTEM, INVITATION_ABI, provider);
                 const inviter = await invitation.getInviter(userAddress);
                 
                 if (inviter === ethers.constants.AddressZero) {
-                    // 新用户，标记为零地址（需要弹窗让用户选择）
+                    // New user, set to zero address (need modal for user to choose)
                     userInviter = ethers.constants.AddressZero;
-                    console.log('🆕 新用户，等待绑定邀请人');
+                    console.log('🆕 New user, waiting to bind inviter');
                 } else {
-                    // 已有邀请人
+                    // Already has inviter
                     userInviter = inviter;
-                    console.log('👥 已有邀请人:', userInviter);
+                    console.log('👥 Already has inviter:', userInviter);
                 }
             } catch (error) {
-                console.error('检查邀请关系失败:', error);
+                console.error('Check inviter failed:', error);
                 userInviter = ethers.constants.AddressZero;
             }
         }
 
-        // 购买Pass
+        // Buy Pass
         async function buyPass(level) {
             if (!signer) {
-                showMessage('请先连接钱包', 'error');
+                showMessage('Please connect wallet first', 'error');
                 return;
             }
 
-            // 重新检查邀请关系
+            // Re-check inviter relationship
             await checkInviter();
-            console.log('👥 当前 userInviter:', userInviter);
+            console.log('👥 Current userInviter:', userInviter);
             console.log('👥 DEFAULT_INVITER:', DEFAULT_INVITER);
             
-            // 检查是否是新用户（链上没有邀请人）
+            // Check if is new user (no inviter on chain)
             if (userInviter === ethers.constants.AddressZero) {
-                console.log('ℹ️ 新用户，显示邀请人弹窗');
-                // 显示弹窗让用户输入邀请人
+                console.log('ℹ️ New user, showing inviter modal');
+                // Show modal for user to enter inviter
                 pendingPassLevel = level;
                 showInviteModal();
                 return;
             }
 
-            console.log('✅ 已有邀请人，直接购买');
-            // 执行购买
+            console.log('✅ Already has inviter, proceeding with purchase');
+            // Execute purchase
             await executeBuyPass(level, userInviter);
         }
 
-        // 执行购买Pass
+        // Execute Pass purchase
         async function executeBuyPass(level, inviter) {
             try {
                 const passSale = new ethers.Contract(CONTRACTS.passSale, PASS_SALE_ABI, signer);
                 const prices = await passSale.getAllPrices();
                 
-                showMessage('正在购买 Pass...', 'info');
+                showMessage('Purchasing Pass...', 'info');
                 const tx = await passSale.buyPass(level, inviter, { value: prices[level - 1] });
                 await tx.wait();
                 
-                showMessage('Pass 购买成功！', 'success');
+                showMessage('Pass purchased successfully!', 'success');
                 
-                // 更新邀请关系
+                // Update inviter relationship
                 userInviter = inviter;
                 
                 await refreshData();
             } catch (error) {
-                showMessage('购买失败: ' + error.message, 'error');
+                showMessage('Purchase failed: ' + error.message, 'error');
             }
         }
 
-        // 显示邀请人弹窗
+        // Show inviter modal
         function showInviteModal() {
             document.getElementById('inviteModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // 关闭邀请人弹窗（不执行购买）
+        // Close inviter modal (without purchase)
         function closeInviteModal(useDefault = false) {
             document.getElementById('inviteModal').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('modalInviterInput').value = '';
             
-            // 只有明确点击 Skip 按钮时才使用默认邀请人
+            // Only use default inviter when explicitly clicking Skip button
             if (useDefault && pendingPassLevel) {
-                console.log('⚠️ 跳过填写，使用默认邀请人:', DEFAULT_INVITER);
+                console.log('⚠️ Skipping, using default inviter:', DEFAULT_INVITER);
                 executeBuyPass(pendingPassLevel, DEFAULT_INVITER);
                 pendingPassLevel = null;
             } else {
-                console.log('❌ 取消购买');
+                console.log('❌ Purchase cancelled');
                 pendingPassLevel = null;
             }
         }
 
-        // 确认邀请人
+        // Confirm inviter
         function confirmInviter() {
             const inviterInput = document.getElementById('modalInviterInput').value.trim();
             
-            // 验证邀请人地址格式
+            // Validate inviter address format
             if (inviterInput && !ethers.utils.isAddress(inviterInput)) {
-                alert('请输入有效的以太坡地址格式');
+                alert('Please enter a valid Ethereum address format');
                 return;
             }
             
             const inviter = inviterInput || DEFAULT_INVITER;
-            console.log('✅ 确认邀请人:', inviter);
+            console.log('✅ Confirmed inviter:', inviter);
             
-            // 先关闭弹窗（不触发默认逻辑）
+            // Close modal first (don't trigger default logic)
             document.getElementById('inviteModal').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('modalInviterInput').value = '';
             
-            // 执行购买
+            // Execute purchase
             if (pendingPassLevel) {
                 executeBuyPass(pendingPassLevel, inviter);
                 pendingPassLevel = null;
             }
         }
 
-        // 初始化NFT挖矿
+        // Initialize NFT Mining
         async function initNFTMining() {
             if (!signer) {
-                showMessage('请先连接钱包', 'error');
+                showMessage('Please connect wallet first', 'error');
                 return;
             }
             try {
                 const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, signer);
-                showMessage('正在初始化...', 'info');
+                showMessage('Initializing...', 'info');
                 const tx = await nftMining.initializeMining();
                 await tx.wait();
-                showMessage('初始化成功！', 'success');
+                showMessage('Initialization successful!', 'success');
                 
-                // 隐藏初始化覆盖层
+                // Hide initialization overlay
                 document.getElementById('initOverlay').classList.add('hidden');
                 
                 await refreshData();
             } catch (error) {
-                showMessage('初始化失败: ' + (error.reason || error.message), 'error');
+                showMessage('Initialization failed: ' + (error.reason || error.message), 'error');
             }
         }
 
-        // 领取NFT奖励
+        // Claim NFT reward
         async function claimNFTReward() {
             if (!signer) return;
             try {
                 const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, signer);
-                showMessage('正在领取...', 'info');
+                showMessage('Claiming...', 'info');
                 const tx = await nftMining.claimNFTReward();
                 await tx.wait();
-                showMessage('领取成功！', 'success');
+                showMessage('Claimed successfully!', 'success');
                 await refreshData();
             } catch (error) {
-                showMessage('领取失败: ' + error.message, 'error');
+                showMessage('Claim failed: ' + error.message, 'error');
             }
         }
 
-        // 刷新数据
+        // Refresh data
         async function refreshData() {
             if (!provider) return;
 
             try {
-                // 获取价格
+                // Get prices
                 const passSale = new ethers.Contract(CONTRACTS.passSale, PASS_SALE_ABI, provider);
                 const prices = await passSale.getAllPrices();
                 document.getElementById('priceStd').textContent = parseFloat(ethers.utils.formatEther(prices[0])).toFixed(3) + ' BERA';
@@ -1544,7 +1544,7 @@
 
                 if (!userAddress) return;
 
-                // 获取Pass持有数量
+                // Get Pass holding counts
                 const passNFT = new ethers.Contract(CONTRACTS.debearPass, PASS_ABI, provider);
                 const [std, pre, ex] = await Promise.all([
                     passNFT.balanceOf(userAddress, 1),
@@ -1555,10 +1555,10 @@
                 document.getElementById('preCount').textContent = pre.toString();
                 document.getElementById('exCount').textContent = ex.toString();
 
-                // 更新NFT橱窗展示
+                // Update NFT showcase display
                 updateNFTShowcase(std.toNumber(), pre.toNumber(), ex.toNumber());
 
-                // 获取挖矿信息
+                // Get mining info
                 const nftMining = new ethers.Contract(CONTRACTS.nftMining, NFT_MINING_ABI, provider);
                 const miningInfo = await nftMining.getUserMiningInfo(userAddress);
                 const dailyReward = await nftMining.getTotalDailyReward(userAddress);
@@ -1572,7 +1572,7 @@
                     document.getElementById('lastClaim').textContent = lastClaim.toLocaleString('zh-CN');
                 }
                 
-                // 检查是否已初始化：如果 lastClaimTime > 0 表示已初始化
+                // Check if initialized: lastClaimTime > 0 means initialized
                 const isInitialized = Number(miningInfo[6]) > 0;
                 const initOverlay = document.getElementById('initOverlay');
                 if (isInitialized) {
@@ -1581,24 +1581,24 @@
                     initOverlay.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error('刷新数据失败:', error);
+                console.error('Refresh data failed:', error);
             }
         }
 
-        // 显示消息
+        // Show message
         function showMessage(text, type = 'info') {
             const messageDiv = document.getElementById('message');
             messageDiv.innerHTML = `<div class="alert ${type}">${text}</div>`;
             setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
         }
 
-        // 启动自动刷新
+        // Start auto refresh
         function startAutoRefresh() {
-            // 清除之前的定时器
+            // Clear previous timer
             if (refreshInterval) {
                 clearInterval(refreshInterval);
             }
-            // 每10秒刷新一次
+            // Refresh every 10 seconds
             refreshInterval = setInterval(async () => {
                 if (userAddress && provider) {
                     await refreshData();
@@ -1606,7 +1606,7 @@
             }, 10000);
         }
 
-        // 停止自动刷新
+        // Stop auto refresh
         function stopAutoRefresh() {
             if (refreshInterval) {
                 clearInterval(refreshInterval);
@@ -1614,12 +1614,12 @@
             }
         }
 
-        // 更新NFT橱窗展示
+        // Update NFT showcase
         function updateNFTShowcase(stdCount, preCount, exCount) {
             const showcase = document.getElementById('nftShowcase');
             const grid = document.getElementById('nftGrid');
             
-            // 检查是否持有任何Pass
+            // Check if holding any Pass
             const hasAnyPass = stdCount > 0 || preCount > 0 || exCount > 0;
             
             if (!hasAnyPass) {
@@ -1630,21 +1630,21 @@
             showcase.classList.add('visible');
             grid.innerHTML = '';
             
-            // 定义Pass信息
+            // Define Pass info
             const passes = [
                 { count: stdCount, name: 'Standard Pass', badge: 'STANDARD', image: 'pass-picture/Standard.jpg', multiplier: '1x' },
                 { count: preCount, name: 'Premium Pass', badge: 'PREMIUM', image: 'pass-picture/Premium.jpg', multiplier: '3.5x' },
                 { count: exCount, name: 'Exclusive Pass', badge: 'EXCLUSIVE', image: 'pass-picture/Exclusive.jpg', multiplier: '7x' }
             ];
             
-            // 生成NFT卡片
+            // Generate NFT cards
             passes.forEach((pass, index) => {
                 if (pass.count > 0) {
                     const nftItem = document.createElement('div');
                     nftItem.className = 'nft-item';
                     nftItem.innerHTML = `
                         <img src="${pass.image}" alt="${pass.name}" class="nft-image">
-                        <div class="nft-count">持有数量: ${pass.count}</div>
+                        <div class="nft-count">Owned: ${pass.count}</div>
                         <button class="nft-send-btn" onclick="openSendModal(${index + 1}, '${pass.name}', ${pass.count})">Send</button>
                     `;
                     grid.appendChild(nftItem);
@@ -1652,10 +1652,10 @@
             });
         }
 
-        // 打开发送NFT弹窗
+        // Open Send NFT modal
         function openSendModal(passLevel, passName, available) {
             if (!signer) {
-                showMessage('请先连接钱包', 'error');
+                showMessage('Please connect wallet first', 'error');
                 return;
             }
             
@@ -1672,7 +1672,7 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // 关闭发送弹窗
+        // Close Send modal
         function closeSendModal() {
             document.getElementById('sendModal').classList.remove('active');
             document.body.style.overflow = '';
@@ -1680,27 +1680,27 @@
             pendingSendPassName = null;
         }
 
-        // 确认发送
+        // Confirm send
         async function confirmSend() {
             const toAddress = document.getElementById('sendToAddress').value.trim();
             const amount = parseInt(document.getElementById('sendAmount').value);
             
             if (!toAddress || !ethers.utils.isAddress(toAddress)) {
-                showMessage('请输入有效的接收地址', 'error');
+                showMessage('Please enter a valid recipient address', 'error');
                 return;
             }
             
             if (!amount || amount < 1 || isNaN(amount)) {
-                showMessage('请输入有效的数量', 'error');
+                showMessage('Please enter a valid amount', 'error');
                 return;
             }
             
             if (!pendingSendPassLevel || !pendingSendPassName) {
-                showMessage('请重新选择要发送的 NFT', 'error');
+                showMessage('Please reselect the NFT to send', 'error');
                 return;
             }
             
-            // 保存变量，避免关闭弹窗时被清除
+            // Save variables to avoid being cleared when modal closes
             const passLevel = pendingSendPassLevel;
             const passName = pendingSendPassName;
             
@@ -1709,9 +1709,9 @@
             try {
                 const passNFT = new ethers.Contract(CONTRACTS.debearPass, PASS_ABI, signer);
                 
-                showMessage(`正在发送 ${amount} 个 ${passName}...`, 'info');
+                showMessage(`Sending ${amount} ${passName}...`, 'info');
                 
-                // 直接转账，不需要给自己授权
+                // Direct transfer, no self-approval needed
                 const tx = await passNFT.safeTransferFrom(
                     userAddress,
                     toAddress,
@@ -1721,17 +1721,17 @@
                 );
                 
                 await tx.wait();
-                showMessage('NFT 发送成功！', 'success');
+                showMessage('NFT sent successfully!', 'success');
                 
-                // 刷新数据
+                // Refresh data
                 await refreshData();
             } catch (error) {
                 console.error('Send error:', error);
-                showMessage('发送失败: ' + (error.reason || error.message), 'error');
+                showMessage('Send failed: ' + (error.reason || error.message), 'error');
             }
         }
 
-        // 移动端菜单切换
+        // Mobile menu toggle
         function toggleMobileMenu() {
             const hamburger = document.querySelector('.hamburger');
             const mobileMenu = document.querySelector('.mobile-menu');

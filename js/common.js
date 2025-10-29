@@ -1,15 +1,15 @@
 /**
- * Debear Party - 公共JavaScript文件
- * 包含：钱包连接、移动端菜单、Toast提示、Loading、粒子效果等
+ * Debear Party - Common JavaScript File
+ * Includes: Wallet Connection, Mobile Menu, Toast Notifications, Loading, Particle Effects, etc.
  */
 
 // ========================================
-// 全局配置
+// Global Configuration
 // ========================================
 const CONFIG = {
     BERACHAIN_CHAIN_ID: '0x138de', // 80094 in hex
     BERACHAIN_CHAIN_ID_DECIMAL: 80094,
-    OWNER_ADDRESS: '0xd8B4286c2f299220830f7228bab15225b4EA8379', // Owner 地址（可选）
+    OWNER_ADDRESS: '0xd8B4286c2f299220830f7228bab15225b4EA8379', // Owner address (optional)
     PARTICLES_CONFIG: {
         particles: {
             number: { value: 100, density: { enable: true, value_area: 800 } },
@@ -57,7 +57,7 @@ const CONFIG = {
 };
 
 // ========================================
-// Toast 提示系统
+// Toast Notification System
 // ========================================
 class ToastManager {
     constructor() {
@@ -66,7 +66,7 @@ class ToastManager {
     }
 
     init() {
-        // 创建toast容器
+        // Create toast container
         if (!document.querySelector('.toast-container')) {
             this.container = document.createElement('div');
             this.container.className = 'toast-container';
@@ -80,13 +80,13 @@ class ToastManager {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
         
-        // 添加图标
+        // Add icon
         const icon = this.getIcon(type);
         toast.innerHTML = `${icon}<span>${message}</span>`;
         
         this.container.appendChild(toast);
-
-        // 自动移除
+        
+        // Auto remove
         setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateX(100px)';
@@ -127,11 +127,11 @@ class ToastManager {
     }
 }
 
-// 全局toast实例
+// Global toast instance
 const toast = new ToastManager();
 
 // ========================================
-// Loading 加载管理
+// Loading Manager
 // ========================================
 class LoadingManager {
     constructor() {
@@ -145,31 +145,31 @@ class LoadingManager {
             this.overlay.className = 'loading-overlay';
             this.overlay.innerHTML = `
                 <div class="loading-spinner"></div>
-                <div class="loading-text">加载中...</div>
+                <div class="loading-text">Loading...</div>
             `;
-            // 确保初始状态是隐藏的
+            // Ensure initial state is hidden
             this.overlay.style.display = 'none';
             document.body.appendChild(this.overlay);
         } else {
             this.overlay = document.querySelector('.loading-overlay');
-            // 确保已存在的元素也是隐藏的
+            // Ensure existing element is also hidden
             this.overlay.classList.remove('active');
             this.overlay.style.display = 'none';
         }
     }
 
-    show(text = '加载中...') {
+    show(text = 'Loading...') {
         if (this.overlay) {
             const textEl = this.overlay.querySelector('.loading-text');
             if (textEl) {
                 textEl.textContent = text;
             }
             this.overlay.style.display = 'flex';
-            // 使用 setTimeout 确保 display 先生效
+            // Use setTimeout to ensure display takes effect first
             setTimeout(() => {
                 this.overlay.classList.add('active');
             }, 10);
-            // 禁止页面滚动
+            // Prevent page scrolling
             document.body.style.overflow = 'hidden';
         }
     }
@@ -177,21 +177,21 @@ class LoadingManager {
     hide() {
         if (this.overlay) {
             this.overlay.classList.remove('active');
-            // 等待动画结束后再隐藏
+            // Wait for animation to end before hiding
             setTimeout(() => {
                 this.overlay.style.display = 'none';
             }, 300);
-            // 恢复页面滚动
+            // Restore page scrolling
             document.body.style.overflow = '';
         }
     }
 }
 
-// 全局loading实例
+// Global loading instance
 const loading = new LoadingManager();
 
 // ========================================
-// 钱包管理
+// Wallet Manager
 // ========================================
 class WalletManager {
     constructor() {
@@ -200,7 +200,7 @@ class WalletManager {
         this.isConnected = false;
     }
 
-    // 获取钱包提供者
+    // Get wallet provider
     getProvider() {
         if (window.okxwallet) {
             return window.okxwallet;
@@ -210,7 +210,7 @@ class WalletManager {
         return null;
     }
 
-    // 连接钱包
+    // Connect wallet
     async connect() {
         try {
             this.provider = this.getProvider();
@@ -224,12 +224,12 @@ class WalletManager {
             const loadingMsg = window.i18n ? window.i18n.t('loading.connecting') : 'Connecting wallet...';
             loading.show(loadingMsg);
 
-            // 请求账户权限
+            // Request account permission
             const accounts = await this.provider.request({ 
                 method: 'eth_requestAccounts' 
             });
 
-            // 检查并切换到Berachain网络
+            // Check and switch to Berachain network
             const chainId = await this.provider.request({ method: 'eth_chainId' });
             if (chainId !== CONFIG.BERACHAIN_CHAIN_ID) {
                 try {
@@ -248,14 +248,14 @@ class WalletManager {
             this.address = accounts[0];
             this.isConnected = true;
 
-            // 保存连接状态
+            // Save connection state
             localStorage.setItem('walletConnected', 'true');
             localStorage.setItem('walletAddress', this.address);
 
-            // 更新UI
+            // Update UI
             this.updateUI();
 
-            // 检查Owner权限
+            // Check Owner permissions
             this.checkOwnerAccess();
 
             loading.hide();
@@ -272,7 +272,7 @@ class WalletManager {
         }
     }
 
-    // 检查钱包连接状态
+    // Check wallet connection status
     async checkConnection() {
         const wasConnected = localStorage.getItem('walletConnected');
         if (!wasConnected) return false;
@@ -293,7 +293,7 @@ class WalletManager {
                 this.checkOwnerAccess();
                 return true;
             } else {
-                // 钱包已断开
+                // Wallet disconnected
                 this.disconnect();
                 return false;
             }
@@ -303,7 +303,7 @@ class WalletManager {
         }
     }
 
-    // 断开连接
+    // Disconnect wallet
     disconnect() {
         this.isConnected = false;
         this.address = null;
@@ -312,7 +312,7 @@ class WalletManager {
         this.updateUI();
     }
 
-    // 更新UI显示
+    // Update UI display
     updateUI() {
         const connectBtns = document.querySelectorAll('.connect-btn');
         
@@ -331,11 +331,11 @@ class WalletManager {
         }
     }
 
-    // 检查Owner权限
+    // Check Owner permissions
     checkOwnerAccess() {
         if (!this.address) return;
         
-        // 安全检查: 如果没有配置 OWNER_ADDRESS，直接返回
+        // Safety check: if OWNER_ADDRESS is not configured, return directly
         if (!CONFIG.OWNER_ADDRESS) return;
 
         const userAddress = this.address.toLowerCase();
@@ -347,12 +347,12 @@ class WalletManager {
         }
     }
 
-    // 获取当前地址
+    // Get current address
     getAddress() {
         return this.address;
     }
 
-    // 监听账户变化
+    // Listen for account changes
     onAccountsChanged(callback) {
         if (this.provider) {
             this.provider.on('accountsChanged', (accounts) => {
@@ -369,11 +369,11 @@ class WalletManager {
         }
     }
 
-    // 监听网络变化
+    // Listen for network changes
     onChainChanged(callback) {
         if (this.provider) {
             this.provider.on('chainChanged', (chainId) => {
-                // 重新加载页面
+                // Reload page
                 window.location.reload();
                 if (callback) callback(chainId);
             });
@@ -381,11 +381,11 @@ class WalletManager {
     }
 }
 
-// 全局钱包实例
+// Global wallet instance
 const wallet = new WalletManager();
 
 // ========================================
-// 移动端菜单管理
+// Mobile Menu Manager
 // ========================================
 class MobileMenuManager {
     constructor() {
@@ -409,12 +409,12 @@ class MobileMenuManager {
             this.overlay.addEventListener('click', () => this.close());
         }
 
-        // 点击菜单链接后自动关闭
+        // Auto close after clicking menu links
         if (this.menu) {
             const links = this.menu.querySelectorAll('a, button');
             links.forEach(link => {
                 link.addEventListener('click', () => {
-                    // 延迟关闭，让页面跳转先执行
+                    // Delay close to allow page navigation to execute first
                     setTimeout(() => this.close(), 100);
                 });
             });
@@ -447,7 +447,7 @@ class MobileMenuManager {
 }
 
 // ========================================
-// 导航栏滚动效果
+// Navbar Scroll Effect
 // ========================================
 class NavbarManager {
     constructor() {
@@ -473,7 +473,7 @@ class NavbarManager {
 }
 
 // ========================================
-// 滚动动画观察器
+// Scroll Animation Observer
 // ========================================
 class ScrollAnimationManager {
     constructor() {
@@ -495,13 +495,13 @@ class ScrollAnimationManager {
             });
         }, options);
 
-        // 观察所有fade-in元素
+        // Observe all fade-in elements
         document.querySelectorAll('.fade-in').forEach(el => {
             this.observer.observe(el);
         });
     }
 
-    // 添加新元素到观察列表
+    // Add new element to observation list
     observe(element) {
         if (this.observer && element) {
             this.observer.observe(element);
@@ -510,7 +510,7 @@ class ScrollAnimationManager {
 }
 
 // ========================================
-// 粒子背景初始化
+// Particle Background Initialization
 // ========================================
 function initParticles() {
     if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
@@ -519,7 +519,7 @@ function initParticles() {
 }
 
 // ========================================
-// 平滑滚动
+// Smooth Scroll
 // ========================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -540,14 +540,14 @@ function initSmoothScroll() {
 }
 
 // ========================================
-// 全局连接钱包函数（向后兼容）
+// Global Connect Wallet Function (backward compatible)
 // ========================================
 async function connectWallet() {
     return await wallet.connect();
 }
 
 // ========================================
-// 移动端菜单切换函数（向后兼容）
+// Mobile Menu Toggle Function (backward compatible)
 // ========================================
 function toggleMobileMenu() {
     if (window.mobileMenu) {
@@ -556,39 +556,39 @@ function toggleMobileMenu() {
 }
 
 // ========================================
-// 页面初始化
+// Page Initialization
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化粒子背景
+    // Initialize particle background
     initParticles();
 
-    // 初始化移动端菜单
+    // Initialize mobile menu
     window.mobileMenu = new MobileMenuManager();
 
-    // 初始化导航栏
+    // Initialize navbar
     window.navbar = new NavbarManager();
 
-    // 初始化滚动动画
+    // Initialize scroll animation
     window.scrollAnimation = new ScrollAnimationManager();
 
-    // 初始化平滑滚动
+    // Initialize smooth scroll
     initSmoothScroll();
 
-    // 检查钱包连接状态
+    // Check wallet connection status
     wallet.checkConnection();
 
-    // 监听钱包事件
+    // Listen for wallet events
     wallet.onAccountsChanged();
     wallet.onChainChanged();
     
-    // 监听语言切换事件，更新钱包按钮文本
+    // Listen for language change events, update wallet button text
     window.addEventListener('languageChanged', () => {
         wallet.updateUI();
     });
 });
 
 // ========================================
-// 导出全局对象
+// Export Global Object
 // ========================================
 window.DebearParty = {
     wallet,

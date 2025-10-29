@@ -108,7 +108,7 @@ class SwapManager {
                 await this.provider.getNetwork();
             } catch (backupError) {
                 console.error('Both RPC endpoints failed:', backupError);
-                this.showMessage('无法连接到 Berachain 网络，请稍后再试', 'error');
+                this.showMessage('Unable to connect to Berachain network, please try again later', 'error');
             }
         }
         
@@ -202,7 +202,7 @@ class SwapManager {
             }
         } catch (error) {
             console.error('Error calculating swap amount:', error);
-            this.showMessage('获取报价失败: ' + error.message, 'error');
+            this.showMessage('Failed to get quote: ' + error.message, 'error');
         }
     }
     
@@ -276,7 +276,7 @@ class SwapManager {
     
     setMaxAmount() {
         if (!this.userAddress) {
-            this.showMessage('请先连接钱包', 'error');
+            this.showMessage('Please connect wallet first', 'error');
             return;
         }
         
@@ -394,7 +394,7 @@ class SwapManager {
         
         // Validate address format
         if (!addressInput || !addressInput.match(/^0x[a-fA-F0-9]{40}$/)) {
-            this.showMessage('请输入有效的代币地址', 'error');
+            this.showMessage('Please enter valid token address', 'error');
             return;
         }
         
@@ -411,7 +411,7 @@ class SwapManager {
         
         // Fetch token details from contract
         try {
-            this.showMessage('正在获取代币信息...', 'info');
+            this.showMessage('Fetching token info...', 'info');
             const addBtn = document.getElementById('addCustomTokenBtn');
             addBtn.disabled = true;
             
@@ -451,11 +451,11 @@ class SwapManager {
             // Select the custom token
             this.selectToken(customToken, this.currentTokenSelectType);
             
-            this.showMessage(`代币 ${symbol} 添加成功！`, 'success');
+            this.showMessage(`Token ${symbol} added successfully!`, 'success');
             
         } catch (error) {
             console.error('Error adding custom token:', error);
-            this.showMessage('无法获取代币信息，请检查地址是否正确', 'error');
+            this.showMessage('Unable to fetch token info, please check address', 'error');
         } finally {
             const addBtn = document.getElementById('addCustomTokenBtn');
             addBtn.disabled = false;
@@ -466,7 +466,7 @@ class SwapManager {
         if (this.isSwapping) return;
         
         if (!this.signer) {
-            this.showMessage('请先连接钱包', 'error');
+            this.showMessage('Please connect wallet first', 'error');
             return;
         }
 
@@ -475,7 +475,7 @@ class SwapManager {
         
         const fromAmount = document.getElementById('fromAmount').value;
         if (!fromAmount || fromAmount === '0') {
-            this.showMessage('请输入交换数量', 'error');
+            this.showMessage('Please enter swap amount', 'error');
             return;
         }
 
@@ -486,16 +486,16 @@ class SwapManager {
         try {
             // Step 1: Check and approve token if needed
             if (!this.currentFromToken.isNative) {
-                btnText.textContent = '检查授权...';
+                btnText.textContent = 'Checking approval...';
                 await this.checkAndApprove(fromAmount);
             }
             
             // Step 2: Execute swap
-            btnText.textContent = '交换中...';
+            btnText.textContent = 'Swapping...';
             const txHash = await this.performSwap(fromAmount);
             
             // Show success message
-            this.showMessage(`交换成功! <a href="${this.explorerUrl}/tx/${txHash}" target="_blank" style="color: inherit; text-decoration: underline;">查看交易</a>`, 'success');
+            this.showMessage(`Swap successful! <a href="${this.explorerUrl}/tx/${txHash}" target="_blank" style="color: inherit; text-decoration: underline;">View transaction</a>`, 'success');
             
             // Update balances
             await this.updateBalances();
@@ -508,11 +508,11 @@ class SwapManager {
             
             let errorMsg = error.message;
             if (error.code === 4001) {
-                errorMsg = '用户取消交易';
+                errorMsg = 'User cancelled transaction';
             } else if (errorMsg.includes('insufficient funds')) {
-                errorMsg = '余额不足以支付交易和Gas费用';
+                errorMsg = 'Insufficient balance for transaction and gas fee';
             } else if (errorMsg.includes('INSUFFICIENT_OUTPUT_AMOUNT')) {
-                errorMsg = '滑点过高,请尝试增加滑点容忍度';
+                errorMsg = 'Slippage too high, try increasing tolerance';
             }
             
             this.showMessage(errorMsg, 'error');
@@ -545,23 +545,23 @@ class SwapManager {
         const routerAddress = testQuote.methodParameters ? testQuote.methodParameters.to : null;
         
         if (!routerAddress) {
-            throw new Error('无法获取路由地址');
+            throw new Error('Unable to get router address');
         }
         
         // Check current allowance
         const allowance = await tokenContract.allowance(this.userAddress, routerAddress);
         
         if (allowance.lt(amountWei)) {
-            this.showMessage('请授权代币使用...', 'info');
+            this.showMessage('Approving token...', 'info');
             
             const approveTx = await tokenContract.approve(
                 routerAddress,
                 ethers.constants.MaxUint256 // Infinite approval
             );
             
-            this.showMessage('等待授权确认...', 'info');
+            this.showMessage('Waiting for approval...', 'info');
             await approveTx.wait();
-            this.showMessage('代币授权成功!', 'success');
+            this.showMessage('Token approved successfully!', 'success');
         }
     }
     
@@ -570,7 +570,7 @@ class SwapManager {
         const tokenOutAddress = this.currentToToken.address;
         
         // Get swap data from Kodiak API
-        this.showMessage('正在获取最优路由...', 'info');
+        this.showMessage('Getting best route...', 'info');
         const swapData = await this.kodiakAPI.getSwapData(
             tokenInAddress,
             tokenOutAddress,
@@ -591,11 +591,11 @@ class SwapManager {
         };
         
         // Execute transaction
-        this.showMessage('正在执行交换...', 'info');
+        this.showMessage('Executing swap...', 'info');
         const tx = await this.signer.sendTransaction(txParams);
         
         // Wait for confirmation
-        this.showMessage('等待交易确认...', 'info');
+        this.showMessage('Waiting for confirmation...', 'info');
         await tx.wait();
         
         return tx.hash;
@@ -664,7 +664,7 @@ async function connectWallet() {
     try {
         const walletProvider = window.okxwallet || window.ethereum;
         if (!walletProvider) {
-            swapManager.showMessage('请安装 MetaMask 或 OKX Wallet', 'error');
+            swapManager.showMessage('Please install MetaMask or OKX Wallet', 'error');
             return;
         }
 
@@ -718,12 +718,12 @@ async function connectWallet() {
             mobileConnectBtn.disabled = false;
         }
 
-        // 保存连接状态
+        // Save connection state
         localStorage.setItem('walletConnected', 'true');
         localStorage.setItem('walletAddress', swapManager.userAddress);
 
         await swapManager.updateBalances();
-        swapManager.showMessage('钱包连接成功', 'success');
+        swapManager.showMessage('Wallet connected successfully', 'success');
         
         // Re-calculate quote if amount is entered
         const fromAmount = document.getElementById('fromAmount').value;
@@ -732,11 +732,11 @@ async function connectWallet() {
         }
     } catch (error) {
         console.error('Connection failed:', error);
-        swapManager.showMessage('连接失败: ' + error.message, 'error');
+        swapManager.showMessage('Connection failed: ' + error.message, 'error');
     }
 }
 
-// 检查并恢复钱包连接
+// Check and restore wallet connection
 async function checkWalletConnection() {
     const wasConnected = localStorage.getItem('walletConnected');
     if (!wasConnected) return;
@@ -745,7 +745,7 @@ async function checkWalletConnection() {
         const walletProvider = window.okxwallet || window.ethereum;
         if (!walletProvider) return;
 
-        // 先检查网络
+        // Check network first
         const chainId = await walletProvider.request({ method: 'eth_chainId' });
         if (chainId !== '0x138de') {
             console.log('Wrong network, need to switch to Berachain');
