@@ -6,14 +6,8 @@ class AveAPI {
         // API endpoints
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
-        this.proxyURL = '/api/ave-proxy'; // 代理端点
-        // 使用多个 CORS 代理 fallback
-        this.corsProxies = [
-            'https://api.allorigins.win/raw?url=',
-            'https://corsproxy.io/?',
-            'https://api.codetabs.com/v1/proxy?quest='
-        ];
-        this.currentProxyIndex = 0;
+        // 使用简化的 API 端点（不需要传递 headers）
+        this.simpleProxyURL = '/api/ave-price'; // Vercel Serverless Function
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
@@ -95,43 +89,14 @@ class AveAPI {
         }
         
         try {
-            let response;
-            
-            if (this.useProxy) {
-                // 使用代理（fallback 到直接请求）
-                try {
-                    response = await fetch(this.proxyURL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            endpoint: '/v2/tokens/price',
-                            method: 'POST',
-                            body: {
-                                token_ids: [this.dpTokenId],
-                                tvl_min: 0,
-                                tx_24h_volume_min: 0
-                            }
-                        })
-                    });
-                    
-                    // 如果代理 404，切换到直接请求
-                    if (!response.ok && response.status === 404) {
-                        console.warn('Proxy not available, falling back to direct request');
-                        this.useProxy = false; // 自动关闭代理
-                        throw new Error('Proxy not found, retry with direct');
-                    }
-                } catch (proxyError) {
-                    console.warn('Proxy failed, trying CORS proxies:', proxyError.message);
-                    this.proxyAttempted = true;
-                    // 尝试多个 CORS 代理
-                    response = await this.fetchWithCorsProxy();
+            // 直接使用简化的 API 端点（GET 请求，无需 headers）
+            console.log('Fetching price from:', this.simpleProxyURL);
+            const response = await fetch(this.simpleProxyURL, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
                 }
-            } else {
-                // 直接使用 CORS 代理
-                response = await this.fetchWithCorsProxy();
-            }
+            });
             
             if (!response.ok) {
                 throw new Error(`Ave API error: ${response.status}`);

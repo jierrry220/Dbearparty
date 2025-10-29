@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "api/ave-price.js": {
+      "memory": 128,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/ave-price",
+      "destination": "/api/ave-price.js"
+    }
+  ]
+}
