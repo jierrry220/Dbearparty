@@ -7,7 +7,7 @@ class AveAPI {
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
         // 使用简化的 API 端点（不需要传递 headers）
-        this.simpleProxyURL = '/api/ave-price'; // Vercel Serverless Function
+        this.simpleProxyURL = 'https://newdp-hb7mlwi7w-jierrrys-projects.vercel.app/api/ave-price'; // Vercel Serverless Function
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
