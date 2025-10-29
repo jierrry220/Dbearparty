@@ -1,0 +1,9 @@
+# Zeabur Configuration
+# Treat this project as a static site, skip npm install
+
+[build]
+buildCommand = ""
+installCommand = ""
+
+[deploy]
+type = "static"
