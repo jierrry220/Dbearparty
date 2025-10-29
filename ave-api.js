@@ -7,12 +7,14 @@ class AveAPI {
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
         this.proxyURL = '/api/ave-proxy'; // 代理端点
+        this.corsProxyURL = 'https://corsproxy.io/?'; // 公共 CORS 代理
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
         
         // 是否使用代理（解决 CORS 问题）
         this.useProxy = useProxy;
+        this.proxyAttempted = false;
         
         // DP Token configuration (Berachain)
         this.dpTokenAddress = '0xf7c464c7832e59855aa245ecc7677f54b3460e7d';
@@ -72,9 +74,11 @@ class AveAPI {
                         throw new Error('Proxy not found, retry with direct');
                     }
                 } catch (proxyError) {
-                    console.warn('Proxy failed, using direct request:', proxyError.message);
-                    // Fallback 到直接请求
-                    response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+                    console.warn('Proxy failed, using CORS proxy:', proxyError.message);
+                    this.proxyAttempted = true;
+                    // Fallback 到公共 CORS 代理
+                    const targetURL = `${this.baseURL}/v2/tokens/price`;
+                    response = await fetch(this.corsProxyURL + encodeURIComponent(targetURL), {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -89,8 +93,9 @@ class AveAPI {
                     });
                 }
             } else {
-                // 直接请求
-                response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+                // 直接使用公共 CORS 代理
+                const targetURL = `${this.baseURL}/v2/tokens/price`;
+                response = await fetch(this.corsProxyURL + encodeURIComponent(targetURL), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
