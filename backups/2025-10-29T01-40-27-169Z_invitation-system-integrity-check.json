@@ -1,0 +1,44 @@
+[
+  {
+    "name": "owner",
+    "before": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+    "after": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+    "critical": true
+  },
+  {
+    "name": "passNFT",
+    "before": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+    "after": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+    "critical": true
+  },
+  {
+    "name": "tEnginePool",
+    "before": "0x0000000000000000000000000000000000000000",
+    "after": "0x0000000000000000000000000000000000000000",
+    "critical": true
+  },
+  {
+    "name": "STANDARD_PASS",
+    "before": "1",
+    "after": "1",
+    "critical": true
+  },
+  {
+    "name": "PREMIUM_PASS",
+    "before": "2",
+    "after": "2",
+    "critical": true
+  },
+  {
+    "name": "EXCLUSIVE_PASS",
+    "before": "3",
+    "after": "3",
+    "critical": true
+  },
+  {
+    "name": "TEngineV4 Authorization",
+    "before": "true",
+    "after": "true",
+    "critical": true
+  }
+]

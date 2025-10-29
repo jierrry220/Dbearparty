@@ -74,7 +74,7 @@ class SwapManager {
         ];
         
         this.currentFromToken = this.tokens[0]; // BERA
-        this.currentToToken = this.tokens[2]; // HONEY
+        this.currentToToken = this.tokens[3]; // DP
         this.slippageTolerance = 0.5; // Default 0.5%
         
         this.provider = null;
@@ -472,7 +472,6 @@ class SwapManager {
 
         const swapBtn = document.getElementById('swapBtn');
         const btnText = swapBtn.querySelector('.btn-text');
-        const btnLoading = swapBtn.querySelector('.btn-loading');
         
         const fromAmount = document.getElementById('fromAmount').value;
         if (!fromAmount || fromAmount === '0') {
@@ -481,8 +480,7 @@ class SwapManager {
         }
 
         this.isSwapping = true;
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'block';
+        const originalText = btnText.textContent;
         swapBtn.disabled = true;
 
         try {
@@ -520,9 +518,7 @@ class SwapManager {
             this.showMessage(errorMsg, 'error');
         } finally {
             this.isSwapping = false;
-            btnText.style.display = 'block';
             btnText.textContent = 'Swap';
-            btnLoading.style.display = 'none';
             swapBtn.disabled = false;
         }
     }

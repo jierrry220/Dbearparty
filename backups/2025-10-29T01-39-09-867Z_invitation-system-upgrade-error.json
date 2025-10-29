@@ -1,0 +1,5 @@
+{
+  "success": false,
+  "error": "execution reverted",
+  "stack": "ProviderError: execution reverted\n    at HttpProvider.request (C:\\Users\\CDD\\Desktop\\newdp\\node_modules\\hardhat\\src\\internal\\core\\providers\\http.ts:116:21)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at staticCallResult (C:\\Users\\CDD\\Desktop\\newdp\\node_modules\\ethers\\src.ts\\contract\\contract.ts:337:22)\n    at staticCall (C:\\Users\\CDD\\Desktop\\newdp\\node_modules\\ethers\\src.ts\\contract\\contract.ts:303:24)\n    at Proxy.MAX_INVITATION_DEPTH (C:\\Users\\CDD\\Desktop\\newdp\\node_modules\\ethers\\src.ts\\contract\\contract.ts:351:41)\n    at captureCurrentState (C:\\Users\\CDD\\Desktop\\newdp\\scripts\\upgrade-invitation-system-v2.js:52:30)\n    at main (C:\\Users\\CDD\\Desktop\\newdp\\scripts\\upgrade-invitation-system-v2.js:191:23)"
+}

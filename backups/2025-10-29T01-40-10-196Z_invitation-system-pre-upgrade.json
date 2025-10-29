@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-10-29T01:40:07.579Z",
+  "proxyAddress": "0xAa733E91132dF624f391f1B426F56BD231486774",
+  "owner": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "passNFT": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+  "tEnginePool": "0x0000000000000000000000000000000000000000",
+  "standardPass": "1",
+  "premiumPass": "2",
+  "exclusivePass": "3",
+  "sampleBindings": []
+}

@@ -832,6 +832,8 @@
 
     <!-- 移动端菜单遮罩 -->
     <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- 邀请弹窗遮罩层 (不要添加 onclick,避免误触) -->
 
     <!-- 移动端侧边栏菜单 -->
     <div class="mobile-menu">
@@ -855,13 +857,13 @@
     </div>
 
     <!-- 邀请人弹窗 -->
-    <div class="modal-overlay" id="inviteModal">
+    <div class="modal-overlay" id="inviteModal" onclick="event.target === this && closeInviteModal(false)">
         <div class="modal">
             <h3 data-i18n="pass.inviteTitle">🎁 Enter Referrer Address</h3>
             <p data-i18n="pass.inviteDesc">You are detected as a new user. Please enter referrer address to get rewards, or skip to use default referrer.</p>
-            <input type="text" class="modal-input" id="modalInviterInput" placeholder="0x... (选填)">
+            <input type="text" class="modal-input" id="modalInviterInput" data-i18n-attr="placeholder" data-i18n="tengine.modalPlaceholder" placeholder="0x... (optional)">
             <div class="modal-buttons">
-                <button class="modal-btn-secondary" onclick="closeInviteModal()" data-i18n="pass.skip">Skip</button>
+                <button class="modal-btn-secondary" onclick="closeInviteModal(true)" data-i18n="pass.skip">Skip</button>
                 <button class="modal-btn-primary" onclick="confirmInviter()" data-i18n="pass.confirm">Confirm</button>
             </div>
         </div>
@@ -924,12 +926,32 @@
                         <span style="color: var(--neon-cyan); font-size: 14px;"><span data-i18n="tengine.balance">Balance:</span> <span id="userDPBalance">0.00</span> DP</span>
                     </label>
                     <div style="position: relative;">
-                        <input type="text" id="stakeAmount" placeholder="输入质押数量" style="padding-right: 70px;">
+                        <input type="text" id="stakeAmount" data-i18n-attr="placeholder" data-i18n="tengine.inputPlaceholder" placeholder="Enter stake amount" style="padding-right: 70px;">
                         <button onclick="setMaxAmount()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); padding: 6px 15px; background: var(--neon-cyan); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s;">MAX</button>
                     </div>
                 </div>
 
                 <button class="btn-primary" onclick="stake()" data-i18n="tengine.stake">Stake</button>
+            </div>
+            
+            <!-- 邀请收益卡片 -->
+            <div class="mining-card" style="margin-top: 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 140, 0, 0.08) 100%); border-color: rgba(255, 215, 0, 0.3);">
+                <h3 style="color: #ffd700;" data-i18n="tengine.inviteTitle">🎁 My Referral Rewards</h3>
+                
+                <div class="alert info" style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.3); color: #ffd700;" data-i18n="tengine.inviteInfo">
+                    💡 Invite users to stake and earn rewards: No Pass 3% | Standard Pass 8% | Premium Pass 11% | Exclusive Pass 15%
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div class="stat">
+                        <span class="stat-label" data-i18n="tengine.passLevel">Pass Level:</span>
+                        <span class="stat-value" id="myPassLevel" style="color: #ffd700;">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label" data-i18n="tengine.rewardRate">Current Reward Rate:</span>
+                        <span class="stat-value" id="myRewardRate" style="color: #ffd700;">--</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1015,11 +1037,11 @@
         // ========== 合约配置 ==========
         const CONTRACTS = {
             tEngine: '0xd9661D56659B80A875E42A51955434A0818581D8',
-            dpToken: '0xf7C464c7832e59855aa245Ecc7677f54B3460e7d',
+            dpToken: '0xf7c464c7832e59855aa245ecc7677f54b3460e7d',
             debearPass: '0x29f2a6756E5B79C36Eb6699220CB56f7749C7514'
         };
 
-        // T-Engine ABI
+        // T-Engine ABI (V2.5 - UTC Day Release)
         const TENGINE_ABI = [
             'function enterPool(uint256 amount, address inviter)',
             'function claim()',
@@ -1028,11 +1050,29 @@
             'function totalClaimed() view returns (uint256)',
             'function deployTime() view returns (uint256)',
             'function getCurrentEpoch() view returns (uint256)',
-            'function calculateClaimable(address user) view returns (uint256)'
+            'function getCurrentDay() view returns (uint256)',
+            'function calculateClaimable(address user) view returns (uint256)',
+            'function getInviterRewardRate(address inviter) view returns (uint256)',
+            'function getInviterAvailableShares(address inviter) view returns (uint256)',
+            'function epochDuration() view returns (uint256)',
+            'function releaseDayDuration() view returns (uint256)',
+            'function manualEpochOffset() view returns (uint256)',
+            'function manualDayOffset() view returns (uint256)',
+            'function lastEpochDurationChangeTime() view returns (uint256)',
+            'function lastEpochDurationChangeEpoch() view returns (uint256)',
+            'function previousEpochDuration() view returns (uint256)',
+            'event InviteRewardReleased(address indexed inviter, address indexed newUser, uint256 actualReward, uint256 expectedReward)'
+        ];
+        
+        // Pass NFT ABI (ERC1155)
+        const PASS_ABI = [
+            'function balanceOf(address account, uint256 id) view returns (uint256)'
         ];
 
         const INVITATION_ABI = [
-            'function getInviter(address) view returns (address)'
+            'function getInviter(address) view returns (address)',
+            'function bindInviter(address user, address inviter) external',
+            'function hasPass(address user) view returns (bool)'
         ];
 
         const TOKEN_ABI = [
@@ -1049,13 +1089,14 @@
         let userDPBalance = '0';
         let userInviter = null;
         let pendingStakeAmount = null;
+        let autoRefreshEnabled = false; // 默认关闭自动刷新
 
         // ========== 连接钱包 ==========
         async function connectWallet() {
             try {
                 const walletProvider = window.okxwallet || window.ethereum;
                 if (!walletProvider) {
-                    showMessage('请安装 MetaMask 或 OKX Wallet', 'error');
+                    showMessage(window.i18n?.t('toast.wallet.noProvider') || 'Please install MetaMask or OKX Wallet', 'error');
                     return;
                 }
 
@@ -1085,10 +1126,28 @@
                 
                 await refreshData();
                 await refreshDPBalance();
-                startRealtimeUpdate();
-                showMessage('钱包连接成功！', 'success');
+                
+                // 尝试刷新邀请信息（可能失败）
+                try {
+                    await refreshInviteInfo();
+                } catch (err) {
+                    console.warn('刷新邀请信息失败:', err.message);
+                }
+                
+                // 不再启动自动刷新，改为按需刷新
+                // startRealtimeUpdate();
+                
+                // 尝试设置事件监听（可能失败）
+                try {
+                    setupEventListeners();
+                } catch (err) {
+                    console.warn('设置事件监听失败:', err.message);
+                }
+                
+                showMessage(window.i18n?.t('tengine.msg.walletConnected') || 'Wallet connected successfully!', 'success');
             } catch (error) {
-                showMessage('连接钱包失败: ' + error.message, 'error');
+                const failMsg = window.i18n?.t('tengine.msg.walletFailed') || 'Failed to connect wallet: ';
+                showMessage(failMsg + error.message, 'error');
             }
         }
 
@@ -1121,10 +1180,11 @@
 
                     localStorage.setItem('walletAddress', userAddress);
 
-                    await checkInviter();
-                    await refreshData();
-                    await refreshDPBalance();
-                    startRealtimeUpdate();
+                await checkInviter();
+                await refreshData();
+                await refreshDPBalance();
+                await refreshInviteInfo(); // 初始化邀请信息
+                // 不启动自动刷新
                 } else {
                     localStorage.removeItem('walletConnected');
                     localStorage.removeItem('walletAddress');
@@ -1144,76 +1204,103 @@
         // ========== 检查邀请关系 ==========
         async function checkInviter() {
             try {
+                // 从 InvitationSystem 合约读取链上邀请关系
                 const invitation = new ethers.Contract(INVITATION_SYSTEM, INVITATION_ABI, provider);
                 const inviter = await invitation.getInviter(userAddress);
                 
                 if (inviter === ethers.constants.AddressZero) {
-                    // 新用户，使用默认邀请人
-                    userInviter = DEFAULT_INVITER;
+                    // 新用户，标记为零地址（后续由用户选择邀请人）
+                    userInviter = ethers.constants.AddressZero;
+                    console.log('🆕 新用户，等待绑定邀请人');
                 } else {
                     // 已有邀请人
                     userInviter = inviter;
+                    console.log('👥 已有邀请人:', userInviter);
                 }
             } catch (error) {
                 console.error('检查邀请关系失败:', error);
-                userInviter = DEFAULT_INVITER;
+                userInviter = ethers.constants.AddressZero;
             }
         }
 
         // ========== 进入矿池 ==========
         async function stake() {
             if (!signer) {
-                showMessage('请先连接钱包', 'error');
+                showMessage(window.i18n?.t('tengine.msg.noWallet') || 'Please connect wallet first', 'error');
                 return;
             }
 
             const amount = document.getElementById('stakeAmount').value;
             if (!amount || parseFloat(amount) <= 0) {
-                showMessage('请输入有效的质押数量', 'error');
+                showMessage(window.i18n?.t('tengine.msg.invalidAmount') || 'Please enter valid stake amount', 'error');
                 return;
             }
 
-            // 检查是否是新用户（没有邀请人）
-            if (userInviter === DEFAULT_INVITER) {
+            // 重新检查邀请关系
+            await checkInviter();
+            console.log('👥 当前 userInviter:', userInviter);
+            console.log('👥 DEFAULT_INVITER:', DEFAULT_INVITER);
+            
+            // 检查是否是新用户（链上没有邀请人）
+            if (userInviter === ethers.constants.AddressZero) {
+                console.log('ℹ️ 新用户，显示邀请人弹窗');
                 // 显示弹窗让用户输入邀请人
                 pendingStakeAmount = amount;
                 showInviteModal();
                 return;
             }
 
+            console.log('✅ 已有邀请人，直接质押');
             // 执行质押
             await executeStake(amount, userInviter);
         }
 
         // ========== 执行质押 ==========
         async function executeStake(amount, inviter) {
+            console.log('🚀 executeStake 被调用');
+            console.log('   质押金额:', amount, 'DP');
+            console.log('   邀请人:', inviter);
+            
             try {
                 const amountWei = ethers.utils.parseEther(amount);
                 const token = new ethers.Contract(CONTRACTS.dpToken, TOKEN_ABI, signer);
                 const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, signer);
 
-                // 检查授权
+                // 步骤 1: 检查授权
                 const allowance = await token.allowance(userAddress, CONTRACTS.tEngine);
                 if (allowance.lt(amountWei)) {
-                    showMessage('正在授权...', 'info');
+                    showMessage(window.i18n?.t('tengine.msg.approving') || 'Step 1/2: Approving DP Token...', 'info');
                     const approveTx = await token.approve(CONTRACTS.tEngine, ethers.constants.MaxUint256);
                     await approveTx.wait();
                 }
 
-                showMessage('正在质押...', 'info');
+                // 步骤 2: 执行质押 (合约会自动处理邀请绑定)
+                showMessage(window.i18n?.t('tengine.msg.staking') || 'Step 2/2: Executing stake...', 'info');
+                console.log('📤 调用 enterPool:', {
+                    amount: ethers.utils.formatEther(amountWei),
+                    inviter: inviter
+                });
+                console.log('📝 注意: TEngine V2.6 将自动处理邀请关系绑定');
+                
                 const tx = await tEngine.enterPool(amountWei, inviter);
+                console.log('📦 交易发送:', tx.hash);
+                
                 await tx.wait();
+                console.log('✅ 交易确认');
 
-                showMessage('质押成功！T-Engine 已启动', 'success');
+                showMessage(window.i18n?.t('tengine.msg.stakeSuccess') || 'Stake successful! T-Engine started', 'success');
                 
                 // 更新邀请关系
                 userInviter = inviter;
                 
                 document.getElementById('stakeAmount').value = '';
-                await refreshData();
-                await refreshDPBalance();
+                
+                // 操作后刷新数据
+                await refreshAllData();
             } catch (error) {
-                showMessage('质押失败: ' + error.message, 'error');
+                console.error('❗ 质押失败:', error);
+                const failMsg = window.i18n?.t('tengine.msg.stakeFailed') || 'Stake failed: ';
+                showMessage(failMsg + error.message, 'error');
             }
         }
 
@@ -1223,15 +1310,19 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // ========== 关闭邀请人弹窗 ==========
-        function closeInviteModal() {
+        // ========== 关闭邀请人弹窗（不执行质押）==========
+        function closeInviteModal(useDefault = false) {
             document.getElementById('inviteModal').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('modalInviterInput').value = '';
             
-            // 使用默认邀请人
-            if (pendingStakeAmount) {
+            // 只有明确点击 Skip 按钮时才使用默认邀请人
+            if (useDefault && pendingStakeAmount) {
+                console.log('⚠️ 跳过填写，使用默认邀请人:', DEFAULT_INVITER);
                 executeStake(pendingStakeAmount, DEFAULT_INVITER);
+                pendingStakeAmount = null;
+            } else {
+                console.log('❌ 取消质押');
                 pendingStakeAmount = null;
             }
         }
@@ -1239,10 +1330,22 @@
         // ========== 确认邀请人 ==========
         function confirmInviter() {
             const inviterInput = document.getElementById('modalInviterInput').value.trim();
+            
+            // 验证邀请人地址格式
+            if (inviterInput && !ethers.utils.isAddress(inviterInput)) {
+                alert(window.i18n?.t('tengine.msg.invalidAddress') || 'Please enter valid Ethereum address format');
+                return;
+            }
+            
             const inviter = inviterInput || DEFAULT_INVITER;
+            console.log('✅ 确认邀请人:', inviter);
             
-            closeInviteModal();
+            // 先关闭弹窗（不触发默认逻辑）
+            document.getElementById('inviteModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('modalInviterInput').value = '';
             
+            // 执行质押
             if (pendingStakeAmount) {
                 executeStake(pendingStakeAmount, inviter);
                 pendingStakeAmount = null;
@@ -1251,27 +1354,30 @@
 
         // T-Engine不支持取回，隐藏此功能
         async function unstake() {
-            showMessage('T-Engine 不支持取回质押，仅能领取奖励', 'error');
+            showMessage(window.i18n?.t('tengine.msg.noUnstake') || 'T-Engine does not support withdrawing stakes, only claiming rewards', 'error');
         }
 
         // ========== 领取奖励 ==========
         async function claimReward() {
             if (!signer) {
-                showMessage('请先连接钱包', 'error');
+                showMessage(window.i18n?.t('tengine.msg.noWallet') || 'Please connect wallet first', 'error');
                 return;
             }
 
             try {
                 const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, signer);
                 
-                showMessage('正在领取奖励...', 'info');
+                showMessage(window.i18n?.t('tengine.msg.claiming') || 'Claiming rewards...', 'info');
                 const tx = await tEngine.claim();
                 await tx.wait();
 
-                showMessage('奖励领取成功！', 'success');
-                await refreshData();
+                showMessage(window.i18n?.t('tengine.msg.claimSuccess') || 'Rewards claimed successfully!', 'success');
+                
+                // 操作后刷新数据
+                await refreshAllData();
             } catch (error) {
-                showMessage('领取失败: ' + error.message, 'error');
+                const failMsg = window.i18n?.t('tengine.msg.claimFailed') || 'Claim failed: ';
+                showMessage(failMsg + error.message, 'error');
             }
         }
 
@@ -1281,71 +1387,73 @@
 
             try {
                 const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
-
+                
                 // 获取用户信息
                 const userInfo = await tEngine.userInfo(userAddress);
-                console.log('🔍 TEngine userInfo:', userInfo);
+                // console.log('🔍 TEngine userInfo:', userInfo); // 减少控制台输出
 
-                // 解析数据
-                let totalShares, claimedShares, lastClaimEpoch, pendingRewards;
+                // 解析数据（V4修复：totalShares/claimedShares 已经是 DP 单位）
+                let totalLockedDP, releasedDP, lastClaimDay, pendingRewardsDP;
                 
                 if (Array.isArray(userInfo)) {
-                    totalShares = userInfo[0];
-                    claimedShares = userInfo[1];
-                    lastClaimEpoch = userInfo[2];
-                    pendingRewards = userInfo[3];
+                    totalLockedDP = userInfo[0];      // 累计锁定DP（投入×4）
+                    releasedDP = userInfo[1];         // 已释放DP
+                    lastClaimDay = userInfo[2];       // 上次领取天数
+                    pendingRewardsDP = userInfo[3];   // 待领取DP
                 } else {
-                    totalShares = userInfo.totalShares || userInfo[0];
-                    claimedShares = userInfo.claimedShares || userInfo[1];
-                    lastClaimEpoch = userInfo.lastClaimEpoch || userInfo[2];
-                    pendingRewards = userInfo.pendingRewards || userInfo[3];
+                    totalLockedDP = userInfo.totalShares || userInfo[0];
+                    releasedDP = userInfo.claimedShares || userInfo[1];
+                    lastClaimDay = userInfo.lastClaimDay || userInfo.lastClaimEpoch || userInfo[2];
+                    pendingRewardsDP = userInfo.pendingRewards || userInfo[3];
                 }
 
-                // 尝试调用 calculateClaimable 获取实时可领取数量
-                let actualClaimable = pendingRewards;
+                // 尝试调用 getPendingRewards 获取实时可领取数量
+                let actualClaimable = pendingRewardsDP;
                 try {
-                    const claimable = await tEngine.calculateClaimable(userAddress);
-                    console.log('✅ calculateClaimable:', ethers.utils.formatEther(claimable));
+                    const claimable = await tEngine.getPendingRewards(userAddress);
+                    // console.log('✅ getPendingRewards:', ethers.utils.formatEther(claimable)); // 减少控制台输出
                     actualClaimable = claimable;
                 } catch (calcError) {
-                    console.log('🔍 合约未提供 calculateClaimable，使用手动计算模式');
+                    // console.log('🔍 合约未提供 getPendingRewards，使用手动计算模式'); // 减少控制台输出
                     
-                    // 手动计算：递减释放机制 0.3%
+                    // 手动计算：递减释放机制 0.3%/天
                     try {
-                        const currentEpoch = await tEngine.getCurrentEpoch();
-                        console.log('🗓️ currentEpoch:', currentEpoch.toString());
-                        console.log('🗓️ lastClaimEpoch:', lastClaimEpoch.toString());
+                        const currentDay = await tEngine.getCurrentDay();
+                        // console.log('🗓️ currentDay (UTC):', currentDay.toString()); // 减少控制台输出
+                        // console.log('🗓️ lastClaimDay:', lastClaimDay.toString()); // 减少控制台输出
                         
-                        const epochDiff = currentEpoch.sub(lastClaimEpoch);
-                        if (epochDiff.gt(0)) {
-                            // 递减释放计算
-                            const remainingShares = totalShares.sub(claimedShares);
-                            let currentRemaining = remainingShares;
+                        const dayDiff = currentDay.sub(lastClaimDay);
+                        if (dayDiff.gt(0)) {
+                            // 递减释放计算（totalLockedDP 和 releasedDP 已经是 DP 单位）
+                            const unreleasedDP = totalLockedDP.sub(releasedDP);
+                            let currentRemaining = unreleasedDP;
                             let totalClaimable = ethers.BigNumber.from(0);
                             
-                            for (let i = 0; i < Number(epochDiff); i++) {
-                                const dayRelease = currentRemaining.mul(3).div(1000);
+                            for (let i = 0; i < Number(dayDiff) && i < 100; i++) {  // 最多计算100天
+                                const dayRelease = currentRemaining.mul(3).div(1000); // 0.3%
                                 totalClaimable = totalClaimable.add(dayRelease);
                                 currentRemaining = currentRemaining.sub(dayRelease);
                             }
                             
-                            actualClaimable = totalClaimable;
-                            console.log('💰 手动计算结果:', ethers.utils.formatEther(actualClaimable));
+                            // totalClaimable 已经是 DP 单位，直接使用
+                            actualClaimable = pendingRewardsDP.add(totalClaimable);
+                            // console.log('💰 手动计算结果:', ethers.utils.formatEther(actualClaimable)); // 减少控制台输出
                         }
-                    } catch (epochError) {
-                        console.error('⚠️ 获取 epoch 失败:', epochError);
+                    } catch (dayError) {
+                        console.error('⚠️ 获取 UTC day 失败:', dayError);
                     }
                 }
 
-                // 计算显示数据
-                const stakedAmount = totalShares.div(4);
-                const remainingShares = totalShares.sub(claimedShares).sub(actualClaimable);
+                // 计算显示数据（V4：所有数据已经是 DP 单位）
+                const myStakedDP = totalLockedDP.div(4);           // 我的质押：锁定DP / 4
+                const unreleasedDP = totalLockedDP.sub(releasedDP); // 未释放DP
+                const claimedDP = releasedDP;                       // 累计领取 = 已释放DP
 
                 // 更新页面
-                document.getElementById('myStake').textContent = parseFloat(ethers.utils.formatEther(stakedAmount)).toFixed(2) + ' DP';
-                document.getElementById('myRemaining').textContent = parseFloat(ethers.utils.formatEther(remainingShares)).toFixed(2) + ' DP';
-                document.getElementById('pendingReward').textContent = parseFloat(ethers.utils.formatEther(actualClaimable)).toFixed(4);
-                document.getElementById('totalClaimed').textContent = parseFloat(ethers.utils.formatEther(claimedShares)).toFixed(2) + ' DP';
+                document.getElementById('myStake').textContent = parseFloat(ethers.utils.formatEther(myStakedDP)).toFixed(2) + ' DP';
+                document.getElementById('myRemaining').textContent = parseFloat(ethers.utils.formatEther(unreleasedDP)).toFixed(2) + ' DP';
+                document.getElementById('pendingReward').textContent = parseFloat(ethers.utils.formatEther(actualClaimable)).toFixed(4) + ' DP';
+                document.getElementById('totalClaimed').textContent = parseFloat(ethers.utils.formatEther(claimedDP)).toFixed(2) + ' DP';
                 
                 // 获取全网数据
                 try {
@@ -1355,18 +1463,25 @@
                     console.warn('获取全网数据失败:', e);
                 }
                 
-                // 计算下次释放倒计时
+                // 计算下次释放倒计时 (V2.5: 基于UTC天)
                 try {
-                    const [deployTimeBN, latestBlock] = await Promise.all([
-                        tEngine.deployTime(),
-                        provider.getBlock('latest')
+                    const [currentDay, latestBlock, releaseDuration] = await Promise.all([
+                        tEngine.getCurrentDay(),
+                        provider.getBlock('latest'),
+                        tEngine.releaseDayDuration().catch(() => ethers.BigNumber.from(86400))
                     ]);
-                    const deployTime = Number(deployTimeBN.toString());
+                    
                     const now = Number(latestBlock.timestamp);
-                    const SECONDS_PER_DAY = 86400;
-                    const elapsedDays = Math.floor((now - deployTime) / SECONDS_PER_DAY);
-                    const nextEpochStart = deployTime + (elapsedDays + 1) * SECONDS_PER_DAY;
-                    startTengineCountdown(nextEpochStart);
+                    const duration = Number(releaseDuration);
+                    
+                    // 计算下一个UTC天的开始时间
+                    const currentDayNum = Number(currentDay);
+                    const nextDayStart = (currentDayNum + 1) * duration;
+                    
+                    // console.log('🕒 当前UTC Day:', currentDayNum); // 减少控制台输出
+                    // console.log('🕒 下一天开始:', new Date(nextDayStart * 1000).toISOString()); // 减少控制台输出
+                    
+                    startTengineCountdown(nextDayStart);
                 } catch (err) {
                     console.warn('倒计时计算失败:', err);
                     document.getElementById('tengineNextRelease').textContent = '--:--:--';
@@ -1418,19 +1533,27 @@
         // ========== 设置最大量 ==========
         function setMaxAmount() {
             if (!userAddress) {
-                showMessage('请先连接钱包', 'error');
+                showMessage(window.i18n?.t('tengine.msg.noWallet') || 'Please connect wallet first', 'error');
                 return;
             }
             document.getElementById('stakeAmount').value = userDPBalance;
         }
         
-        // ========== 启动实时更新 ==========
+        // ========== 启动实时更新（已废弃，改为按需刷新）==========
         function startRealtimeUpdate() {
-            if (updateInterval) clearInterval(updateInterval);
-            updateInterval = setInterval(() => {
-                refreshData();
-                refreshDPBalance();
-            }, 10000); // 每10秒刷新
+            // 不再自动刷新，改为按需刷新
+            console.log('⏸️ 自动刷新已禁用，改为操作后按需刷新');
+        }
+        
+        // ========== 刷新所有数据（用户操作后调用）==========
+        async function refreshAllData() {
+            await refreshData();
+            await refreshDPBalance();
+            try {
+                await refreshInviteInfo();
+            } catch (err) {
+                console.warn('刷新邀请信息失败:', err.message);
+            }
         }
         
         // ========== T-Engine 倒计时 ==========
@@ -1460,6 +1583,103 @@
             tick();
             tengineCountdownInterval = setInterval(tick, 1000);
         }
+        
+        // ========== 刷新邀请信息 ==========
+        async function refreshInviteInfo() {
+            if (!provider || !userAddress) return;
+            
+            try {
+                const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
+                const passNFT = new ethers.Contract(CONTRACTS.debearPass, PASS_ABI, provider);
+                
+                // 检查是否有新方法
+                let rewardRate, availableShares;
+                try {
+                    // V2.5 使用 getInviterRewardRate 方法
+                    [rewardRate, availableShares] = await Promise.all([
+                        tEngine.getInviterRewardRate(userAddress),
+                        tEngine.getInviterAvailableShares(userAddress)
+                    ]);
+                } catch (methodError) {
+                    console.warn('合约未升级，邀请功能不可用，错误:', methodError.message);
+                    document.getElementById('myPassLevel').textContent = '需升级';
+                    document.getElementById('myRewardRate').textContent = '需升级';
+                    return;
+                }
+                
+                // 获取Pass NFT信息 (ERC1155)
+                let passLevel = '未持有 Pass';
+                try {
+                    // 先检查合约代码是否存在
+                    const code = await provider.getCode(CONTRACTS.debearPass);
+                    if (code === '0x' || code === '0x0') {
+                        console.log('DebearPass 合约未部署，使用默认奖励率');
+                        passLevel = '未持有 Pass (合约未部署)';
+                    } else {
+                        // ERC1155: tokenId 1 = Standard, 2 = Premium, 3 = Exclusive
+                        const exclusiveBalance = await passNFT.balanceOf(userAddress, 3);
+                        const premiumBalance = await passNFT.balanceOf(userAddress, 2);
+                        const standardBalance = await passNFT.balanceOf(userAddress, 1);
+                        
+                        if (exclusiveBalance.gt(0)) {
+                            passLevel = '💎 Exclusive Pass';
+                        } else if (premiumBalance.gt(0)) {
+                            passLevel = '🌟 Premium Pass';
+                        } else if (standardBalance.gt(0)) {
+                            passLevel = '⭐ Standard Pass';
+                        }
+                    }
+                } catch (passError) {
+                    console.warn('获取Pass信息失败，使用默认奖励率:', passError.message);
+                    passLevel = '未持有 Pass';
+                }
+                
+                // 获取pendingRewards
+                const userInfo = await tEngine.userInfo(userAddress);
+                let pendingRewards;
+                if (Array.isArray(userInfo)) {
+                    pendingRewards = userInfo[3];
+                } else {
+                    pendingRewards = userInfo.pendingRewards || userInfo[3];
+                }
+                
+                // 更新页面（仅保留 Pass 等级和奖励率）
+                document.getElementById('myPassLevel').textContent = passLevel;
+                document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
+                
+            } catch (error) {
+                console.error('刷新邀请信息失败:', error);
+            }
+        }
+        
+        // ========== 监听邀请奖励事件 ==========
+        function setupEventListeners() {
+            if (!provider || !userAddress) return;
+            
+            try {
+                const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
+                
+                // 监听 InviteRewardReleased 事件
+                tEngine.on('InviteRewardReleased', (inviter, newUser, actualReward, expectedReward) => {
+                    if (inviter.toLowerCase() === userAddress.toLowerCase()) {
+                        const amount = parseFloat(ethers.utils.formatEther(actualReward)).toFixed(4);
+                        showMessage(`🎉 邀请奖励累加: ${amount} DP（需claim领取）`, 'success');
+                        
+                        // 监听到事件后刷新数据
+                        setTimeout(() => {
+                            refreshAllData();
+                        }, 2000);
+                    }
+                });
+                
+                console.log('✅ 事件监听已启动');
+            } catch (error) {
+                console.warn('事件监听设置失败:', error);
+            }
+        }
+        
+        // ========== 旧版实时刷新（已废弃）==========
+        // 已改为按需刷新模式，无需定时器
     </script>
 </body>
 </html>

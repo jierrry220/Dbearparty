@@ -1062,7 +1062,7 @@
             <p data-i18n="pass.inviteDesc">You are detected as a new user. Please enter referrer address to get rewards, or skip to use default referrer.</p>
             <input type="text" class="modal-input" id="modalInviterInput" placeholder="0x... (选填)">
             <div class="modal-buttons">
-                <button class="modal-btn-secondary" onclick="closeInviteModal()" data-i18n="pass.skip">Skip</button>
+                <button class="modal-btn-secondary" onclick="closeInviteModal(true)" data-i18n="pass.skip">Skip</button>
                 <button class="modal-btn-primary" onclick="confirmInviter()" data-i18n="pass.confirm">Confirm</button>
             </div>
         </div>
@@ -1384,15 +1384,17 @@
                 const inviter = await invitation.getInviter(userAddress);
                 
                 if (inviter === ethers.constants.AddressZero) {
-                    // 新用户，使用默认邀请人
-                    userInviter = DEFAULT_INVITER;
+                    // 新用户，标记为零地址（需要弹窗让用户选择）
+                    userInviter = ethers.constants.AddressZero;
+                    console.log('🆕 新用户，等待绑定邀请人');
                 } else {
                     // 已有邀请人
                     userInviter = inviter;
+                    console.log('👥 已有邀请人:', userInviter);
                 }
             } catch (error) {
                 console.error('检查邀请关系失败:', error);
-                userInviter = DEFAULT_INVITER;
+                userInviter = ethers.constants.AddressZero;
             }
         }
 
@@ -1403,14 +1405,21 @@
                 return;
             }
 
-            // 检查是否是新用户（没有邀请人）
-            if (userInviter === DEFAULT_INVITER) {
+            // 重新检查邀请关系
+            await checkInviter();
+            console.log('👥 当前 userInviter:', userInviter);
+            console.log('👥 DEFAULT_INVITER:', DEFAULT_INVITER);
+            
+            // 检查是否是新用户（链上没有邀请人）
+            if (userInviter === ethers.constants.AddressZero) {
+                console.log('ℹ️ 新用户，显示邀请人弹窗');
                 // 显示弹窗让用户输入邀请人
                 pendingPassLevel = level;
                 showInviteModal();
                 return;
             }
 
+            console.log('✅ 已有邀请人，直接购买');
             // 执行购买
             await executeBuyPass(level, userInviter);
         }
@@ -1442,15 +1451,19 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // 关闭邀请人弹窗
-        function closeInviteModal() {
+        // 关闭邀请人弹窗（不执行购买）
+        function closeInviteModal(useDefault = false) {
             document.getElementById('inviteModal').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('modalInviterInput').value = '';
             
-            // 使用默认邀请人
-            if (pendingPassLevel) {
+            // 只有明确点击 Skip 按钮时才使用默认邀请人
+            if (useDefault && pendingPassLevel) {
+                console.log('⚠️ 跳过填写，使用默认邀请人:', DEFAULT_INVITER);
                 executeBuyPass(pendingPassLevel, DEFAULT_INVITER);
+                pendingPassLevel = null;
+            } else {
+                console.log('❌ 取消购买');
                 pendingPassLevel = null;
             }
         }
@@ -1458,10 +1471,22 @@
         // 确认邀请人
         function confirmInviter() {
             const inviterInput = document.getElementById('modalInviterInput').value.trim();
+            
+            // 验证邀请人地址格式
+            if (inviterInput && !ethers.utils.isAddress(inviterInput)) {
+                alert('请输入有效的以太坡地址格式');
+                return;
+            }
+            
             const inviter = inviterInput || DEFAULT_INVITER;
+            console.log('✅ 确认邀请人:', inviter);
             
-            closeInviteModal();
+            // 先关闭弹窗（不触发默认逻辑）
+            document.getElementById('inviteModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('modalInviterInput').value = '';
             
+            // 执行购买
             if (pendingPassLevel) {
                 executeBuyPass(pendingPassLevel, inviter);
                 pendingPassLevel = null;

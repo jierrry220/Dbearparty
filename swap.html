@@ -364,9 +364,16 @@
 
         /* 主内容区 */
         .container {
-            max-width: 600px;
+            max-width: 1400px;
             margin: 120px auto 50px;
             padding: 0 5%;
+        }
+        
+        .swap-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
         }
 
         .page-title {
@@ -397,6 +404,9 @@
             padding: 30px;
             position: relative;
             overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .swap-header {
@@ -874,7 +884,107 @@
             transform: none;
         }
 
+        /* 价格图表卡片 */
+        .price-chart-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(255, 0, 255, 0.08) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-header {
+            margin-bottom: 25px;
+        }
+        
+        .chart-title {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .price-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .price-stat {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+        
+        .price-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .price-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .price-change-positive {
+            color: #00ff88 !important;
+        }
+        
+        .price-change-negative {
+            color: #ff0064 !important;
+        }
+        
+        .chart-container {
+            position: relative;
+            flex: 1;
+            min-height: 300px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .chart-error {
+            display: none;
+            text-align: center;
+            color: #ff0064;
+            padding: 20px;
+        }
+        
+        .chart-footer {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
         /* 响应式 */
+        @media (max-width: 1200px) {
+            .swap-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-chart-card {
+                margin-bottom: 30px;
+            }
+            
+            .swap-card {
+                height: auto;
+            }
+        }
+        
         @media (max-width: 768px) {
             .page-title h1 { font-size: 36px; }
             .nav-menu { display: none; }
@@ -883,6 +993,15 @@
             .hamburger { display: flex; }
             .mobile-connect-btn { display: block; }
             .amount-input { font-size: 24px; }
+            
+            .price-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chart-container {
+                min-height: 250px;
+                flex: 1;
+            }
         }
     </style>
 </head>
@@ -980,6 +1099,46 @@
             <h1>💱 Swap</h1>
         </div>
 
+        <div class="swap-layout">
+            <!-- DP 价格图表 -->
+            <div class="price-chart-card">
+            <div class="chart-header">
+                <h2 class="chart-title">🐻 DP Token Price</h2>
+            </div>
+            
+            <div class="price-info">
+                <div class="price-stat">
+                    <div class="price-stat-label">Current Price</div>
+                    <div class="price-stat-value" id="dpCurrentPrice">$0.0000</div>
+                </div>
+                <div class="price-stat">
+                    <div class="price-stat-label">24h Change</div>
+                    <div class="price-stat-value" id="dpPriceChange24h">0.00%</div>
+                </div>
+                <div class="price-stat">
+                    <div class="price-stat-label">Market Cap</div>
+                    <div class="price-stat-value" id="dpMarketCap">$0</div>
+                </div>
+                <div class="price-stat">
+                    <div class="price-stat-label">24h Volume</div>
+                    <div class="price-stat-value" id="dpVolume24h">$0</div>
+                </div>
+                <div class="price-stat">
+                    <div class="price-stat-label">TVL</div>
+                    <div class="price-stat-value" id="dpTVL">$0</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="dpPriceChart"></canvas>
+                <div class="chart-error" id="chartError"></div>
+            </div>
+            
+            <div class="chart-footer">
+                <span id="dpLastUpdate">Updated: --:--</span> | Powered by <strong>Ave Cloud Data API</strong>
+            </div>
+        </div>
+
         <!-- Swap 卡片 -->
         <div class="swap-card">
             <div class="swap-header">
@@ -1033,7 +1192,7 @@
                     <input type="number" class="amount-input" id="toAmount" placeholder="0.0" step="any" readonly>
                     <div class="token-selector" id="toTokenSelector">
                         <div class="token-info">
-                            <span class="token-symbol" id="toTokenSymbol">HONEY</span>
+                            <span class="token-symbol" id="toTokenSymbol">DP</span>
                         </div>
                         <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1065,20 +1224,30 @@
             <!-- Swap Button -->
             <button class="swap-btn" id="swapBtn" disabled>
                 <span class="btn-text">Enter Amount</span>
-                <div class="btn-loading" style="display: none;">
-                    <div class="loading-spinner"></div>
-                </div>
             </button>
+
+            <!-- Powered by -->
+            <div style="text-align: center; margin-top: 12px; color: var(--text-secondary); font-size: 12px; opacity: 0.8;">
+                Powered by <strong>kodiak kX</strong>
+            </div>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <!-- 国际化配置 -->
     <script src="js/i18n.js"></script>
     
     <!-- 公共脚本 -->
     <script src="js/common.js"></script>
+    
+    <!-- Ave API & Price Chart -->
+    <script src="ave-api.js"></script>
+    <script src="price-chart.js"></script>
     
     <script src="kodiak-api.js"></script>
     <script src="swap.js"></script>
@@ -1113,6 +1282,16 @@
                 document.body.style.overflow = '';
             }
         }
+        
+        // 初始化 DP 价格图表
+        let dpPriceChart;
+        window.addEventListener('load', () => {
+            // 创建 Ave API 实例
+            const aveAPI = new AveAPI('7h7NW15y2nApmvp4iyKZ6Ql6HSCPe3irICJKtMK0vKbbYDvohfsyTgwZ55t2QfNL');
+            
+            // 创建价格图表实例
+            dpPriceChart = new DPPriceChart('dpPriceChart', aveAPI);
+        });
     </script>
 </body>
 </html>

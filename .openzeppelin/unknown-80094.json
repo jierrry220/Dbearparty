@@ -1,0 +1,5296 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0xd9661D56659B80A875E42A51955434A0818581D8",
+      "kind": "uups"
+    },
+    {
+      "address": "0xAa733E91132dF624f391f1B426F56BD231486774",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "394c07978f06f1bbf548c703bbe3f9cd2be5a9345b0f9ffdb03bfe8f4c095b42": {
+      "address": "0xd76B61Aa1C9E7375195dE282C636761c25828c98",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(IERC20Upgradeable)882",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:32"
+          },
+          {
+            "label": "debearPass",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(IDebearPass)1396",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:33"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1417_storage)",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:43"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:46"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:47"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:48"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:52"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "209",
+            "type": "t_bool",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:53"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "210",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:54"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "211",
+            "type": "t_address",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:54"
+          },
+          {
+            "label": "epochDuration",
+            "offset": 0,
+            "slot": "212",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:57"
+          },
+          {
+            "label": "manualEpochOffset",
+            "offset": 0,
+            "slot": "213",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:57"
+          },
+          {
+            "label": "pendingRewardsV2",
+            "offset": 0,
+            "slot": "214",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:58"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "215",
+            "type": "t_uint256",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:70"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "216",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:74"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "217",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV3",
+            "src": "contracts\\TEngineV3.sol:76"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1396": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20Upgradeable)882": {
+            "label": "contract IERC20Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1417_storage)": {
+            "label": "mapping(address => struct TEngineV3.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1417_storage": {
+            "label": "struct TEngineV3.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimEpoch",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "2a15e157e85ef5cc2d90186d407665e914e4cf14a4b0f04d5a65da614c4b0201": {
+      "address": "0x77123C2501FD37eFCDa14F32A856d32a049Da79C",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:28"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:29"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:31"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:32"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:34"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1550_storage)",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:49"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:50"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:51"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:54"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:55"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:56"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:57"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:59"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:62"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:65"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1521",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:77"
+          },
+          {
+            "label": "epochDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:81"
+          },
+          {
+            "label": "manualEpochOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:82"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV2",
+            "src": "contracts\\TEngine.sol:84"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1521": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1550_storage)": {
+            "label": "mapping(address => struct TEngineV2.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1550_storage": {
+            "label": "struct TEngineV2.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimEpoch",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      },
+      "allAddresses": [
+        "0x77123C2501FD37eFCDa14F32A856d32a049Da79C",
+        "0x81BCc2b3d5675518aA74754971565B149Fb3C22D",
+        "0x5B97cB59cE55b591036120c0B3693EeCB02889aa"
+      ]
+    },
+    "ad7d47ec1ad6350d8a9cc17ddf608e504a448b96b8e0f8bba1d9a2d9c2df8afd": {
+      "address": "0x3A5fBBD102B923b995c46a66Fc4c5CaD7a732A7D",
+      "txHash": "0x50a3a82a4e9f457bffb999e3411634ab23909ed4b5e48274d37116e49bc8b27b",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:28"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:29"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:31"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:32"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:34"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1550_storage)",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:49"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:50"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:51"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:54"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:55"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:56"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:57"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:59"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:62"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:65"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1521",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:77"
+          },
+          {
+            "label": "epochDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:81"
+          },
+          {
+            "label": "manualEpochOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:83"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:87"
+          },
+          {
+            "label": "lastEpochDurationChangeTime",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:88"
+          },
+          {
+            "label": "lastEpochDurationChangeEpoch",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:89"
+          },
+          {
+            "label": "previousEpochDuration",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:90"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1521": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1550_storage)": {
+            "label": "mapping(address => struct TEngineV2_1.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1550_storage": {
+            "label": "struct TEngineV2_1.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimEpoch",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      },
+      "allAddresses": [
+        "0x3A5fBBD102B923b995c46a66Fc4c5CaD7a732A7D",
+        "0x6097679438a24676Efd3015B968b18BE1Fce37E6"
+      ]
+    },
+    "954317a0fe63ae3f73457fe2f1b1f4a900f1f1e0cd195b27849f96da7b38bc68": {
+      "address": "0xDB220423db78a92eFD9B82d65451B83FF6b5Ad10",
+      "txHash": "0x073ad4747d6655f19f45c2e6a9c6b78958eb6a40c1f4e3598ba3f30443c21fd5",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:27"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:28"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:30"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:31"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:33"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1543_storage)",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:48"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:49"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:50"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:53"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:54"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:55"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:56"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:58"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:61"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:64"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:76"
+          },
+          {
+            "label": "epochDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:80"
+          },
+          {
+            "label": "manualEpochOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:82"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:86"
+          },
+          {
+            "label": "lastEpochDurationChangeTime",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:87"
+          },
+          {
+            "label": "lastEpochDurationChangeEpoch",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:88"
+          },
+          {
+            "label": "previousEpochDuration",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:89"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1543_storage)": {
+            "label": "mapping(address => struct TEngineV2_1.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1543_storage": {
+            "label": "struct TEngineV2_1.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimEpoch",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "07aeb14724df254ace1b9e098bf576691040f9b13593112c0dff54d98f57ab07": {
+      "address": "0x05294F6429Af987251a9E186ab6A2ECA0A22b655",
+      "txHash": "0xa27a546e430c9c8e365a6823d8687325be50245877668a614540e43b9f4da3f4",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)7941",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:27"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)7970",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:28"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:30"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:31"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:33"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)8009_storage)",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:48"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:49"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:50"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:53"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:54"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:55"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:56"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:58"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:61"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:64"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)7980",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:76"
+          },
+          {
+            "label": "epochDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:80"
+          },
+          {
+            "label": "manualEpochOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:82"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:86"
+          },
+          {
+            "label": "lastEpochDurationChangeTime",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:87"
+          },
+          {
+            "label": "lastEpochDurationChangeEpoch",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:88"
+          },
+          {
+            "label": "previousEpochDuration",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV2_1",
+            "src": "contracts\\TEngine.sol:89"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)7980": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)7941": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)7970": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)8009_storage)": {
+            "label": "mapping(address => struct TEngineV2_1.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)8009_storage": {
+            "label": "struct TEngineV2_1.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimEpoch",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "ff0e0820a795cbc048cef308c34bb9f83fa3425553fe49f08ed0b1c966cee076": {
+      "address": "0x23a912A5236A700f77c5cB6237249a895b9ea5a3",
+      "txHash": "0x0f958d948dd0f3501a6a163534519c0b9e8cc705c37c66d8bc223a8608c19e50",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(IERC20Upgradeable)882",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:41"
+          },
+          {
+            "label": "debearPass",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(IDebearPass)1389",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:42"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_contract(IInvitationSystem)1411",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:43"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1427_storage)",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:45"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:47"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:48"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:50"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:51"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "209",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:52"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "210",
+            "type": "t_bool",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:54"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "211",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:55"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "212",
+            "type": "t_address",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:56"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "213",
+            "type": "t_address",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:57"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "214",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:60"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "215",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:61"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "216",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:62"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "217",
+            "type": "t_uint256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:66"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "218",
+            "type": "t_int256",
+            "contract": "TEngineV2_6",
+            "src": "contracts\\TEngineV2_6.sol:67"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1389": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20Upgradeable)882": {
+            "label": "contract IERC20Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1411": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1427_storage)": {
+            "label": "mapping(address => struct TEngineV2_6.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1427_storage": {
+            "label": "struct TEngineV2_6.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "66a3295ab8dfaeae8b3317f8c8a9e5a1f303220540f0785d05a16f716070cba6": {
+      "address": "0x13546FAb3ef132aAeAB480e16F5916A6F5395EaC",
+      "txHash": "0x98fb9d5b187661f224c8a214ce9d80e43b7e414a8a07218150cc9d58ed39f585",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      },
+      "allAddresses": [
+        "0x13546FAb3ef132aAeAB480e16F5916A6F5395EaC",
+        "0x77123C2501FD37eFCDa14F32A856d32a049Da79C"
+      ]
+    },
+    "a80d58ad0d3dead939edad73300dfe43b041c56b438965e41739945ab283b070": {
+      "address": "0xb4D275098A80cF84Cfeafc2ec981e27C6ae3B181",
+      "txHash": "0x6da8e704ef5ffdf37bef1ef607a2da48730e960ba4c43e387acbc3453196dd73",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "2c49c0851137905103aa56812f42efb8fc8ce843ec013419188a20d72ddb0ebe": {
+      "address": "0x7f53b252E9FCE1d41FeA6541D9E53DD490EA5EBB",
+      "txHash": "0x189d953238a531f1302fe79ea46330466ea3087eb3e8fa14b98c905d64f42814",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "ae7bd1c8bf3f7aa8c184e43b6529e93695d7315a57bb1803c1e42b5161fe2a18": {
+      "address": "0x713fb04695b76174eFCd43fBd8e7731B50a25D2B",
+      "txHash": "0x19cbf57dcfd7a54637f8806f34a576d2a8ca6ac46481c93a22b3041d4fe2d637",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "ca809c4e040903317ff0fb2ded2147bbb4002b4b65cd53a02d5db01b7d8f7996": {
+      "address": "0xbc20C7059f80e4331a0fD5B1a4469d64e4E79420",
+      "txHash": "0x3ef086b64061e042c71398a8411ad65cbfea062cc2087bde4f53e40bdc63c03c",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "df0e4be4a500cc66bc95edba442b52b10607ff36e50a2fc7bc0e6992466a9ba5": {
+      "address": "0xd0BF7CD179BAD7D5734F04F88fc65A438a4fD1D0",
+      "txHash": "0x05cb0f68cddf05452deb5983aa9a6b0e9a7fc098c3708330b15b42ef827ae83d",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "92afb8145bbf63bc38f9aeeb42ddd97576a09685603f34d1c5c08c11fa2354aa": {
+      "address": "0x414726Fa73C210571921F545311Ab0E884399d8e",
+      "txHash": "0xd055038e2132ef11f9d6e9e5d1515ebb2ce5dfa201e08dccb58bb4c49ff33a72",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "9f2ab2db3a3deebfe1d7cf2cfabf15f0e2ad89b4f4d619553ae87a1a8884fe1e": {
+      "address": "0x1E8ca4F1dA6261de745D79F8FB1aEF7FebA9410c",
+      "txHash": "0xd3a447870471820f0c33f7803d3bbea6dc878acf30dbf7541400c74560099ffa",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "d2c627c5930dfb6e78f6a8e21e95c5a79fd7416d332c49354107d030e2d23850": {
+      "address": "0x1Ac0eEB8679116c3566Ebe264bF8239e297e57e7",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "passNFT",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(IERC1155Upgradeable)1011",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:30"
+          },
+          {
+            "label": "tEnginePool",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(ITEnginePool)1608",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:31"
+          },
+          {
+            "label": "inviterOf",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:41"
+          },
+          {
+            "label": "invitees",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:44"
+          },
+          {
+            "label": "totalInvitationRewards",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:46"
+          },
+          {
+            "label": "inviteeCount",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:50"
+          },
+          {
+            "label": "authorizedContracts",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "InvitationSystem",
+            "src": "contracts\\InvitationSystem.sol:54"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC1155Upgradeable)1011": {
+            "label": "contract IERC1155Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ITEnginePool)1608": {
+            "label": "contract ITEnginePool",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "9fe16ce1aefdd6504e5b984578512b5bc52fc36f50e2cb908d1551c9b8e1c9de": {
+      "address": "0x944338dab9aD0740C74964A3b20387173eC9C64e",
+      "txHash": "0xf00c5a005e124067c19178e490ad54255740632ea3e8c7e3cac871933a1ec0ac",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "dpToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IERC20BurnableUpgradeable)1475",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:45"
+          },
+          {
+            "label": "invitationSystem",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_contract(IInvitationSystem)1504",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:46"
+          },
+          {
+            "label": "taxRecipient",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:48"
+          },
+          {
+            "label": "defaultInviter",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_address",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:50"
+          },
+          {
+            "label": "deployTime",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:52"
+          },
+          {
+            "label": "userInfo",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1544_storage)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:63"
+          },
+          {
+            "label": "totalDeposited",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:65"
+          },
+          {
+            "label": "totalSharesIssued",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:67"
+          },
+          {
+            "label": "totalClaimed",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:68"
+          },
+          {
+            "label": "totalTaxCollected",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:69"
+          },
+          {
+            "label": "totalInviteRewards",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:70"
+          },
+          {
+            "label": "sharesMultiplier",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:73"
+          },
+          {
+            "label": "dailyReleaseRate",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:75"
+          },
+          {
+            "label": "taxRate",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:76"
+          },
+          {
+            "label": "claimPaused",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_bool",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:77"
+          },
+          {
+            "label": "debearPass",
+            "offset": 1,
+            "slot": "265",
+            "type": "t_contract(IDebearPass)1514",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:79"
+          },
+          {
+            "label": "releaseDayDuration",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:80"
+          },
+          {
+            "label": "manualDayOffset",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_int256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:81"
+          },
+          {
+            "label": "totalInviteRewardsTransferred",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:85"
+          },
+          {
+            "label": "userInviteRewardsGiven",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:88"
+          },
+          {
+            "label": "userInviteRewardsReceived",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:90"
+          },
+          {
+            "label": "lastGlobalReleaseDay",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_uint256",
+            "contract": "TEngineV4",
+            "src": "contracts\\TEngineV4.sol:95"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDebearPass)1514": {
+            "label": "contract IDebearPass",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IERC20BurnableUpgradeable)1475": {
+            "label": "contract IERC20BurnableUpgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvitationSystem)1504": {
+            "label": "contract IInvitationSystem",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1544_storage)": {
+            "label": "mapping(address => struct TEngineV4.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserInfo)1544_storage": {
+            "label": "struct TEngineV4.UserInfo",
+            "members": [
+              {
+                "label": "totalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimedShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastClaimDay",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "b8f7e46f0dff1170b72053de0c7b479f07b01c2e620e96c3985966c0764fa8b1": {
+      "address": "0x831C35DcB863de63D8E0a6307f7a1a4dDBe56469",
+      "txHash": "0x77e4a3286b542c7aeaa2bd895c814ad8beb69cab432a34aa69cbb365b106249b",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "passNFT",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(IERC1155Upgradeable)926",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:24"
+          },
+          {
+            "label": "tEnginePool",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(ITEnginePool)1445",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:27"
+          },
+          {
+            "label": "inviterOf",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:35"
+          },
+          {
+            "label": "invitees",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:38"
+          },
+          {
+            "label": "totalInvitationRewards",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:43"
+          },
+          {
+            "label": "inviteeCount",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:44"
+          },
+          {
+            "label": "authorizedContracts",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "InvitationSystemV2",
+            "src": "contracts\\InvitationSystemV2.sol:50"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC1155Upgradeable)926": {
+            "label": "contract IERC1155Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ITEnginePool)1445": {
+            "label": "contract ITEnginePool",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    }
+  }
+}

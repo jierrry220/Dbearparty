@@ -9,6 +9,7 @@
 const CONFIG = {
     BERACHAIN_CHAIN_ID: '0x138de', // 80094 in hex
     BERACHAIN_CHAIN_ID_DECIMAL: 80094,
+    OWNER_ADDRESS: '0xd8B4286c2f299220830f7228bab15225b4EA8379', // Owner 地址（可选）
     PARTICLES_CONFIG: {
         particles: {
             number: { value: 100, density: { enable: true, value_area: 800 } },
@@ -146,9 +147,14 @@ class LoadingManager {
                 <div class="loading-spinner"></div>
                 <div class="loading-text">加载中...</div>
             `;
+            // 确保初始状态是隐藏的
+            this.overlay.style.display = 'none';
             document.body.appendChild(this.overlay);
         } else {
             this.overlay = document.querySelector('.loading-overlay');
+            // 确保已存在的元素也是隐藏的
+            this.overlay.classList.remove('active');
+            this.overlay.style.display = 'none';
         }
     }
 
@@ -158,7 +164,11 @@ class LoadingManager {
             if (textEl) {
                 textEl.textContent = text;
             }
-            this.overlay.classList.add('active');
+            this.overlay.style.display = 'flex';
+            // 使用 setTimeout 确保 display 先生效
+            setTimeout(() => {
+                this.overlay.classList.add('active');
+            }, 10);
             // 禁止页面滚动
             document.body.style.overflow = 'hidden';
         }
@@ -167,6 +177,10 @@ class LoadingManager {
     hide() {
         if (this.overlay) {
             this.overlay.classList.remove('active');
+            // 等待动画结束后再隐藏
+            setTimeout(() => {
+                this.overlay.style.display = 'none';
+            }, 300);
             // 恢复页面滚动
             document.body.style.overflow = '';
         }
@@ -320,6 +334,9 @@ class WalletManager {
     // 检查Owner权限
     checkOwnerAccess() {
         if (!this.address) return;
+        
+        // 安全检查: 如果没有配置 OWNER_ADDRESS，直接返回
+        if (!CONFIG.OWNER_ADDRESS) return;
 
         const userAddress = this.address.toLowerCase();
         const ownerAddress = CONFIG.OWNER_ADDRESS.toLowerCase();

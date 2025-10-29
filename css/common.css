@@ -556,17 +556,19 @@ body {
     background: rgba(10, 14, 26, 0.9);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    display: none;
+    display: none !important; /* 强制隐藏 */
     align-items: center;
     justify-content: center;
     z-index: var(--z-modal);
     opacity: 0;
     transition: opacity var(--transition-normal);
+    visibility: hidden; /* 额外保障 */
 }
 
 .loading-overlay.active {
-    display: flex;
+    display: flex !important; /* 显示时覆盖默认隐藏 */
     opacity: 1;
+    visibility: visible;
 }
 
 .loading-spinner {

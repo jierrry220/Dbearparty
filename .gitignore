@@ -61,6 +61,13 @@ hardhat.config.ts
 dist
 build
 
-# 缓存
+# 缂撳瓨
 .cache
 .parcel-cache
+
+# AVE API 集成文档 (可选保留)
+# AVE_API_INTEGRATION_GUIDE.md
+# DP_PRICE_CHART_README.md
+
+# 部署清理指南
+CLEANUP_FOR_DEPLOY.md

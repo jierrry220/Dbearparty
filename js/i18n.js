@@ -72,6 +72,7 @@ const translations = {
         'footer.community.title': 'Community',
         'footer.community.discord': 'Discord',
         'footer.community.twitter': 'Twitter',
+        'footer.community.telegram': 'Telegram',
         'footer.community.medium': 'Medium',
         'footer.community.help': 'Help Center',
         
@@ -119,6 +120,31 @@ const translations = {
         'tengine.notice2': 'T-Engine does not support withdrawing stakes, only claiming daily released rewards',
         'tengine.notice3': 'Holding Pass NFT grants mining power bonus (Coming Soon)',
         'tengine.notice4': 'Smart contracts have been audited, but please invest cautiously',
+        
+        // T-Engine 邀请收益
+        'tengine.inviteTitle': '🎁 My Referral Rewards',
+        'tengine.inviteInfo': '💡 Invite users to stake and earn rewards: No Pass 3% | Standard Pass 8% | Premium Pass 11% | Exclusive Pass 15%',
+        'tengine.passLevel': 'Pass Level:',
+        'tengine.rewardRate': 'Current Reward Rate:',
+        
+        // T-Engine 输入框
+        'tengine.inputPlaceholder': 'Enter stake amount',
+        'tengine.modalPlaceholder': '0x... (optional)',
+        
+        // T-Engine 消息提示
+        'tengine.msg.noWallet': 'Please connect wallet first',
+        'tengine.msg.invalidAmount': 'Please enter valid stake amount',
+        'tengine.msg.approving': 'Step 1/2: Approving DP Token...',
+        'tengine.msg.staking': 'Step 2/2: Executing stake...',
+        'tengine.msg.stakeSuccess': 'Stake successful! T-Engine started',
+        'tengine.msg.stakeFailed': 'Stake failed: ',
+        'tengine.msg.claiming': 'Claiming rewards...',
+        'tengine.msg.claimSuccess': 'Rewards claimed successfully!',
+        'tengine.msg.claimFailed': 'Claim failed: ',
+        'tengine.msg.noUnstake': 'T-Engine does not support withdrawing stakes, only claiming rewards',
+        'tengine.msg.walletConnected': 'Wallet connected successfully!',
+        'tengine.msg.walletFailed': 'Failed to connect wallet: ',
+        'tengine.msg.invalidAddress': 'Please enter valid Ethereum address format',
         
         // Swap 页面
         'swap.title': '💱 Swap',
@@ -253,6 +279,7 @@ const translations = {
         'footer.community.title': '社區',
         'footer.community.discord': 'Discord',
         'footer.community.twitter': 'Twitter',
+        'footer.community.telegram': 'Telegram',
         'footer.community.medium': 'Medium',
         'footer.community.help': '幫助中心',
         
@@ -287,8 +314,8 @@ const translations = {
         'tengine.balance': '餘額:',
         'tengine.stake': '質押',
         'tengine.whatIs': '🚀 什麼是 T-Engine？',
-        'tengine.intro1': 'T-Engine 是 Debear Party 生態系統的核心挖礦引擎。通過質押 DP Token，用戶可以啟動 T-Engine 進行持續挖礦，獲得豐厚的 DP Token 獎勵。',
-        'tengine.intro2': 'T-Engine 的釋放機制為，每天釋放剩餘份額的0.3%，確保公平分配和可持續發展。無論您是小額質押還是大額投資，都能獲得相應的收益回報。',
+        'tengine.intro1': 'T-Engine 是 Debear Party 生态系统的核心挖矿引擎。通过质押 DP Token，用户可以启动 T-Engine 进行持续挖矿，获得丰厚的 DP Token 奖励。',
+        'tengine.intro2': 'T-Engine 每天释放剩余份额的0.3%，确保公平分配和可持续发展。无论您是小额质押还是大额投资，都能获得相应的收益回报。',
         'tengine.howTo': '🔄 如何使用？',
         'tengine.step1': '<strong>連接錢包：</strong>確保錢包中有足夠的 DP Token',
         'tengine.step2': '<strong>質押代幣：</strong>輸入質押數量，點擊"質押"按鈕',
@@ -298,8 +325,33 @@ const translations = {
         'tengine.notice': '⚠️ 注意事項',
         'tengine.notice1': '質押操作需要支付少量 Gas 費用（BERA）',
         'tengine.notice2': 'T-Engine 不支持取回質押，僅能領取每日釋放的獎勵',
-        'tengine.notice3': '持有 Pass NFT 可獲得算力加成（即將開放）',
-        'tengine.notice4': '智能合約已經過安全審計，但仍需謹慎投資',
+        'tengine.notice3': '持有 Pass NFT 可获得算力加成（即将开放）',
+        'tengine.notice4': '智能合约已经过安全审计，但仍需谨慎投资',
+        
+        // T-Engine 邀请收益
+        'tengine.inviteTitle': '🎁 我的邀请收益',
+        'tengine.inviteInfo': '💡 邀请用户质押可获奖励：无 Pass 默认 3% | Standard Pass 8% | Premium Pass 11% | Exclusive Pass 15%',
+        'tengine.passLevel': '持有 Pass 等级:',
+        'tengine.rewardRate': '当前邀请奖励率:',
+        
+        // T-Engine 输入框
+        'tengine.inputPlaceholder': '输入质押数量',
+        'tengine.modalPlaceholder': '0x... (选填)',
+        
+        // T-Engine 消息提示
+        'tengine.msg.noWallet': '请先连接钱包',
+        'tengine.msg.invalidAmount': '请输入有效的质押数量',
+        'tengine.msg.approving': '步骤 1/2: 授权 DP Token...',
+        'tengine.msg.staking': '步骤 2/2: 执行质押...',
+        'tengine.msg.stakeSuccess': '质押成功！T-Engine 已启动',
+        'tengine.msg.stakeFailed': '质押失败: ',
+        'tengine.msg.claiming': '正在领取奖励...',
+        'tengine.msg.claimSuccess': '奖励领取成功！',
+        'tengine.msg.claimFailed': '领取失败: ',
+        'tengine.msg.noUnstake': 'T-Engine 不支持取回质押，仅能领取奖励',
+        'tengine.msg.walletConnected': '钱包连接成功！',
+        'tengine.msg.walletFailed': '连接钱包失败: ',
+        'tengine.msg.invalidAddress': '请输入有效的以太坡地址格式',
         
         // Swap 頁面
         'swap.title': '💱 Swap',

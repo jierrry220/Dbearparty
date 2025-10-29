@@ -12,6 +12,10 @@
     "dev": "node server.js",
     "compile": "hardhat compile",
     "test": "hardhat test",
+    "test-compile": "hardhat run scripts/compileTest.js --network hardhat",
+    "test-invite": "hardhat run scripts/testInviteChain.js --network hardhat",
+    "upgrade": "hardhat run scripts/upgradeTEngineV2.js --network berachain",
+    "upgrade-local": "hardhat run scripts/upgradeTEngineV2.js --network localhost",
     "deploy": "hardhat run scripts/deploy.js --network berachain",
     "deploy-local": "hardhat run scripts/deploy.js --network localhost"
   },
@@ -24,7 +28,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "^3.1.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
