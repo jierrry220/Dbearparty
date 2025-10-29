@@ -1,0 +1,55 @@
+{
+  "name": "debear-party",
+  "version": "1.0.0",
+  "description": "Debear Party - Web3 潮流元宇宙游戏平台",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test-compile": "hardhat run scripts/compileTest.js --network hardhat",
+    "test-invite": "hardhat run scripts/testInviteChain.js --network hardhat",
+    "upgrade": "hardhat run scripts/upgradeTEngineV2.js --network berachain",
+    "upgrade-local": "hardhat run scripts/upgradeTEngineV2.js --network localhost",
+    "deploy": "hardhat run scripts/deploy.js --network berachain",
+    "deploy-local": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "keywords": [
+    "berachain",
+    "defi",
+    "nft",
+    "web3"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.1.0",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/mocha": "^10.0.10",
+    "chai": "^4.3.10",
+    "dotenv": "^16.6.1",
+    "ethers": "^6.15.0",
+    "hardhat": "^2.26.3",
+    "hardhat-gas-reporter": "^2.3.0",
+    "solidity-coverage": "^0.8.16",
+    "ts-node": "^10.9.2",
+    "typechain": "^8.3.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.6",
+    "@openzeppelin/contracts-upgradeable": "^4.9.5",
+    "@openzeppelin/hardhat-upgrades": "^2.0.0",
+    "solc": "^0.8.30"
+  }
+}
