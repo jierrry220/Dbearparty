@@ -1,7 +1,7 @@
-// Ave API CORS Proxy
+// Ave API CORS Proxy for Zeabur
 // 用于解决浏览器跨域问题
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     // 允许所有域名访问（生产环境建议限制为你的域名）
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -22,6 +22,8 @@ export default async function handler(req, res) {
         
         // 构建完整 URL
         const url = `${baseURL}${endpoint}`;
+        
+        console.log('Proxying request to:', url);
         
         // 转发请求到 Ave API
         const response = await fetch(url, {
@@ -50,4 +52,4 @@ export default async function handler(req, res) {
             message: error.message 
         });
     }
-}
+};

@@ -47,22 +47,47 @@ class AveAPI {
             let response;
             
             if (this.useProxy) {
-                // 使用代理
-                response = await fetch(this.proxyURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        endpoint: '/v2/tokens/price',
+                // 使用代理（fallback 到直接请求）
+                try {
+                    response = await fetch(this.proxyURL, {
                         method: 'POST',
-                        body: {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            endpoint: '/v2/tokens/price',
+                            method: 'POST',
+                            body: {
+                                token_ids: [this.dpTokenId],
+                                tvl_min: 0,
+                                tx_24h_volume_min: 0
+                            }
+                        })
+                    });
+                    
+                    // 如果代理 404，切换到直接请求
+                    if (!response.ok && response.status === 404) {
+                        console.warn('Proxy not available, falling back to direct request');
+                        this.useProxy = false; // 自动关闭代理
+                        throw new Error('Proxy not found, retry with direct');
+                    }
+                } catch (proxyError) {
+                    console.warn('Proxy failed, using direct request:', proxyError.message);
+                    // Fallback 到直接请求
+                    response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-API-KEY': this.apiKey,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
                             token_ids: [this.dpTokenId],
                             tvl_min: 0,
                             tx_24h_volume_min: 0
-                        }
-                    })
-                });
+                        })
+                    });
+                }
             } else {
                 // 直接请求
                 response = await fetch(`${this.baseURL}/v2/tokens/price`, {
