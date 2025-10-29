@@ -1,10 +1,12 @@
 {
   "functions": {
     "api/ave-price.js": {
-      "memory": 128,
       "maxDuration": 10
     }
   },
+  "buildCommand": "",
+  "installCommand": ""
+}
   "rewrites": [
     {
       "source": "/api/ave-price",
