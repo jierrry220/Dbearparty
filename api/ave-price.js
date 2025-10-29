@@ -1,15 +1,15 @@
 // Vercel Serverless Function for Ave API proxy
 // Deploy to Vercel: https://vercel.com
 
-const AVE_API_KEY = '7h7NW15y2nApmvp4iyKZ6Ql6HSCPe3irICJKtMK0vKbbYDvohfsyTgwZ55t2QfNL';
 const AVE_API_URL = 'https://prod.ave-api.com/v2/tokens/price';
 const DP_TOKEN_ID = '0xf7c464c7832e59855aa245ecc7677f54b3460e7d-berachain';
 
 module.exports = async (req, res) => {
-    // CORS headers
+    // CORS headers - allow all origins
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    res.setHeader('Access-Control-Max-Age', '86400');
     
     // Handle preflight
     if (req.method === 'OPTIONS') {
@@ -18,6 +18,13 @@ module.exports = async (req, res) => {
     }
     
     try {
+        // Get API key from environment variable
+        const AVE_API_KEY = process.env.AVE_API_KEY;
+        
+        if (!AVE_API_KEY) {
+            throw new Error('AVE_API_KEY environment variable not set');
+        }
+        
         // Fetch from Ave API
         const response = await fetch(AVE_API_URL, {
             method: 'POST',
