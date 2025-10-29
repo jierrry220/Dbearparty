@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-10-29T11:42:33.489Z",
+  "proxyAddress": "0xd9661D56659B80A875E42A51955434A0818581D8",
+  "deployer": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "contractState": {
+    "totalDeposited": "577593000000000000000000",
+    "totalSharesIssued": "2310372000000000000000000",
+    "totalClaimed": "2004065729400754811922687",
+    "sharesMultiplier": "4",
+    "dailyReleaseRate": "30",
+    "totalTaxCollected": "188556849151719502436963",
+    "taxRate": "0",
+    "claimPaused": false,
+    "debearPass": "0x29f2a6756E5B79C36Eb6699220CB56f7749C7514",
+    "releaseDayDuration": "86400",
+    "manualDayOffset": "0"
+  }
+}

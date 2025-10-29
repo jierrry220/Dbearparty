@@ -72,3 +72,4 @@ build
 
 # 部署清理指南
 CLEANUP_FOR_DEPLOY.md
+.vercel
