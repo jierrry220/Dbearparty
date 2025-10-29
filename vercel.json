@@ -5,8 +5,7 @@
     }
   },
   "buildCommand": "",
-  "installCommand": ""
-}
+  "installCommand": "",
   "rewrites": [
     {
       "source": "/api/ave-price",
