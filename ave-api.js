@@ -6,8 +6,6 @@ class AveAPI {
         // API endpoints
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
-        // 使用简化的 API 端点（不需要传递 headers）
-        this.simpleProxyURL = 'https://newdp-hb7mlwi7w-jierrrys-projects.vercel.app/api/ave-price'; // Vercel Serverless Function
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
@@ -47,13 +45,20 @@ class AveAPI {
         }
         
         try {
-            // 直接使用简化的 API 端点（GET 请求，无需 headers）
-            console.log('Fetching price from:', this.simpleProxyURL);
-            const response = await fetch(this.simpleProxyURL, {
-                method: 'GET',
+            // Call Ave API directly
+            console.log('Fetching price from Ave API');
+            const response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+                method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': this.apiKey,
                     'Accept': 'application/json'
-                }
+                },
+                body: JSON.stringify({
+                    token_ids: [this.dpTokenId],
+                    tvl_min: 0,
+                    tx_24h_volume_min: 0
+                })
             });
             
             if (!response.ok) {

@@ -1290,8 +1290,7 @@
         let dpPriceChart;
         window.addEventListener('load', () => {
             // 创建 Ave API 实例
-            // 第二个参数 useProxy=true 启用代理模式，解决 CORS 问题
-            const aveAPI = new AveAPI('7h7NW15y2nApmvp4iyKZ6Ql6HSCPe3irICJKtMK0vKbbYDvohfsyTgwZ55t2QfNL', true);
+            const aveAPI = new AveAPI('7h7NW15y2nApmvp4iyKZ6Ql6HSCPe3irICJKtMK0vKbbYDvohfsyTgwZ55t2QfNL');
             
             // 创建价格图表实例
             dpPriceChart = new DPPriceChart('dpPriceChart', aveAPI);
