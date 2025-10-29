@@ -35,48 +35,6 @@ class AveAPI {
         return this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE';
     }
     
-    /**
-     * 使用 CORS 代理获取数据（尝试多个代理）
-     */
-    async fetchWithCorsProxy() {
-        const targetURL = `${this.baseURL}/v2/tokens/price`;
-        const requestBody = {
-            token_ids: [this.dpTokenId],
-            tvl_min: 0,
-            tx_24h_volume_min: 0
-        };
-        
-        // 尝试所有 CORS 代理
-        for (let i = 0; i < this.corsProxies.length; i++) {
-            const proxyURL = this.corsProxies[i];
-            console.log(`Trying CORS proxy ${i + 1}/${this.corsProxies.length}:`, proxyURL);
-            
-            try {
-                const response = await fetch(proxyURL + encodeURIComponent(targetURL), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-KEY': this.apiKey,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-                
-                if (response.ok) {
-                    console.log(`✅ CORS proxy ${i + 1} success!`);
-                    this.currentProxyIndex = i;
-                    return response;
-                }
-                
-                console.warn(`CORS proxy ${i + 1} failed with status:`, response.status);
-            } catch (err) {
-                console.warn(`CORS proxy ${i + 1} error:`, err.message);
-            }
-        }
-        
-        // 所有代理都失败，抛出错误
-        throw new Error('All CORS proxies failed');
-    }
     
     /**
      * 获取 DP 代币的实时价格信息
