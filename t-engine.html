@@ -1041,7 +1041,7 @@
             debearPass: '0x29f2a6756E5B79C36Eb6699220CB56f7749C7514'
         };
 
-        // T-Engine ABI (V2.5 - UTC Day Release)
+        // T-Engine ABI (V5 - 包含强制释放功能)
         const TENGINE_ABI = [
             'function enterPool(uint256 amount, address inviter)',
             'function claim()',
@@ -1061,7 +1061,13 @@
             'function lastEpochDurationChangeTime() view returns (uint256)',
             'function lastEpochDurationChangeEpoch() view returns (uint256)',
             'function previousEpochDuration() view returns (uint256)',
-            'event InviteRewardReleased(address indexed inviter, address indexed newUser, uint256 actualReward, uint256 expectedReward)'
+            // V5 新增函数
+            'function getPendingRewards(address user) view returns (uint256)',
+            'function getRemainingShares(address user) view returns (uint256)',
+            'function globalForceReleaseCount() view returns (uint256)',
+            'function userProcessedForceReleases(address) view returns (uint256)',
+            'event InviteRewardReleased(address indexed inviter, address indexed newUser, uint256 actualReward, uint256 expectedReward)',
+            'event GlobalForceReleaseTriggered(uint256 releaseCount, uint256 timestamp)'
         ];
         
         // Pass NFT ABI (ERC1155)
@@ -1407,12 +1413,17 @@
                     pendingRewardsDP = userInfo.pendingRewards || userInfo[3];
                 }
 
-                // 尝试调用 getPendingRewards 获取实时可领取数量
+                // V5: 尝试调用 getPendingRewards 获取实时可领取数量（包括强制释放）
                 let actualClaimable = pendingRewardsDP;
+                let actualRemaining = totalLockedDP.sub(releasedDP); // 默认值
+                
                 try {
-                    const claimable = await tEngine.getPendingRewards(userAddress);
-                    // console.log('✅ getPendingRewards:', ethers.utils.formatEther(claimable)); // 减少控制台输出
-                    actualClaimable = claimable;
+                    // V5 新函数：同时获取待领取和剩余份额（已包含强制释放）
+                    [actualClaimable, actualRemaining] = await Promise.all([
+                        tEngine.getPendingRewards(userAddress),
+                        tEngine.getRemainingShares(userAddress)
+                    ]);
+                    // console.log('✅ V5 数据（含强制释放）:', ethers.utils.formatEther(actualClaimable)); // 减少控制台输出
                 } catch (calcError) {
                     // console.log('🔍 合约未提供 getPendingRewards，使用手动计算模式'); // 减少控制台输出
                     
@@ -1444,14 +1455,13 @@
                     }
                 }
 
-                // 计算显示数据（V4：所有数据已经是 DP 单位）
+                // 计算显示数据（V5：使用包含强制释放的实时数据）
                 const myStakedDP = totalLockedDP.div(4);           // 我的质押：锁定DP / 4
-                const unreleasedDP = totalLockedDP.sub(releasedDP); // 未释放DP
                 const claimedDP = releasedDP;                       // 累计领取 = 已释放DP
 
-                // 更新页面
+                // 更新页面（actualRemaining 和 actualClaimable 已经包含强制释放）
                 document.getElementById('myStake').textContent = parseFloat(ethers.utils.formatEther(myStakedDP)).toFixed(2) + ' DP';
-                document.getElementById('myRemaining').textContent = parseFloat(ethers.utils.formatEther(unreleasedDP)).toFixed(2) + ' DP';
+                document.getElementById('myRemaining').textContent = parseFloat(ethers.utils.formatEther(actualRemaining)).toFixed(2) + ' DP';
                 document.getElementById('pendingReward').textContent = parseFloat(ethers.utils.formatEther(actualClaimable)).toFixed(4) + ' DP';
                 document.getElementById('totalClaimed').textContent = parseFloat(ethers.utils.formatEther(claimedDP)).toFixed(2) + ' DP';
                 

@@ -2,13 +2,17 @@
 // https://ave-cloud.gitbook.io/data-api
 
 class AveAPI {
-    constructor(apiKey) {
+    constructor(apiKey, useProxy = false) {
         // API endpoints
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
+        this.proxyURL = '/api/ave-proxy'; // 代理端点
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
+        
+        // 是否使用代理（解决 CORS 问题）
+        this.useProxy = useProxy;
         
         // DP Token configuration (Berachain)
         this.dpTokenAddress = '0xf7c464c7832e59855aa245ecc7677f54b3460e7d';
@@ -40,19 +44,41 @@ class AveAPI {
         }
         
         try {
-            const response = await fetch(`${this.baseURL}/v2/tokens/price`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-API-KEY': this.apiKey,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    token_ids: [this.dpTokenId],
-                    tvl_min: 0,
-                    tx_24h_volume_min: 0
-                })
-            });
+            let response;
+            
+            if (this.useProxy) {
+                // 使用代理
+                response = await fetch(this.proxyURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        endpoint: '/v2/tokens/price',
+                        method: 'POST',
+                        body: {
+                            token_ids: [this.dpTokenId],
+                            tvl_min: 0,
+                            tx_24h_volume_min: 0
+                        }
+                    })
+                });
+            } else {
+                // 直接请求
+                response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': this.apiKey,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token_ids: [this.dpTokenId],
+                        tvl_min: 0,
+                        tx_24h_volume_min: 0
+                    })
+                });
+            }
             
             if (!response.ok) {
                 throw new Error(`Ave API error: ${response.status}`);
