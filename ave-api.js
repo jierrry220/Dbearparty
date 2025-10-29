@@ -7,7 +7,13 @@ class AveAPI {
         this.baseURL = 'https://prod.ave-api.com';
         this.backupURL = 'https://data.ave-api.xyz';
         this.proxyURL = '/api/ave-proxy'; // 代理端点
-        this.corsProxyURL = 'https://corsproxy.io/?'; // 公共 CORS 代理
+        // 使用多个 CORS 代理 fallback
+        this.corsProxies = [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?',
+            'https://api.codetabs.com/v1/proxy?quest='
+        ];
+        this.currentProxyIndex = 0;
         
         // API Key - Replace with your actual key
         this.apiKey = apiKey || 'YOUR_API_KEY_HERE';
@@ -33,6 +39,49 @@ class AveAPI {
      */
     isConfigured() {
         return this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE';
+    }
+    
+    /**
+     * 使用 CORS 代理获取数据（尝试多个代理）
+     */
+    async fetchWithCorsProxy() {
+        const targetURL = `${this.baseURL}/v2/tokens/price`;
+        const requestBody = {
+            token_ids: [this.dpTokenId],
+            tvl_min: 0,
+            tx_24h_volume_min: 0
+        };
+        
+        // 尝试所有 CORS 代理
+        for (let i = 0; i < this.corsProxies.length; i++) {
+            const proxyURL = this.corsProxies[i];
+            console.log(`Trying CORS proxy ${i + 1}/${this.corsProxies.length}:`, proxyURL);
+            
+            try {
+                const response = await fetch(proxyURL + encodeURIComponent(targetURL), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': this.apiKey,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                if (response.ok) {
+                    console.log(`✅ CORS proxy ${i + 1} success!`);
+                    this.currentProxyIndex = i;
+                    return response;
+                }
+                
+                console.warn(`CORS proxy ${i + 1} failed with status:`, response.status);
+            } catch (err) {
+                console.warn(`CORS proxy ${i + 1} error:`, err.message);
+            }
+        }
+        
+        // 所有代理都失败，抛出错误
+        throw new Error('All CORS proxies failed');
     }
     
     /**
@@ -74,40 +123,14 @@ class AveAPI {
                         throw new Error('Proxy not found, retry with direct');
                     }
                 } catch (proxyError) {
-                    console.warn('Proxy failed, using CORS proxy:', proxyError.message);
+                    console.warn('Proxy failed, trying CORS proxies:', proxyError.message);
                     this.proxyAttempted = true;
-                    // Fallback 到公共 CORS 代理
-                    const targetURL = `${this.baseURL}/v2/tokens/price`;
-                    response = await fetch(this.corsProxyURL + encodeURIComponent(targetURL), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-API-KEY': this.apiKey,
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            token_ids: [this.dpTokenId],
-                            tvl_min: 0,
-                            tx_24h_volume_min: 0
-                        })
-                    });
+                    // 尝试多个 CORS 代理
+                    response = await this.fetchWithCorsProxy();
                 }
             } else {
-                // 直接使用公共 CORS 代理
-                const targetURL = `${this.baseURL}/v2/tokens/price`;
-                response = await fetch(this.corsProxyURL + encodeURIComponent(targetURL), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-KEY': this.apiKey,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        token_ids: [this.dpTokenId],
-                        tvl_min: 0,
-                        tx_24h_volume_min: 0
-                    })
-                });
+                // 直接使用 CORS 代理
+                response = await this.fetchWithCorsProxy();
             }
             
             if (!response.ok) {
