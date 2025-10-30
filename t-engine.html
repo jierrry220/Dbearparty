@@ -951,6 +951,14 @@
                         <span class="stat-label" data-i18n="tengine.rewardRate">Current Reward Rate:</span>
                         <span class="stat-value" id="myRewardRate" style="color: #ffd700;">--</span>
                     </div>
+                    <div class="stat">
+                        <span class="stat-label" data-i18n="tengine.acceleratedRelease">💨 Accelerated Release:</span>
+                        <span class="stat-value" id="myInviteRewardsReceived" style="color: #ffd700;">-- DP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label" data-i18n="tengine.myReferrals">👥 My Referrals:</span>
+                        <span class="stat-value" id="myReferralCount" style="color: #ffd700;">--</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1037,8 +1045,9 @@
         // ========== 合约配置 ==========
         const CONTRACTS = {
             tEngine: '0xd9661D56659B80A875E42A51955434A0818581D8',
-            dpToken: '0xf7c464c7832e59855aa245ecc7677f54b3460e7d',
-            debearPass: '0x29f2a6756E5B79C36Eb6699220CB56f7749C7514'
+            dpToken: '0xf7C464c7832e59855aa245Ecc7677f54B3460e7d',
+            debearPass: '0x29f2a6756E5B79C36Eb6699220CB56f7749C7514',
+            invitationSystem: '0xAa733E91132dF624f391f1B426F56BD231486774'
         };
 
         // T-Engine ABI (V5 - 包含强制释放功能)
@@ -1066,6 +1075,8 @@
             'function getRemainingShares(address user) view returns (uint256)',
             'function globalForceReleaseCount() view returns (uint256)',
             'function userProcessedForceReleases(address) view returns (uint256)',
+            'function userInviteRewardsReceived(address) view returns (uint256)',
+            'function userInviteRewardsGiven(address) view returns (uint256)',
             'event InviteRewardReleased(address indexed inviter, address indexed newUser, uint256 actualReward, uint256 expectedReward)',
             'event GlobalForceReleaseTriggered(uint256 releaseCount, uint256 timestamp)'
         ];
@@ -1601,6 +1612,9 @@
             try {
                 const tEngine = new ethers.Contract(CONTRACTS.tEngine, TENGINE_ABI, provider);
                 const passNFT = new ethers.Contract(CONTRACTS.debearPass, PASS_ABI, provider);
+                const invitationSystem = new ethers.Contract(CONTRACTS.invitationSystem, [
+                    'function inviteeCount(address) view returns (uint256)'
+                ], provider);
                 
                 // 检查是否有新方法
                 let rewardRate, availableShares;
@@ -1644,18 +1658,36 @@
                     passLevel = '未持有 Pass';
                 }
                 
-                // 获取pendingRewards
-                const userInfo = await tEngine.userInfo(userAddress);
-                let pendingRewards;
-                if (Array.isArray(userInfo)) {
-                    pendingRewards = userInfo[3];
-                } else {
-                    pendingRewards = userInfo.pendingRewards || userInfo[3];
-                }
+                // 获取新增数据：加速释放（发出+收到） + 邀请人数
+                let rewardsGiven = ethers.BigNumber.from(0);
+                let rewardsReceived = ethers.BigNumber.from(0);
+                let referralCount = 0;
                 
-                // 更新页面（仅保留 Pass 等级和奖励率）
-                document.getElementById('myPassLevel').textContent = passLevel;
-                document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
+                try {
+                    [rewardsGiven, rewardsReceived, referralCount] = await Promise.all([
+                        tEngine.userInviteRewardsGiven(userAddress),
+                        tEngine.userInviteRewardsReceived(userAddress),
+                        invitationSystem.inviteeCount(userAddress)
+                    ]);
+                    
+                    const totalAccelerated = rewardsGiven.add(rewardsReceived);
+                    console.log(`💨 加速释放: 发出 ${ethers.utils.formatEther(rewardsGiven)} + 收到 ${ethers.utils.formatEther(rewardsReceived)} = ${ethers.utils.formatEther(totalAccelerated)} DP`);
+                    console.log(`👥 邀请人数: ${referralCount.toString()}`);
+                    
+                    // 更新页面
+                    document.getElementById('myPassLevel').textContent = passLevel;
+                    document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
+                    document.getElementById('myInviteRewardsReceived').textContent = parseFloat(ethers.utils.formatEther(totalAccelerated)).toFixed(2);
+                    document.getElementById('myReferralCount').textContent = referralCount.toString();
+                    
+                } catch (newDataError) {
+                    console.warn('获取新数据失败:', newDataError.message);
+                    // 失败时也要更新基本信息
+                    document.getElementById('myPassLevel').textContent = passLevel;
+                    document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
+                    document.getElementById('myInviteRewardsReceived').textContent = '0.00';
+                    document.getElementById('myReferralCount').textContent = '0';
+                }
                 
             } catch (error) {
                 console.error('刷新邀请信息失败:', error);

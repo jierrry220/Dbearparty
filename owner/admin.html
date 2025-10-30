@@ -265,15 +265,16 @@
         </div>
         
         <div class="group" style="margin-top:12px;">
-          <label>重置全局计数器（慢慢使用！）</label>
+          <label>🔄 重置全局计数器（修复新用户 bug）</label>
           <div class="row">
-            <input id="resetCounterValue" placeholder="例: 20930" style="flex:1" />
+            <input id="resetCounterValue" placeholder="输入 0 清零计数器" style="flex:1" />
             <button class="btn danger" id="btnResetForceReleaseCounters" style="flex:0 0 auto;">
               ⚠️ 重置计数器
             </button>
           </div>
           <div class="muted" style="margin-top:4px;">
-            ⚠️ 仅在需要重新基准时使用，会影响所有用户的释放量计算
+            💡 重置为 0：新用户不能领取历史强制释放（修复 bug）<br>
+            ⚠️ 已 claim 的老用户不受影响，未 claim 的会失去待领取的历史释放
           </div>
         </div>
         
@@ -360,7 +361,7 @@
       'function triggerGlobalRelease()',
       'function triggerGlobalReleaseMultiple(uint256 count)',
       'function resetForceReleaseCounters(uint256 newCount)',
-      'function globalForceReleaseCounter() view returns (uint256)',
+      'function globalForceReleaseCount() view returns (uint256)',
       'function owner() view returns (address)'
     ];
 
@@ -603,7 +604,7 @@
         
         // V5: 读取全局强制释放计数器
         try {
-          const globalCounter = await ten.globalForceReleaseCounter();
+          const globalCounter = await ten.globalForceReleaseCount();
           $('currGlobalForceCounter').textContent = globalCounter.toString();
           $('currGlobalForceCounter').style.color = '#fbbf24';
           console.log('✅ V5 全局强制释放计数器:', globalCounter.toString());
@@ -823,7 +824,15 @@
           return; 
         }
         
-        if (!confirm(`⚠️ 确定要重置全局计数器为 ${newCount} 吗？\n\n这是一个重大操作！\n\n• 会直接设置全局计数器为 ${newCount}\n• 会影响所有用户的释放量计算\n• 一般用于重新设置基准值\n\n请确认你知道自己在做什么！`)) return;
+        let confirmMsg = `⚠️ 确定要重置全局计数器为 ${newCount} 吗？\n\n`;
+        
+        if (newCount === 0) {
+          confirmMsg += `💡 重置为 0 的作用：\n• 修复新用户 bug：新用户不能领取历史强制释放\n• 已 claim 的老用户：不受影响，已领取的不会被撤回\n• 未 claim 的老用户：会失去待领取的历史释放\n\n这是推荐的修复方案！`;
+        } else {
+          confirmMsg += `这是一个重大操作！\n\n• 会直接设置全局计数器为 ${newCount}\n• 会影响所有用户的释放量计算\n• 一般用于重新设置基准值\n\n请确认你知道自己在做什么！`;
+        }
+        
+        if (!confirm(confirmMsg)) return;
         
         const ten = await withSigner(CONTRACTS.tEngine, TENGINE_ABI);
         const tx = await ten.resetForceReleaseCounters(newCount);

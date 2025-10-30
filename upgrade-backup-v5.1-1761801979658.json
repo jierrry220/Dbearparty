@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-10-30T05:26:19.076Z",
+  "network": "berachain",
+  "chainId": "80094",
+  "proxyAddress": "0xd9661D56659B80A875E42A51955434A0818581D8",
+  "previousImplementation": "0x0c78B63aEeE40c0226Da752c9E8f1f9e6c24a3Db",
+  "contractVersion": "TEngineV5",
+  "upgradeVersion": "TEngineV5.1",
+  "state": {
+    "dpToken": "0xf7C464c7832e59855aa245Ecc7677f54B3460e7d",
+    "totalDeposited": "579993000000000000000000",
+    "totalSharesIssued": "2319972000000000000000000",
+    "totalClaimed": "2009516177875138317900481",
+    "sharesMultiplier": "4",
+    "dailyReleaseRate": "30",
+    "globalForceReleaseCount": "7"
+  },
+  "upgradeReason": "Fix: Sync force release counter for new users to prevent getting historical rewards"
+}

@@ -126,6 +126,8 @@ const translations = {
         'tengine.inviteInfo': '💡 Invite users to stake and earn rewards: No Pass 3% | Standard Pass 8% | Premium Pass 11% | Exclusive Pass 15%',
         'tengine.passLevel': 'Pass Level:',
         'tengine.rewardRate': 'Current Reward Rate:',
+        'tengine.acceleratedRelease': '💨 Accelerated Release:',
+        'tengine.myReferrals': '👥 My Referrals:',
         
         // T-Engine 输入框
         'tengine.inputPlaceholder': 'Enter stake amount',
@@ -333,6 +335,8 @@ const translations = {
         'tengine.inviteInfo': '💡 邀请用户质押可获奖励：无 Pass 默认 3% | Standard Pass 8% | Premium Pass 11% | Exclusive Pass 15%',
         'tengine.passLevel': '持有 Pass 等级:',
         'tengine.rewardRate': '当前邀请奖励率:',
+        'tengine.acceleratedRelease': '💨 加速释放:',
+        'tengine.myReferrals': '👥 我的邀请人数:',
         
         // T-Engine 输入框
         'tengine.inputPlaceholder': '输入质押数量',
