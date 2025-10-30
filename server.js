@@ -14,12 +14,34 @@ const server = http.createServer(async (req, res) => {
     if (url === '/api/ave-price') {
         try {
             const aveApiHandler = require('./api/ave-price.js');
-            await aveApiHandler(req, res);
+            
+            // 创建兼容 Vercel 格式的 res 对象
+            const mockRes = {
+                statusCode: 200,
+                headers: {},
+                setHeader(key, value) {
+                    this.headers[key] = value;
+                },
+                status(code) {
+                    this.statusCode = code;
+                    return this;
+                },
+                json(data) {
+                    res.writeHead(this.statusCode, { ...this.headers, 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(data));
+                },
+                end() {
+                    res.writeHead(this.statusCode, this.headers);
+                    res.end();
+                }
+            };
+            
+            await aveApiHandler(req, mockRes);
             return;
         } catch (error) {
             console.error('API route error:', error);
             res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Internal server error' }));
+            res.end(JSON.stringify({ error: 'Internal server error', message: error.message }));
             return;
         }
     }
