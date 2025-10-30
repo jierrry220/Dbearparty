@@ -44,10 +44,26 @@ class AveAPI {
             return this.priceCache.data;
         }
         
+        // 自动检测是否需要使用代理（生产环境）
+        const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        
         try {
-            // Call Ave API directly
-            console.log('Fetching price from Ave API');
-            const response = await fetch(`${this.baseURL}/v2/tokens/price`, {
+            let response;
+            
+            if (isProduction) {
+                // 生产环境：使用服务器端代理避免 CORS
+                console.log('Fetching price via proxy');
+                response = await fetch('/api/ave-price', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+            } else {
+                // 本地开发：直接调用 Ave API
+                console.log('Fetching price from Ave API directly');
+                response = await fetch(`${this.baseURL}/v2/tokens/price`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

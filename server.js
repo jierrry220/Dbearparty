@@ -6,9 +6,23 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     // 移除 URL 中的查询参数
     const url = req.url.split('?')[0];
+    
+    // 处理 API 路由
+    if (url === '/api/ave-price') {
+        try {
+            const aveApiHandler = require('./api/ave-price.js');
+            await aveApiHandler(req, res);
+            return;
+        } catch (error) {
+            console.error('API route error:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Internal server error' }));
+            return;
+        }
+    }
     
     // 默认访问 index.html
     let filePath = url === '/' ? '/index.html' : url;
