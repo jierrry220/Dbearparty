@@ -7,8 +7,11 @@ const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const server = http.createServer((req, res) => {
+    // 移除 URL 中的查询参数
+    const url = req.url.split('?')[0];
+    
     // 默认访问 index.html
-    let filePath = req.url === '/' ? '/index.html' : req.url;
+    let filePath = url === '/' ? '/index.html' : url;
     filePath = path.join(__dirname, filePath);
 
     // 获取文件扩展名
