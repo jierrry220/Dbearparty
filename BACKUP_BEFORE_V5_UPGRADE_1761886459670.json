@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-10-31T04:54:19.666Z",
+  "proxyAddress": "0xd9661D56659B80A875E42A51955434A0818581D8",
+  "implementationAddress": "0x0c78b63aeee40c0226da752c9e8f1f9e6c24a3db",
+  "currentDay": "20392",
+  "lastGlobalReleaseDay": "0",
+  "globalForceReleaseCount": "0",
+  "totalDeposited": "581193000000000000000000",
+  "totalSharesIssued": "2324772000000000000000000",
+  "totalClaimed": "2010260198058853580039191",
+  "owner": "0xd8B4286c2f299220830f7228bab15225b4EA8379",
+  "releaseDayDuration": "86400"
+}
