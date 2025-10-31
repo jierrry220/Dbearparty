@@ -1,10 +1,35 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
+const crypto = require('crypto');
 
 // 环境变量配置
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// 缓存配置函数
+function getCacheControl(extname) {
+    // JS/CSS/图片缓存 1 年(不常变)
+    if (['.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf'].includes(extname)) {
+        return 'public, max-age=31536000, immutable';
+    }
+    // HTML 缓存 5 分钟(经常更新)
+    if (extname === '.html') {
+        return 'public, max-age=300, must-revalidate';
+    }
+    // JSON 缓存 1 小时
+    if (extname === '.json') {
+        return 'public, max-age=3600';
+    }
+    // 默认缓存 1 小时
+    return 'public, max-age=3600';
+}
+
+// 生成 ETag
+function generateETag(content) {
+    return crypto.createHash('md5').update(content).digest('hex').substring(0, 27);
+}
 
 const server = http.createServer(async (req, res) => {
     // 移除 URL 中的查询参数
@@ -79,7 +104,10 @@ const server = http.createServer(async (req, res) => {
                 res.end('服务器错误: ' + error.code);
             }
         } else {
-            // 添加 CORS 头部和安全头部
+            // 生成 ETag
+            const etag = generateETag(content);
+            
+            // 添加 CORS 头部、安全头部和缓存头部
             const headers = {
                 'Content-Type': contentType,
                 'Access-Control-Allow-Origin': '*',
@@ -87,10 +115,32 @@ const server = http.createServer(async (req, res) => {
                 'Access-Control-Allow-Headers': 'Content-Type',
                 'X-Content-Type-Options': 'nosniff',
                 'X-Frame-Options': 'DENY',
-                'X-XSS-Protection': '1; mode=block'
+                'X-XSS-Protection': '1; mode=block',
+                'Cache-Control': getCacheControl(extname),
+                'ETag': `"${etag}"`
             };
-            res.writeHead(200, headers);
-            res.end(content, 'utf-8');
+            
+            // 检查客户端缓存
+            const clientETag = req.headers['if-none-match'];
+            if (clientETag === `"${etag}"`) {
+                res.writeHead(304, headers);
+                res.end();
+                return;
+            }
+            
+            // Gzip 压缩(仅压缩文本文件)
+            const shouldCompress = /\.(html|css|js|json|svg)$/.test(filePath);
+            const acceptEncoding = req.headers['accept-encoding'] || '';
+            
+            if (shouldCompress && acceptEncoding.includes('gzip')) {
+                headers['Content-Encoding'] = 'gzip';
+                const compressed = zlib.gzipSync(content);
+                res.writeHead(200, headers);
+                res.end(compressed);
+            } else {
+                res.writeHead(200, headers);
+                res.end(content, 'utf-8');
+            }
         }
     });
 });
