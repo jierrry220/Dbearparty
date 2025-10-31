@@ -952,10 +952,6 @@
                         <span class="stat-value" id="myRewardRate" style="color: #ffd700;">--</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label" data-i18n="tengine.acceleratedRelease">💨 Accelerated Release:</span>
-                        <span class="stat-value" id="myInviteRewardsReceived" style="color: #ffd700;">-- DP</span>
-                    </div>
-                    <div class="stat">
                         <span class="stat-label" data-i18n="tengine.myReferrals">👥 My Referrals:</span>
                         <span class="stat-value" id="myReferralCount" style="color: #ffd700;">--</span>
                     </div>
@@ -1664,28 +1660,21 @@
                 let referralCount = 0;
                 
                 try {
-                    [rewardsGiven, rewardsReceived, referralCount] = await Promise.all([
-                        tEngine.userInviteRewardsGiven(userAddress),
-                        tEngine.userInviteRewardsReceived(userAddress),
-                        invitationSystem.inviteeCount(userAddress)
-                    ]);
+                    // 只获取邀请人数,不再显示加速释放
+                    referralCount = await invitationSystem.inviteeCount(userAddress);
                     
-                    const totalAccelerated = rewardsGiven.add(rewardsReceived);
-                    console.log(`💨 加速释放: 发出 ${ethers.utils.formatEther(rewardsGiven)} + 收到 ${ethers.utils.formatEther(rewardsReceived)} = ${ethers.utils.formatEther(totalAccelerated)} DP`);
                     console.log(`👥 邀请人数: ${referralCount.toString()}`);
                     
                     // 更新页面
                     document.getElementById('myPassLevel').textContent = passLevel;
                     document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
-                    document.getElementById('myInviteRewardsReceived').textContent = parseFloat(ethers.utils.formatEther(totalAccelerated)).toFixed(2);
                     document.getElementById('myReferralCount').textContent = referralCount.toString();
                     
                 } catch (newDataError) {
-                    console.warn('获取新数据失败:', newDataError.message);
+                    console.warn('获取邀请数据失败:', newDataError.message);
                     // 失败时也要更新基本信息
                     document.getElementById('myPassLevel').textContent = passLevel;
                     document.getElementById('myRewardRate').textContent = `${rewardRate}%`;
-                    document.getElementById('myInviteRewardsReceived').textContent = '0.00';
                     document.getElementById('myReferralCount').textContent = '0';
                 }
                 
